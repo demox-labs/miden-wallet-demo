@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useRef,
 } from 'react';
 
 import * as MidenSdk from '@demox-labs/miden-sdk/dist/index';
@@ -12,9 +13,15 @@ import * as MidenSdk from '@demox-labs/miden-sdk/dist/index';
 export interface MidenSdkContextState {
   isLoading: boolean;
   Miden: typeof MidenSdk;
-  client: MidenSdk.WebClient | null;
-  faucetId: MidenSdk.AccountId | null;
-  createFaucet: () => Promise<void>;
+  createClient: () => Promise<MidenSdk.WebClient>;
+  createFaucet: (
+    client: MidenSdk.WebClient,
+    storageMode: MidenSdk.AccountStorageMode,
+    nonFungible: boolean,
+    assetSymbol: string,
+    decimals: number,
+    totalSupply: bigint
+  ) => Promise<MidenSdk.AccountId>;
 }
 
 const defaultContext: {
@@ -40,8 +47,6 @@ export interface MidenSdkProviderProps {
 export const MidenSdkProvider: FC<MidenSdkProviderProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [Miden, setMiden] = useState<any>(null);
-  const [client, setClient] = useState<any>(null);
-  const [faucetId, setFaucetId] = useState<any>(null);
 
   const loadSdk = useCallback(async () => {
     if (!isLoading && Miden !== null) return;
@@ -53,34 +58,60 @@ export const MidenSdkProvider: FC<MidenSdkProviderProps> = ({ children }) => {
   }, [isLoading, Miden, setIsLoading, setMiden]);
 
   const createClient = useCallback(async () => {
-    if (!Miden || client !== null) return;
-    const newClient = await Miden.WebClient.create_client(
-      'https://rpc.testnet.miden.io'
-    );
-    setClient(newClient);
-  }, [Miden, setClient, client]);
+    if (!Miden) return null;
+    return await Miden.WebClient.createClient('https://rpc.testnet.miden.io');
+  }, [Miden]);
 
-  const createFaucet = useCallback(async () => {
-    if (!Miden || !client || faucetId) return;
-    const faucet = await client.new_faucet(
-      Miden.AccountStorageMode.public(),
-      false,
-      'TEST',
-      10,
-      BigInt(1000000)
-    );
-    await client.sync_state();
-    setFaucetId(faucet.id());
-  }, [Miden, client, setFaucetId, faucetId]);
+  const createFaucet = useCallback(
+    async (
+      client: MidenSdk.WebClient,
+      storageMode: MidenSdk.AccountStorageMode,
+      nonFungible: boolean,
+      assetSymbol: string,
+      decimals: number,
+      totalSupply: bigint
+    ): Promise<MidenSdk.AccountId> => {
+      if (!Miden || !client)
+        throw new Error('Miden SDK or client not initialized');
+
+      try {
+        // First sync the client state to ensure we're up to date
+        await client.syncState();
+
+        // Create the faucet with provided configuration
+        const faucet = await client.newFaucet(
+          storageMode,
+          nonFungible,
+          assetSymbol,
+          decimals,
+          totalSupply
+        );
+
+        // Get the faucet ID before any other operations
+        const newFaucetId = faucet.id();
+
+        // Add a delay to ensure proper initialization
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        // Sync state again after faucet creation
+        await client.syncState();
+
+        return newFaucetId;
+      } catch (error) {
+        console.error('Error creating faucet:', error);
+        throw error;
+      }
+    },
+    [Miden]
+  );
 
   useEffect(() => {
     loadSdk();
-    createClient();
-  }, [loadSdk, createClient]);
+  }, [loadSdk]);
 
   return (
     <MidenSdkContext.Provider
-      value={{ isLoading, Miden, client, faucetId, createFaucet }}
+      value={{ isLoading, Miden, createClient, createFaucet }}
     >
       {children}
     </MidenSdkContext.Provider>

@@ -13,16 +13,15 @@ import { ChevronDown } from '@/components/icons/chevron-down';
 const MenuLinks = [
   {
     name: 'Home',
+    href: '/',
     dropDownItems: [
       { name: 'Modern', href: '/' },
       { name: 'Minimal', href: '/minimal' },
     ],
   },
-  { name: 'Sign', href: '/sign' },
-  { name: 'Decrypt', href: '/decrypt' },
-  { name: 'Records', href: '/records' },
-  { name: 'Execute', href: '/execute' },
-  { name: 'Deploy', href: '/deploy' },
+  { name: 'Send', href: '/send' },
+  { name: 'Faucet', href: '/faucet' },
+  { name: 'Mint', href: '/mint' },
 ];
 
 export function MenuItems() {
