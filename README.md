@@ -1,15 +1,15 @@
 # Leo Wallet Demo
 
-This is a NextJS-based demo site for the [Aleo Wallet Adapter](https://github.com/demox-labs/aleo-wallet-adapter) to be used on the [Aleo blockchain](https://aleo.org). <br>
+This is a NextJS-based demo site for the [Miden Wallet Adapter](https://github.com/demox-labs/miden-wallet-adapter) to be used on the [Miden blockchain](https://polygon.technology/polygon-miden). <br>
 
-The goal of this demo is to show how to build a website that integrates with Aleo Wallets like the [Leo Wallet](https://leo.app)
+The goal of this demo is to show how to build a website that integrates with wallets like the [Miden Wallet](https://www.leo.app/miden)
 
 
 <hr />
 
-## Demo 
+## Demo
 
-You can find [this site live here](https://demo.leo.app)
+You can find [this site live here](https://miden.leo.app)
 
 ## 🚀 Quick Start
 
@@ -23,7 +23,7 @@ Then run the following:
 ### 1) Clone the repository
 
 ```bash
-git clone https://github.com/demox-labs/leo-wallet-demo && cd leo-wallet-demo
+git clone https://github.com/demox-labs/miden-wallet-demo && cd miden-wallet-demo
 ```
 
 ### 2) Install dependencies
