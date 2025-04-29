@@ -26,7 +26,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   const wallets = useMemo(
     () => [
       new TridentWalletAdapter({
-        appName: 'Trident Demo App',
+        appName: 'Miden Demo App',
       }),
     ],
     []

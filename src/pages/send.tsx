@@ -95,8 +95,8 @@ const SendPage: NextPageWithLayout = () => {
   return (
     <>
       <NextSeo
-        title="Trident Wallet Request Send"
-        description="Request Send from the Trident Wallet"
+        title="Miden Wallet Request Send"
+        description="Request Send from the Miden Wallet"
       />
       <Base>
         <form

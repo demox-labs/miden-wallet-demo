@@ -166,8 +166,8 @@ const FaucetPage: NextPageWithLayout = () => {
   return (
     <>
       <NextSeo
-        title="Trident Wallet Request Mint"
-        description="Request Mint from the Trident Wallet"
+        title="Miden Wallet Request Mint"
+        description="Request Mint from the Miden Wallet"
       />
       <Base>
         {!showNoteForm ? (

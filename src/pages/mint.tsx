@@ -167,8 +167,8 @@ const MintPage: NextPageWithLayout = () => {
   return (
     <>
       <NextSeo
-        title="Trident Wallet Request Mint"
-        description="Request Mint from the Trident Wallet"
+        title="Miden Wallet Request Mint"
+        description="Request Mint from the Miden Wallet"
       />
       <Base>
         <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
