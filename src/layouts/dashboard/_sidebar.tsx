@@ -47,7 +47,7 @@ export default function Sidebar({ className }: SidebarProps) {
         className
       )}
     >
-      <div className="relative flex flex-col items-center justify-between px-6 py-4 2xl:px-8">
+      <div className="relative flex flex-col items-center justify-between px-6 pt-9 pb-4 2xl:px-8">
         <Logo />
         <div className="md:hidden">
           <Button
