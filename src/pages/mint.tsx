@@ -83,17 +83,16 @@ const MintPage: NextPageWithLayout = () => {
   async function requestNote(isPrivateNote: boolean, amount: number) {
     try {
       const response = await fetch(
-        'https://faucet.testnet.miden.io/get_tokens',
+        `https://faucet.testnet.miden.io/get_tokens?${new URLSearchParams({
+          asset_amount: amount.toString(),
+          is_private_note: String(isPrivateNote),
+          account_id: publicKey!,
+        })}`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            account_id: publicKey,
-            is_private_note: isPrivateNote,
-            asset_amount: amount,
-          }),
         }
       );
 
