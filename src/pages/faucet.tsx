@@ -11,8 +11,7 @@ import {
   WalletNotConnectedError,
 } from '@demox-labs/miden-wallet-adapter-base';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
-import { TridentWalletAdapter } from '@demox-labs/miden-wallet-adapter-trident';
-import { Transaction } from '@demox-labs/miden-wallet-adapter-base';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 
 interface FaucetConfig {
   storageMode: 'public' | 'private';
@@ -74,11 +73,7 @@ const FaucetPage: NextPageWithLayout = () => {
     setIsLoading(true);
 
     try {
-      setStatus('Syncing client state...');
       await client.syncState();
-
-      setStatus('Fetching faucet authentication...');
-      await client.fetchAndCacheAccountAuthByAccountId(faucetId);
 
       const accountId = Miden.AccountId.fromHex(publicKey);
       const noteType = sharePrivately
@@ -123,7 +118,7 @@ const FaucetPage: NextPageWithLayout = () => {
 
           setStatus('Submitting consume transaction request...');
           const txId =
-            (await (wallet?.adapter as TridentWalletAdapter).requestConsume(
+            (await (wallet?.adapter as MidenWalletAdapter).requestConsume(
               transaction
             )) || '';
           setStatus(`Transaction ID: ${txId}`);

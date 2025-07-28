@@ -53,7 +53,7 @@ const GettingStartedPage: NextPageWithLayout = () => {
           bgColor="bg-white shadow-card dark:bg-light-dark"
         >
           &bull; Download and install a Miden-compatible wallet. We recommend{' '}
-          <a href="https://demoxlabs.xyz">Miden Wallet</a>
+          <a href="https://miden.fi">Miden Wallet</a>
         </Section>
         <Section title="STEP 2 - CREATE A NEW WALLET ACCOUNT" bgColor="">
           &bull; Once installed - click on &quot;Create a new wallet&quot;{' '}

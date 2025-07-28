@@ -10,7 +10,7 @@ import {
   WalletNotConnectedError,
 } from '@demox-labs/miden-wallet-adapter-base';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import { TridentWalletAdapter } from '@demox-labs/miden-wallet-adapter-trident';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { NextSeo } from 'next-seo';
 import {
   FormEvent,
@@ -19,6 +19,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { sha3_256 } from 'js-sha3';
 
 interface FaucetMetadata {
   id: string;
@@ -80,27 +81,117 @@ const MintPage: NextPageWithLayout = () => {
     fetchFaucetState();
   }, [fetchFaucetState, faucetState]);
 
-  async function requestNote(isPrivateNote: boolean, amount: number) {
+  // Function to find a valid nonce for proof of work using the new challenge format
+  async function findValidNonce(challenge: string, target: string) {
+    let nonce = 0;
+    let targetNum = BigInt(target);
+
+    while (true) {
+      // Generate a random nonce
+      nonce = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
+
+      try {
+        // Compute hash using SHA3 with the challenge and nonce
+        let hash = sha3_256.create();
+        hash.update(challenge); // Use the hex-encoded challenge string directly
+
+        // Convert nonce to 8-byte big-endian format to match backend
+        const nonceBytes = new ArrayBuffer(8);
+        const nonceView = new DataView(nonceBytes);
+        nonceView.setBigUint64(0, BigInt(nonce), false); // false = big-endian
+        const nonceByteArray = new Uint8Array(nonceBytes);
+        hash.update(nonceByteArray);
+
+        // Take the first 8 bytes of the hash and parse them as u64 in big-endian
+        let digest = BigInt('0x' + hash.hex().slice(0, 16));
+
+        // Check if the hash is less than the target
+        if (digest < targetNum) {
+          return nonce;
+        }
+      } catch (error: any) {
+        console.error('Error computing hash:', error);
+        throw new Error('Failed to compute hash: ' + error.message);
+      }
+
+      // Yield to browser to prevent freezing
+      if (nonce % 1000 === 0) {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+    }
+  }
+
+  async function powChallenge() {
+    let powResponse;
     try {
-      const response = await fetch(
-        `https://faucet.testnet.miden.io/get_tokens?${new URLSearchParams({
-          asset_amount: amount.toString(),
-          is_private_note: String(isPrivateNote),
-          account_id: publicKey!,
-        })}`,
+      powResponse = await fetch(
+        'https://faucet.testnet.miden.io/pow?' +
+          new URLSearchParams({
+            account_id: publicKey!,
+          }),
         {
-          method: 'POST',
+          method: 'GET',
+        }
+      );
+    } catch (error) {
+      setStatus('Connection failed.');
+      return { challenge: '', nonce: 0 };
+    }
+
+    if (!powResponse.ok) {
+      const message = await powResponse.text();
+      setStatus(message);
+      setIsLoading(false);
+      return { challenge: '', nonce: 0 };
+    }
+    setIsLoading(true);
+
+    const powData = await powResponse.json();
+
+    const nonce = await findValidNonce(powData.challenge, powData.target);
+    return { challenge: powData.challenge, nonce };
+  }
+
+  async function requestNote(
+    isPrivateNote: boolean,
+    amount: number,
+    challenge: string,
+    nonce: number
+  ) {
+    try {
+      const params = {
+        account_id: publicKey!,
+        is_private_note: String(isPrivateNote),
+        asset_amount: amount.toString(),
+        challenge: challenge,
+        nonce: nonce.toString(),
+      };
+      const noteDataRegex = /"data_base64":"([^"]+)"/;
+      const noteIdRegex = /"note_id":"([^"]+)"/;
+      let noteData = '';
+      let noteId = '';
+
+      const response = await fetch(
+        'https://faucet.testnet.miden.io/get_tokens?' +
+          new URLSearchParams(params),
+        {
+          method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'text/event-stream',
           },
         }
       );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      const text = await response.text();
+      const noteDataMatch = noteDataRegex.exec(text);
+      const noteIdMatch = noteIdRegex.exec(text);
+      if (noteDataMatch) {
+        noteData = noteDataMatch[1];
+      }
+      if (noteIdMatch) {
+        noteId = noteIdMatch[1];
       }
 
-      return response;
+      return { noteData, noteId };
     } catch (error) {
       console.error('Error:', error);
     }
@@ -115,18 +206,28 @@ const MintPage: NextPageWithLayout = () => {
     const isPrivateNote = noteType === 'private';
     setStatus('Minting note from remote faucet...');
     try {
-      const noteResponse = await requestNote(isPrivateNote, amount!);
+      const { challenge, nonce } = await powChallenge();
 
-      const noteBuffer = await noteResponse!.arrayBuffer();
-      const noteBytes = new Uint8Array(noteBuffer);
-
+      const noteResponse = await requestNote(
+        isPrivateNote,
+        amount!,
+        challenge,
+        nonce
+      );
       let transaction: ConsumeTransaction;
 
       if (isPrivateNote) {
-        const buffer = new ArrayBuffer(noteBytes.byteLength);
+        // Decode base64
+        const binaryString = atob(noteResponse!.noteData);
+        const byteArray = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          byteArray[i] = binaryString.charCodeAt(i);
+        }
+
+        const buffer = new ArrayBuffer(byteArray.byteLength);
         const bytesCopy = new Uint8Array(buffer);
-        bytesCopy.set(noteBytes);
-        const noteId = await client.importNote(noteBytes);
+        bytesCopy.set(byteArray);
+        const noteId = await client.importNote(byteArray);
         transaction = new ConsumeTransaction(
           faucetState!.id,
           noteId,
@@ -136,10 +237,9 @@ const MintPage: NextPageWithLayout = () => {
         );
         console.log(transaction);
       } else {
-        const noteId = await client.importNote(noteBytes);
         transaction = new ConsumeTransaction(
           faucetState!.id,
-          noteId,
+          noteResponse!.noteId,
           noteType,
           amount!
         );
@@ -147,7 +247,7 @@ const MintPage: NextPageWithLayout = () => {
 
       setStatus('Submitting consume transaction request...');
       const txId =
-        (await (wallet?.adapter as TridentWalletAdapter).requestConsume(
+        (await (wallet?.adapter as MidenWalletAdapter).requestConsume(
           transaction
         )) || '';
       setIsLoading(false);

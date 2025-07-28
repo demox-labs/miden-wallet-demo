@@ -1,15 +1,15 @@
 # Miden Wallet Demo
 
-This is a NextJS-based demo site for the [Miden Wallet Adapter](https://github.com/demox-labs/miden-wallet-adapter) to be used on the [Miden blockchain](https://polygon.technology/polygon-miden). <br>
+This is a NextJS-based demo site for the [Miden Wallet Adapter](https://github.com/demox-labs/miden-wallet-adapter) to be used on the [Miden blockchain](https://miden.xyz). <br>
 
-The goal of this demo is to show how to build a website that integrates with wallets like the [Miden Wallet](https://www.leo.app/miden)
+The goal of this demo is to show how to build a website that integrates with wallets like the [Miden Wallet](https://miden.fi)
 
 
 <hr />
 
 ## Demo
 
-You can find [this site live here](https://miden.leo.app)
+You can find [this site live here](https://demo.miden.fi)
 
 ## 🚀 Quick Start
 

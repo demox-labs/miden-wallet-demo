@@ -1,10 +1,10 @@
-import { useState, FormEvent, SyntheticEvent, useEffect } from 'react';
+import { useState, FormEvent, SyntheticEvent } from 'react';
 import type { NextPageWithLayout } from '@/types';
 import { NextSeo } from 'next-seo';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import Base from '@/components/ui/base';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import { TridentWalletAdapter } from '@demox-labs/miden-wallet-adapter-trident';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { Check } from '@/components/icons/check';
 import Button from '@/components/ui/button';
 import {
@@ -21,27 +21,6 @@ const SendPage: NextPageWithLayout = () => {
   let [sharePrivately, setSharePrivately] = useState<boolean>(false);
   let [recallBlocks, setRecallBlocks] = useState<number | undefined>();
 
-  let [transactionId, setTransactionId] = useState<string | undefined>(
-    undefined
-  );
-  //let [status, setStatus] = useState<string | undefined>();
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | undefined;
-
-    if (transactionId) {
-      intervalId = setInterval(() => {
-        getTransactionStatus(transactionId!);
-      }, 1000);
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [transactionId]);
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (!publicKey) throw new WalletNotConnectedError();
@@ -55,39 +34,27 @@ const SendPage: NextPageWithLayout = () => {
     );
 
     const txId =
-      (await (wallet?.adapter as TridentWalletAdapter).requestSend(
+      (await (wallet?.adapter as MidenWalletAdapter).requestSend(
         midenTransaction
       )) || '';
     if (event.target?.elements[0]?.value) {
       event.target.elements[0].value = '';
     }
-    setTransactionId(txId);
-  };
-
-  const getTransactionStatus = async (txId: string) => {
-    // const status = await (
-    //   wallet?.adapter as TridentWalletAdapter
-    // ).transactionStatus(txId);
-    // setStatus(status);
   };
 
   const handleToAddressChange = (event: any) => {
-    setTransactionId(undefined);
     event.preventDefault();
     setToAddress(event.currentTarget.value);
   };
   const handleFaucetIdChange = (event: any) => {
-    setTransactionId(undefined);
     event.preventDefault();
     setFaucetId(event.currentTarget.value);
   };
   const handleAmountChange = (event: any) => {
-    setTransactionId(undefined);
     event.preventDefault();
     setAmount(event.currentTarget.value);
   };
   const handleRecallBlocksChange = (event: any) => {
-    setTransactionId(undefined);
     event.preventDefault();
     setRecallBlocks(event.currentTarget.value);
   };
@@ -183,13 +150,6 @@ const SendPage: NextPageWithLayout = () => {
             </Button>
           </div>
         </form>
-        {transactionId && (
-          <div className="mt-5 inline-flex w-full items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
-            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full px-4 text-xs text-white sm:text-sm">
-              {/* {`Transaction status: ${status}`} */}
-            </div>
-          </div>
-        )}
       </Base>
     </>
   );

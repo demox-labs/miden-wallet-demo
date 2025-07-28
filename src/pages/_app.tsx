@@ -12,7 +12,7 @@ import 'swiper/css';
 import '@/assets/css/scrollbar.css';
 import '@/assets/css/globals.css';
 import '@/assets/css/range-slider.css';
-import { TridentWalletAdapter } from '@demox-labs/miden-wallet-adapter-trident';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { DecryptPermission } from '@demox-labs/miden-wallet-adapter-base';
 import { WalletProvider } from '@demox-labs/miden-wallet-adapter-react';
 import { WalletModalProvider } from '@demox-labs/miden-wallet-adapter-reactui';
@@ -25,7 +25,7 @@ type AppPropsWithLayout = AppProps & {
 function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
   const wallets = useMemo(
     () => [
-      new TridentWalletAdapter({
+      new MidenWalletAdapter({
         appName: 'Miden Demo App',
       }),
     ],
