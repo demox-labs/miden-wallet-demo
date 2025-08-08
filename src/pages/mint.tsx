@@ -6,11 +6,10 @@ import type { NextPageWithLayout } from '@/types';
 import {
   ConsumeTransaction,
   NoteTypeString,
-  Transaction,
   WalletNotConnectedError,
-} from '@demox-labs/miden-wallet-adapter-base';
-import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
+  useWallet,
+  MidenWalletAdapter,
+} from '@demox-labs/miden-wallet-adapter';
 import { NextSeo } from 'next-seo';
 import {
   FormEvent,

@@ -5,13 +5,13 @@ import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import Base from '@/components/ui/base';
 import FaucetConfigForm from '@/components/forms/faucet-config-form';
 import NoteForm from '@/components/forms/note-form';
-import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
 import {
+  useWallet,
   ConsumeTransaction,
   WalletNotConnectedError,
-} from '@demox-labs/miden-wallet-adapter-base';
+  MidenWalletAdapter,
+} from '@demox-labs/miden-wallet-adapter';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
-import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 
 interface FaucetConfig {
   storageMode: 'public' | 'private';

@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 import { useWindowScroll } from '@/lib/hooks/use-window-scroll';
 import Hamburger from '@/components/ui/hamburger';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import { useDrawer } from '@/components/drawer-views/context';
 import Sidebar from '@/layouts/dashboard/_sidebar';
-import React, { FC, useMemo } from 'react';
-import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter-reactui';
+import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
 
-require('@demox-labs/miden-wallet-adapter-reactui/dist/styles.css');
+require('@demox-labs/miden-wallet-adapter/styles.css');
 
 function HeaderRightArea() {
   return (

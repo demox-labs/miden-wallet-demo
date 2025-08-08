@@ -1,6 +1,6 @@
 import { useState, FormEvent } from 'react';
 import Button from '@/components/ui/button';
-import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
+import { useWallet } from '@demox-labs/miden-wallet-adapter';
 import { Check } from '@/components/icons/check';
 
 interface NoteFormProps {

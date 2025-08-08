@@ -12,10 +12,12 @@ import 'swiper/css';
 import '@/assets/css/scrollbar.css';
 import '@/assets/css/globals.css';
 import '@/assets/css/range-slider.css';
-import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
-import { DecryptPermission } from '@demox-labs/miden-wallet-adapter-base';
-import { WalletProvider } from '@demox-labs/miden-wallet-adapter-react';
-import { WalletModalProvider } from '@demox-labs/miden-wallet-adapter-reactui';
+import {
+  WalletProvider,
+  WalletModalProvider,
+  MidenWalletAdapter,
+  DecryptPermission,
+} from '@demox-labs/miden-wallet-adapter';
 import { MidenSdkProvider } from '@/lib/hooks/use-miden-sdk';
 
 type AppPropsWithLayout = AppProps & {

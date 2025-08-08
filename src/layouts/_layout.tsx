@@ -7,7 +7,7 @@ import { useDrawer } from '@/components/drawer-views/context';
 import Hamburger from '@/components/ui/hamburger';
 import { MenuItems } from '@/layouts/_layout-menu';
 import React from 'react';
-import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter-reactui/';
+import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
 
 require('@demox-labs/miden-wallet-adapter/dist/ui/styles.css');
 
