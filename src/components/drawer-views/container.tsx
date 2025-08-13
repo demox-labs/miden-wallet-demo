@@ -1,8 +1,8 @@
 import { Fragment, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { Dialog } from '@/components/ui/dialog';
-import { Transition } from '@/components/ui/transition';
+import { Dialog, DialogPanel, DialogBackdrop } from '@/components/ui/dialog';
+import { Transition, TransitionChild } from '@/components/ui/transition';
 import { DRAWER_VIEW, useDrawer } from '@/components/drawer-views/context';
 
 const Sidebar = dynamic(() => import('@/layouts/dashboard/_sidebar'));
@@ -35,7 +35,7 @@ export default function DrawersContainer() {
         className="fixed inset-0 z-40 overflow-hidden"
         onClose={closeDrawer}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -44,9 +44,9 @@ export default function DrawersContainer() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-gray-700 bg-opacity-60 backdrop-blur" />
-        </Transition.Child>
-        <Transition.Child
+          <DialogBackdrop className="fixed inset-0 bg-gray-700 bg-opacity-60 backdrop-blur" />
+        </TransitionChild>
+        <TransitionChild
           as={Fragment}
           enter="transform transition ease-out duration-300"
           enterFrom="-translate-x-full"
@@ -55,10 +55,10 @@ export default function DrawersContainer() {
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
         >
-          <div className="fixed inset-y-0 left-0 flex w-full max-w-full xs:w-auto">
+          <DialogPanel className="fixed inset-y-0 left-0 flex w-full max-w-full xs:w-auto">
             {view && renderDrawerContent(view)}
-          </div>
-        </Transition.Child>
+          </DialogPanel>
+        </TransitionChild>
       </Dialog>
     </Transition>
   );

@@ -1,1 +1,1 @@
-export { Dialog } from '@headlessui/react';
+export { Dialog, DialogPanel, DialogBackdrop } from '@headlessui/react';

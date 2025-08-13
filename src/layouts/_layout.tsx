@@ -5,7 +5,7 @@ import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import { useDrawer } from '@/components/drawer-views/context';
 import Hamburger from '@/components/ui/hamburger';
-import { MenuItems } from '@/layouts/_layout-menu';
+import { LayoutMenuItems } from '@/layouts/_layout-menu';
 import React from 'react';
 import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
 
@@ -59,7 +59,6 @@ export function Header() {
           : 'h-16 bg-body dark:bg-dark sm:h-24'
       }`}
     >
-      {/* <div className="w-80 2xl:w-[368px]"></div> */}
       <div className="flex items-center">
         <div className="hidden lg:mr-6 lg:block xl:hidden">
           <Hamburger
@@ -71,7 +70,7 @@ export function Header() {
         </div>
         <Logo />
         {isMounted && ['xs', 'sm', 'md', 'lg'].indexOf(breakpoint) == -1 && (
-          <MenuItems />
+          <LayoutMenuItems />
         )}
       </div>
 

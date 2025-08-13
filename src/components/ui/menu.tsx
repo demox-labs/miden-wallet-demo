@@ -1,1 +1,1 @@
-export { Menu } from '@headlessui/react';
+export { MenuButton, MenuItem, MenuItems, Menu } from '@headlessui/react';

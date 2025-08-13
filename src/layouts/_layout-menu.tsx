@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import Logo from '@/components/ui/logo';
 import Button from '@/components/ui/button';
-import { Menu } from '@/components/ui/menu';
+import { Menu, MenuButton, MenuItem, MenuItems } from '@/components/ui/menu';
 import { Transition } from '@/components/ui/transition';
 import ActiveLink from '@/components/ui/links/active-link';
 import Scrollbar from '@/components/ui/scrollbar';
@@ -24,7 +24,7 @@ const MenuLinks = [
   { name: 'Mint', href: '/mint' },
 ];
 
-export function MenuItems() {
+export function LayoutMenuItems() {
   return (
     <div className="flex items-center xl:px-10 2xl:px-14 3xl:px-16">
       {MenuLinks.map((item, index) => (
@@ -32,13 +32,13 @@ export function MenuItems() {
           {item.dropDownItems ? (
             <div className="relative mx-4 first:ml-0 last:mr-0" key={index}>
               <Menu>
-                <Menu.Button className="flex items-center text-sm font-medium uppercase text-gray-600 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                <MenuButton className="flex items-center text-sm font-medium uppercase text-gray-600 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
                   {item.name}
 
                   <span className="z-[1] transition-transform duration-200 ltr:ml-3 rtl:mr-3">
                     <ChevronDown />
                   </span>
-                </Menu.Button>
+                </MenuButton>
                 <Transition
                   as={Fragment}
                   enter="ease-out duration-300"
@@ -48,9 +48,9 @@ export function MenuItems() {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-4"
                 >
-                  <Menu.Items className="absolute left-0 mt-5 w-64 origin-top-right rounded-lg bg-white p-3 shadow-large dark:bg-gray-800">
+                  <MenuItems className="absolute left-0 mt-5 w-64 origin-top-right rounded-lg bg-white p-3 shadow-large dark:bg-gray-800">
                     {item.dropDownItems.map((dropDownItem, index) => (
-                      <Menu.Item key={index}>
+                      <MenuItem key={index}>
                         <ActiveLink
                           href={dropDownItem.href}
                           className="block rounded-lg px-3 py-2 text-sm font-medium uppercase text-gray-900 transition hover:bg-gray-50 dark:text-white dark:hover:bg-gray-700"
@@ -58,15 +58,14 @@ export function MenuItems() {
                         >
                           {dropDownItem.name}
                         </ActiveLink>
-                      </Menu.Item>
+                      </MenuItem>
                     ))}
-                  </Menu.Items>
+                  </MenuItems>
                 </Transition>
               </Menu>
             </div>
           ) : (
             <ActiveLink
-              key={index}
               href={item.href}
               className="mx-4 text-sm font-medium uppercase text-gray-600 transition first:ml-0 last:mr-0 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
               activeClassName="text-gray-900"
@@ -105,14 +104,14 @@ export default function DrawerMenu() {
           <Menu>
             {({ open }) => (
               <>
-                <Menu.Button className="flex items-center justify-between border-t border-dashed py-3.5 text-justify text-sm font-medium uppercase text-gray-900 transition first:border-t-0 hover:text-gray-900 dark:text-white dark:hover:text-white">
+                <MenuButton className="flex items-center justify-between border-t border-dashed py-3.5 text-justify text-sm font-medium uppercase text-gray-900 transition first:border-t-0 hover:text-gray-900 dark:text-white dark:hover:text-white">
                   Explore
                   <ChevronForward
                     className={`ml-3 transition-transform ${
                       open ? 'rotate-90' : ''
                     }`}
                   />
-                </Menu.Button>
+                </MenuButton>
                 <Transition
                   as={Fragment}
                   enter="ease-in-out duration-200"
@@ -122,8 +121,8 @@ export default function DrawerMenu() {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <Menu.Items className="">
-                    <Menu.Item>
+                  <MenuItems className="">
+                    <MenuItem>
                       <ActiveLink
                         href="/"
                         className="mb-3.5 flex items-center text-sm font-normal uppercase text-gray-600 before:mr-3.5 before:block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-gray-600 dark:text-gray-400 dark:before:bg-gray-400 dark:hover:text-white"
@@ -131,8 +130,8 @@ export default function DrawerMenu() {
                       >
                         Collection
                       </ActiveLink>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <ActiveLink
                         href="/profile"
                         className="mb-3.5 flex items-center text-sm font-normal uppercase text-gray-600 before:mr-3.5 before:block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-gray-600 dark:text-gray-400 dark:before:bg-gray-400 dark:hover:text-white"
@@ -140,8 +139,8 @@ export default function DrawerMenu() {
                       >
                         Trending
                       </ActiveLink>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <ActiveLink
                         href="/"
                         className="mb-3.5 flex items-center text-sm font-normal uppercase text-gray-600 before:mr-3.5 before:block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-gray-600 dark:text-gray-400 dark:before:bg-gray-400 dark:hover:text-white"
@@ -149,8 +148,8 @@ export default function DrawerMenu() {
                       >
                         Browse
                       </ActiveLink>
-                    </Menu.Item>
-                  </Menu.Items>
+                    </MenuItem>
+                  </MenuItems>
                 </Transition>
               </>
             )}
@@ -174,14 +173,14 @@ export default function DrawerMenu() {
           <Menu>
             {({ open }) => (
               <>
-                <Menu.Button className="flex items-center justify-between border-t border-dashed py-3.5 text-justify text-sm font-medium uppercase text-gray-900 transition first:border-t-0 hover:text-gray-900 dark:border-gray-700 dark:text-white dark:hover:text-white">
+                <MenuButton className="flex items-center justify-between border-t border-dashed py-3.5 text-justify text-sm font-medium uppercase text-gray-900 transition first:border-t-0 hover:text-gray-900 dark:border-gray-700 dark:text-white dark:hover:text-white">
                   Account
                   <ChevronForward
                     className={`ml-3 transition-transform ${
                       open ? 'rotate-90' : ''
                     }`}
                   />
-                </Menu.Button>
+                </MenuButton>
                 <Transition
                   as={Fragment}
                   enter="ease-in-out duration-200"
@@ -191,8 +190,8 @@ export default function DrawerMenu() {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <Menu.Items className="">
-                    <Menu.Item>
+                  <MenuItems className="">
+                    <MenuItem>
                       <ActiveLink
                         href="/"
                         className="mb-3.5 flex items-center text-sm font-normal uppercase text-gray-600 before:mr-3.5 before:block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-gray-600 dark:text-gray-400 dark:before:bg-gray-400 dark:hover:text-white"
@@ -200,8 +199,8 @@ export default function DrawerMenu() {
                       >
                         View profile
                       </ActiveLink>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <ActiveLink
                         href="/"
                         className="mb-3.5 flex items-center text-sm font-normal uppercase text-gray-600 before:mr-3.5 before:block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-gray-600 dark:text-gray-400 dark:before:bg-gray-400 dark:hover:text-white"
@@ -209,8 +208,8 @@ export default function DrawerMenu() {
                       >
                         settings
                       </ActiveLink>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <ActiveLink
                         href="/"
                         className="mb-3.5 flex items-center text-sm font-normal uppercase text-gray-600 before:mr-3.5 before:block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-gray-600 dark:text-gray-400 dark:before:bg-gray-400 dark:hover:text-white"
@@ -218,8 +217,8 @@ export default function DrawerMenu() {
                       >
                         help
                       </ActiveLink>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <ActiveLink
                         href="/"
                         className="mb-3.5 flex items-center text-sm font-normal uppercase text-gray-600 before:mr-3.5 before:block before:h-1 before:w-1 before:shrink-0 before:rounded-full before:bg-gray-600 dark:text-gray-400 dark:before:bg-gray-400 dark:hover:text-white"
@@ -227,8 +226,8 @@ export default function DrawerMenu() {
                       >
                         Disconnect
                       </ActiveLink>
-                    </Menu.Item>
-                  </Menu.Items>
+                    </MenuItem>
+                  </MenuItems>
                 </Transition>
               </>
             )}

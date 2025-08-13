@@ -3,7 +3,7 @@ import {
   OverlayScrollbarsComponent,
   OverlayScrollbarsComponentProps,
 } from 'overlayscrollbars-react';
-import 'overlayscrollbars/css/OverlayScrollbars.css';
+import 'overlayscrollbars/styles/overlayscrollbars.css';
 
 interface ScrollbarProps extends OverlayScrollbarsComponentProps {
   style?: React.CSSProperties;
@@ -19,13 +19,14 @@ export default function Scrollbar({
   return (
     <OverlayScrollbarsComponent
       options={{
-        className: cn('os-theme-thin', className),
         scrollbars: {
+          theme: 'os-theme-thin',
           autoHide: 'scroll',
         },
         ...options,
       }}
       style={style}
+      className={cn(className)}
       {...props}
     />
   );

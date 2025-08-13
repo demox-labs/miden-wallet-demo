@@ -119,8 +119,3 @@ Styles for Swiper slider
 .text-heading-style {
   @apply text-sm font-medium tracking-wider;
 }
-
-/* React Share button custom styles */
-.product-share .react-share__ShareButton {
-  @apply flex flex-col items-center justify-center;
-}

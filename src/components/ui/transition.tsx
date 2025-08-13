@@ -1,1 +1,1 @@
-export { Transition } from '@headlessui/react';
+export { Transition, TransitionChild } from '@headlessui/react';
