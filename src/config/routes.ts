@@ -3,6 +3,7 @@ const routes = {
   mint: '/mint',
   send: '/send',
   faucet: '/faucet',
+  privateNotes: '/privateNotes',
 };
 
 export default routes;

@@ -28,6 +28,10 @@ const baseMenu = [
     name: 'Faucet',
     value: routes.faucet,
   },
+  {
+    name: 'Private Notes',
+    value: routes.privateNotes,
+  },
 ];
 
 function ActiveNavLink({ href, title, isActive, className }: any) {
