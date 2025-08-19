@@ -22,7 +22,7 @@ interface FaucetConfig {
 }
 
 const FaucetPage: NextPageWithLayout = () => {
-  const { publicKey, wallet } = useWallet();
+  const { accountId, wallet } = useWallet();
   const { Miden, createClient, createFaucet } = useMidenSdk();
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [client, setClient] = useState<any>(null);
@@ -31,7 +31,7 @@ const FaucetPage: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateFaucet = async (faucetConfig: FaucetConfig) => {
-    if (!publicKey) throw new WalletNotConnectedError();
+    if (!accountId) throw new WalletNotConnectedError();
     if (!Miden) return;
     setIsLoading(true);
 
@@ -68,14 +68,14 @@ const FaucetPage: NextPageWithLayout = () => {
     amount: number,
     sharePrivately: boolean
   ) => {
-    if (!publicKey) throw new WalletNotConnectedError();
+    if (!accountId) throw new WalletNotConnectedError();
     if (!Miden || !client || !faucetId) return;
     setIsLoading(true);
 
     try {
       await client.syncState();
 
-      const accountId = Miden.AccountId.fromHex(publicKey);
+      const midenAccountId = Miden.AccountId.fromHex(accountId);
       const noteType = sharePrivately
         ? Miden.NoteType.Private
         : Miden.NoteType.Public;
@@ -83,7 +83,7 @@ const FaucetPage: NextPageWithLayout = () => {
 
       setStatus('Minting note...');
       const mintTxnReq = await client.newMintTransactionRequest(
-        accountId,
+        midenAccountId,
         faucetId,
         noteType,
         BigInt(amount)
@@ -94,7 +94,7 @@ const FaucetPage: NextPageWithLayout = () => {
       const noteId = mintTxn.createdNotes().notes()[0].id();
       const noteIdString = noteId.toString();
 
-      if (address === publicKey) {
+      if (address === accountId) {
         try {
           let transaction: ConsumeTransaction;
           if (sharePrivately) {
@@ -179,7 +179,7 @@ const FaucetPage: NextPageWithLayout = () => {
             onStatusChange={setStatus}
             onSubmitNote={handleSubmitNote}
             isLoading={isLoading}
-            isDisabled={!publicKey || !Miden || !client || !faucetId}
+            isDisabled={!accountId || !Miden || !client || !faucetId}
           />
         )}
         {status && (

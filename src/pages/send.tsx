@@ -13,7 +13,7 @@ import { Check } from '@/components/icons/check';
 import Button from '@/components/ui/button';
 
 const SendPage: NextPageWithLayout = () => {
-  const { wallet, publicKey } = useWallet();
+  const { wallet, accountId } = useWallet();
 
   let [toAddress, setToAddress] = useState('');
   let [amount, setAmount] = useState<number | undefined>(undefined);
@@ -23,10 +23,10 @@ const SendPage: NextPageWithLayout = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if (!publicKey) throw new WalletNotConnectedError();
+    if (!accountId) throw new WalletNotConnectedError();
 
     const midenTransaction = new SendTransaction(
-      publicKey,
+      accountId,
       toAddress,
       faucetId,
       sharePrivately ? 'private' : 'public',
@@ -141,12 +141,12 @@ const SendPage: NextPageWithLayout = () => {
           </label>
           <div className="flex items-center justify-center">
             <Button
-              disabled={!publicKey || !toAddress || !amount || !faucetId}
+              disabled={!accountId || !toAddress || !amount || !faucetId}
               type="submit"
               color="white"
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             >
-              {!publicKey ? 'Connect Your Wallet' : 'Submit'}
+              {!accountId ? 'Connect Your Wallet' : 'Submit'}
             </Button>
           </div>
         </form>
