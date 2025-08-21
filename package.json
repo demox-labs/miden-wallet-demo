@@ -4,7 +4,7 @@
   "version": "1.2.0",
   "scripts": {
     "clean": "rimraf \"{node_modules,.next,out.cache}\"",
-    "delete-local-modules": "rimraf \"node_modules/@demox-labs/miden-wallet-adapter*/node_modules\"",
+    "delete-local-modules": "rimraf -g \"node_modules/@demox-labs/miden-wallet-adapter*/node_modules\"",
     "dev": "yarn delete-local-modules && next dev",
     "build": "next build",
     "start": "next start",
