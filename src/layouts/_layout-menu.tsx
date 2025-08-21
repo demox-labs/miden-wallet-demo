@@ -22,6 +22,7 @@ const MenuLinks = [
   { name: 'Send', href: '/send' },
   { name: 'Faucet', href: '/faucet' },
   { name: 'Mint', href: '/mint' },
+  { name: 'Private Notes', href: '/privateNotes' },
 ];
 
 export function LayoutMenuItems() {

@@ -32,6 +32,11 @@ const menuItems = [
     icon: <OvenIcon />,
     href: routes.faucet,
   },
+  {
+    name: 'Private Notes',
+    icon: <OvenIcon />,
+    href: routes.privateNotes,
+  },
 ];
 
 type SidebarProps = {
