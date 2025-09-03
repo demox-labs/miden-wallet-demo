@@ -9,7 +9,7 @@ import { LayoutMenuItems } from '@/layouts/_layout-menu';
 import React from 'react';
 import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
 
-require('@demox-labs/miden-wallet-adapter/dist/ui/styles.css');
+require('@demox-labs/miden-wallet-adapter/styles.css');
 
 function HeaderRightArea() {
   const isMounted = useIsMounted();

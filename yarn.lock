@@ -806,7 +806,7 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-"@demox-labs/miden-sdk@^0.10.1":
+"@demox-labs/miden-sdk@0.10.1":
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/@demox-labs/miden-sdk/-/miden-sdk-0.10.1.tgz#1eb59dae60e7d850118fe76405468bedda844ccc"
   integrity sha512-2fdTkifJ1H+HTfc0QKUcSr5bK++jYw4W/m0kWt//DeQoZeg3RORMo8POG2eDMLakxgLDZy7WRYLRScGguTaLAQ==
@@ -819,6 +819,13 @@
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-base/-/miden-wallet-adapter-base-0.3.0.tgz#b11e998d277f6755d177794efa4f04d4e0b9a9e7"
   integrity sha512-pzGOwddVHH2MWxGRHlkGwlEXgb14vYuyxKRR6wrlkbmWyyYUKR7gR16v7zweo/27qMkkhkW9YxH2a+I8F3eGOQ==
+  dependencies:
+    eventemitter3 "^5.0.1"
+
+"@demox-labs/miden-wallet-adapter-base@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-base/-/miden-wallet-adapter-base-0.3.1.tgz#654baa43183560a51369b51b3bf2217bcc508159"
+  integrity sha512-myeaOT78EKvDHdN/iD7OVRu3GtTrplXhCBWDo5DleEgH7ZWNUng7TLemdcJ/E27KwnyGA+EQigLat+DiMvRMLA==
   dependencies:
     eventemitter3 "^5.0.1"
 
@@ -845,12 +852,12 @@
     "@demox-labs/miden-wallet-adapter-base" "^0.3.0"
     "@demox-labs/miden-wallet-adapter-react" "^0.3.0"
 
-"@demox-labs/miden-wallet-adapter@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter/-/miden-wallet-adapter-0.3.0.tgz#4bd1b99f881d397b6f711ff4a985a46f0f7711a8"
-  integrity sha512-LEWJrEqCbZc9/AizQUn4DS7z74PRIfL+6K7kawX2VZDjd2UwprELcDA/uTJxhuo+TZpn7vy1BFP24F7K/2PyGQ==
+"@demox-labs/miden-wallet-adapter@0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter/-/miden-wallet-adapter-0.3.3.tgz#00711ca0e8f53fa2b7eac71748ecd86d3dec773b"
+  integrity sha512-Qdw2fY4o9ReSWke/XW2tAAZJvJCviIKim7Ju2WU0iRZ2pybr0JLia7UhJDPSe1LPvOo63smDuYFBLm3wDhhrgA==
   dependencies:
-    "@demox-labs/miden-wallet-adapter-base" "^0.3.0"
+    "@demox-labs/miden-wallet-adapter-base" "^0.3.1"
     "@demox-labs/miden-wallet-adapter-miden" "^0.3.0"
     "@demox-labs/miden-wallet-adapter-react" "^0.3.0"
     "@demox-labs/miden-wallet-adapter-reactui" "^0.3.0"
