@@ -3,12 +3,12 @@ import type { NextPageWithLayout } from '@/types';
 import { NextSeo } from 'next-seo';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import Base from '@/components/ui/base';
+import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
 import {
-  useWallet,
-  MidenWalletAdapter,
   SendTransaction,
   WalletNotConnectedError,
-} from '@demox-labs/miden-wallet-adapter';
+} from '@demox-labs/miden-wallet-adapter-base';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { Check } from '@/components/icons/check';
 import Button from '@/components/ui/button';
 

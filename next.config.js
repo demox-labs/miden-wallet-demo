@@ -10,6 +10,12 @@ const { join } = require('path');
 
 module.exports = withPWA({
   reactStrictMode: false,
+  transpilePackages: [
+    '@demox-labs/miden-wallet-adapter-base',
+    '@demox-labs/miden-wallet-adapter-react',
+    '@demox-labs/miden-wallet-adapter-reactui',
+    '@demox-labs/miden-wallet-adapter-miden',
+  ],
   ...(process.env.NODE_ENV === 'production' && {
     typescript: {
       ignoreBuildErrors: true,
@@ -28,6 +34,12 @@ module.exports = withPWA({
       ...config.experiments,
       asyncWebAssembly: true,
       topLevelAwait: true,
+    };
+
+    // Ensure ES modules are handled correctly
+    config.resolve.extensionAlias = {
+      '.js': ['.js', '.ts', '.tsx'],
+      '.jsx': ['.jsx', '.tsx'],
     };
 
     config.module.rules.push({

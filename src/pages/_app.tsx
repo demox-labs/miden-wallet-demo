@@ -16,12 +16,13 @@ import 'swiper/css';
 import '@/assets/css/scrollbar.css';
 import '@/assets/css/globals.css';
 import '@/assets/css/range-slider.css';
+import { WalletProvider } from '@demox-labs/miden-wallet-adapter-react';
 import {
-  WalletProvider,
-  WalletModalProvider,
-  MidenWalletAdapter,
-  DecryptPermission,
-} from '@demox-labs/miden-wallet-adapter';
+  AllowedPrivateData,
+  PrivateDataPermission,
+} from '@demox-labs/miden-wallet-adapter-base';
+import { WalletModalProvider } from '@demox-labs/miden-wallet-adapter-reactui';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { MidenSdkProvider } from '@/lib/hooks/use-miden-sdk';
 
 type AppPropsWithLayout = AppProps & {
@@ -59,7 +60,8 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
           >
             <WalletProvider
               wallets={wallets}
-              decryptPermission={DecryptPermission.UponRequest}
+              privateDataPermission={PrivateDataPermission.Auto}
+              allowedPrivateData={AllowedPrivateData.All}
               autoConnect
             >
               <WalletModalProvider>

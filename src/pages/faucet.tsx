@@ -5,12 +5,12 @@ import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import Base from '@/components/ui/base';
 import FaucetConfigForm from '@/components/forms/faucet-config-form';
 import NoteForm from '@/components/forms/note-form';
+import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
 import {
-  useWallet,
   ConsumeTransaction,
   WalletNotConnectedError,
-  MidenWalletAdapter,
-} from '@demox-labs/miden-wallet-adapter';
+} from '@demox-labs/miden-wallet-adapter-base';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
 
 interface FaucetConfig {

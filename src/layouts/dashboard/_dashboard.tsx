@@ -5,9 +5,9 @@ import Hamburger from '@/components/ui/hamburger';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import { useDrawer } from '@/components/drawer-views/context';
 import Sidebar from '@/layouts/dashboard/_sidebar';
-import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
+import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter-reactui';
 
-require('@demox-labs/miden-wallet-adapter/styles.css');
+import '@demox-labs/miden-wallet-adapter-reactui/styles.css';
 
 function HeaderRightArea() {
   return (

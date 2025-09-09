@@ -3,13 +3,13 @@ import Button from '@/components/ui/button';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
 import type { NextPageWithLayout } from '@/types';
+import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
 import {
   ConsumeTransaction,
   NoteTypeString,
   WalletNotConnectedError,
-  useWallet,
-  MidenWalletAdapter,
-} from '@demox-labs/miden-wallet-adapter';
+} from '@demox-labs/miden-wallet-adapter-base';
+import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { NextSeo } from 'next-seo';
 import {
   FormEvent,

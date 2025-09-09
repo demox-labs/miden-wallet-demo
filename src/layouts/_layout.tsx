@@ -7,9 +7,7 @@ import { useDrawer } from '@/components/drawer-views/context';
 import Hamburger from '@/components/ui/hamburger';
 import { LayoutMenuItems } from '@/layouts/_layout-menu';
 import React from 'react';
-import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter';
-
-require('@demox-labs/miden-wallet-adapter/styles.css');
+import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter-reactui';
 
 function HeaderRightArea() {
   const isMounted = useIsMounted();
