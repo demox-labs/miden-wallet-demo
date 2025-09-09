@@ -16,14 +16,18 @@ import {
   SyntheticEvent,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { sha3_256 } from 'js-sha3';
+import { MIDEN_METADATA } from '@/types';
 
 interface FaucetMetadata {
   id: string;
-  asset_amount_options: number[];
+  decimals: number;
 }
+
+const tokenAmountOptions = [100, 500, 1000];
 
 const MintPage: NextPageWithLayout = () => {
   const { wallet, accountId } = useWallet();
@@ -66,12 +70,17 @@ const MintPage: NextPageWithLayout = () => {
     fetch('https://faucet.testnet.miden.io/get_metadata')
       .then((response) => response.json())
       .then((data) => {
+        console.log('data', data);
         setFaucetState(data);
       })
       .catch((error) => {
         console.error('Error fetching faucet metadata:', error);
       });
   }, [setFaucetState]);
+
+  const decimals = useMemo(() => {
+    return faucetState?.decimals || MIDEN_METADATA.decimals;
+  }, [faucetState]);
 
   useEffect(() => {
     if (faucetState) {
@@ -209,7 +218,7 @@ const MintPage: NextPageWithLayout = () => {
 
       const noteResponse = await requestNote(
         isPrivateNote,
-        amount!,
+        amount! * 10 ** decimals,
         challenge,
         nonce
       );
@@ -231,7 +240,7 @@ const MintPage: NextPageWithLayout = () => {
           faucetState!.id,
           noteId,
           noteType,
-          amount!,
+          amount! * 10 ** decimals,
           bytesCopy
         );
         console.log(transaction);
@@ -240,7 +249,7 @@ const MintPage: NextPageWithLayout = () => {
           faucetState!.id,
           noteResponse!.noteId,
           noteType,
-          amount!
+          amount! * 10 ** decimals
         );
       }
 
@@ -286,7 +295,7 @@ const MintPage: NextPageWithLayout = () => {
               }
               value={amount}
             >
-              {faucetState?.asset_amount_options.map((option) => (
+              {tokenAmountOptions.map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>

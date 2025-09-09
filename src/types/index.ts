@@ -11,3 +11,9 @@ export interface Attachment {
   original: string;
   thumbnail: string;
 }
+
+export const MIDEN_METADATA = {
+  decimals: 6,
+  symbol: 'MIDEN',
+  name: 'Miden',
+};

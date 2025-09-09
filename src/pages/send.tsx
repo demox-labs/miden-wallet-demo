@@ -11,6 +11,7 @@ import {
 import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { Check } from '@/components/icons/check';
 import Button from '@/components/ui/button';
+import { MIDEN_METADATA } from '@/types';
 
 const SendPage: NextPageWithLayout = () => {
   const { wallet, accountId } = useWallet();
@@ -30,7 +31,7 @@ const SendPage: NextPageWithLayout = () => {
       toAddress,
       faucetId,
       sharePrivately ? 'private' : 'public',
-      amount!
+      amount! * 10 ** MIDEN_METADATA.decimals
     );
 
     const txId =
@@ -91,7 +92,7 @@ const SendPage: NextPageWithLayout = () => {
           <label className="flex w-full items-center py-4">
             <input
               className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-              placeholder="Faucet ID (e.g., 0xe727df7d6b3c6220000054d5f6b3b4)"
+              placeholder="Faucet ID (e.g., mtst1qzp4jgq9cy75wgp7c833ynr9f4cqqscqucc)"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleFaucetIdChange(event)
