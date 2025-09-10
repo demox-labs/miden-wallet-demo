@@ -60,8 +60,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
           >
             <WalletProvider
               wallets={wallets}
-              privateDataPermission={PrivateDataPermission.Auto}
-              allowedPrivateData={AllowedPrivateData.All}
+              privateDataPermission={PrivateDataPermission.UponRequest}
               autoConnect
             >
               <WalletModalProvider>
