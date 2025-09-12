@@ -67,14 +67,19 @@ const PrivateNotesPage: NextPageWithLayout = () => {
         {/* Notes list */}
         {notes.length > 0 && (
           <div className="mt-6">
-            <h2 className="mb-2 text-lg font-semibold">Private Note IDs</h2>
+            <h2 className="mb-2 text-lg font-semibold">Private Notes</h2>
             <ul className="space-y-2">
               {notes.map((note, i) => (
                 <li
                   key={i}
                   className="rounded-md border p-3 dark:border-gray-700"
                 >
-                  {note}
+                  {typeof note === 'string' && note}
+                  {typeof note === 'object' && (
+                    <>
+                      <pre>{JSON.stringify(note, null, 2)}</pre>
+                    </>
+                  )}
                 </li>
               ))}
             </ul>
