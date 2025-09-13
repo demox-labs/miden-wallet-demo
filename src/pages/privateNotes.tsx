@@ -23,14 +23,8 @@ const PrivateNotesPage: NextPageWithLayout = () => {
       setLoading(true);
       console.log('Requesting private notes...');
 
-      // const resp = await (
-      //   wallet?.adapter as MidenWalletAdapter
-      // ).requestPrivateNotes(); // TODO: Add typing for response
-
       const resp = (await requestPrivateNotes!()) || [];
 
-      // Handle either shape: array of notes OR { notes: [...] }
-      // const list: any[] = Array.isArray(resp) ? resp : resp?.notes ?? []; // TODO: Fix this based off response shape
       console.log('Private Notes Response:', resp);
       setNotes(resp);
     } catch (e: any) {

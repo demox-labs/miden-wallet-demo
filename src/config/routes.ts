@@ -4,6 +4,7 @@ const routes = {
   send: '/send',
   faucet: '/faucet',
   privateNotes: '/privateNotes',
+  sign: '/sign',
 };
 
 export default routes;
