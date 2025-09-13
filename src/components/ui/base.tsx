@@ -32,6 +32,10 @@ const baseMenu = [
     name: 'Private Notes',
     value: routes.privateNotes,
   },
+  {
+    name: 'Sign',
+    value: routes.sign,
+  },
 ];
 
 function ActiveNavLink({ href, title, isActive, className }: any) {

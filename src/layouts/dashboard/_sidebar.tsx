@@ -37,6 +37,11 @@ const menuItems = [
     icon: <OvenIcon />,
     href: routes.privateNotes,
   },
+  {
+    name: 'Sign',
+    icon: <Sun />,
+    href: routes.sign,
+  },
 ];
 
 type SidebarProps = {
