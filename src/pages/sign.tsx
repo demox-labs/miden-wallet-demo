@@ -38,13 +38,20 @@ const SignPage = dynamic(
       return s;
     }
 
+    let _sdkPromise: Promise<typeof import('@demox-labs/miden-sdk')> | null =
+      null;
+    function getMidenSdk() {
+      if (!_sdkPromise) _sdkPromise = import('@demox-labs/miden-sdk');
+      return _sdkPromise;
+    }
+
     /** Build a random Word from 32 CSPRNG bytes (4×u64 little-endian) – client-only */
     async function generateRandomWord(): Promise<{
       hex: string;
       bytes: Uint8Array;
     }> {
       // Lazily import the WASM SDK only in the browser.
-      const { Word } = await import('@demox-labs/miden-sdk');
+      const { Word } = await getMidenSdk();
 
       // 1) 32 secure random bytes
       if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
@@ -74,7 +81,7 @@ const SignPage = dynamic(
 
     // ---------- Client component ----------
     const Page: React.FC = () => {
-      const { accountId, signMessage } = useWallet();
+      const { accountId, publicKey, signMessage } = useWallet();
 
       const [wordHex, setWordHex] = useState<string>('');
       const [wordBytes, setWordBytes] = useState<Uint8Array | null>(null);
@@ -104,6 +111,28 @@ const SignPage = dynamic(
 
         // signMessage likely expects Uint8Array — keep it as typed array.
         const sigBytes = (await signMessage!(wordBytes)) || new Uint8Array();
+
+        const { PublicKey, Signature, Word } = await getMidenSdk();
+
+        const dataToVerify = Word.deserialize(wordBytes);
+        const unsignedData = await generateRandomWord();
+        const unsignedDataAsWord = Word.deserialize(unsignedData.bytes);
+        const signature = Signature.deserialize(sigBytes);
+        const midenPublicKey = PublicKey.deserialize(publicKey!);
+
+        const verifySignatureResult = midenPublicKey.verify(
+          dataToVerify,
+          signature
+        );
+        const verifyUnsignedDataResult = midenPublicKey.verify(
+          unsignedDataAsWord,
+          signature
+        );
+        console.log('Signature verification result:', verifySignatureResult); // -> outputs true
+        console.log(
+          'Unsigned data verification result:',
+          verifyUnsignedDataResult
+        ); // -> outputs false
         setSignatureHex(bytesToHex(sigBytes));
       };
 
