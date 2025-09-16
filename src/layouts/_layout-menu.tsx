@@ -19,9 +19,10 @@ const MenuLinks = [
       { name: 'Minimal', href: '/minimal' },
     ],
   },
+  { name: 'Mint', href: '/mint' },
   { name: 'Send', href: '/send' },
   { name: 'Faucet', href: '/faucet' },
-  { name: 'Mint', href: '/mint' },
+  { name: 'Assets', href: '/assets' },
   { name: 'Private Notes', href: '/privateNotes' },
   { name: 'Sign', href: '/sign' },
 ];

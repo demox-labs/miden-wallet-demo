@@ -29,6 +29,10 @@ const baseMenu = [
     value: routes.faucet,
   },
   {
+    name: 'Assets',
+    value: routes.assets,
+  },
+  {
     name: 'Private Notes',
     value: routes.privateNotes,
   },

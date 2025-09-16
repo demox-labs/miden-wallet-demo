@@ -10,6 +10,7 @@ import { HomeIcon } from '@/components/icons/home';
 import { Close } from '@/components/icons/close';
 import { OvenIcon } from '@/components/icons/oven';
 import { Sun } from '@/components/icons/sun';
+import { FarmIcon } from '@/components/icons/farm';
 
 const menuItems = [
   {
@@ -26,6 +27,11 @@ const menuItems = [
     name: 'Send',
     icon: <ChevronForward />,
     href: routes.send,
+  },
+  {
+    name: 'Assets',
+    icon: <FarmIcon />,
+    href: routes.assets,
   },
   {
     name: 'Create Faucet',

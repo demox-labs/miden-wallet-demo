@@ -3,6 +3,7 @@ const routes = {
   mint: '/mint',
   send: '/send',
   faucet: '/faucet',
+  assets: '/assets',
   privateNotes: '/privateNotes',
   sign: '/sign',
 };
