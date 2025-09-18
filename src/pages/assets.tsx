@@ -13,6 +13,7 @@ const AssetsPage: NextPageWithLayout = () => {
   const [loading, setLoading] = useState(false);
   const [assets, setAssets] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (event?: SyntheticEvent) => {
     event?.preventDefault?.();
@@ -25,6 +26,7 @@ const AssetsPage: NextPageWithLayout = () => {
 
       const assets = (await requestAssets!()) || [];
       setAssets(assets);
+      setSubmitted(true);
     } catch (error: any) {
       console.error(error);
       setError(error?.message ?? String(error));
@@ -84,6 +86,13 @@ const AssetsPage: NextPageWithLayout = () => {
                 </li>
               ))}
             </ul>
+          </div>
+        )}
+        {submitted && assets.length === 0 && (
+          <div className="mt-6">
+            <h2 className="mb-2 text-lg font-semibold">
+              No assets found on this account
+            </h2>
           </div>
         )}
       </Base>

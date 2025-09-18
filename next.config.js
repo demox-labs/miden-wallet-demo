@@ -59,7 +59,6 @@ module.exports = withPWA({
     config.plugins = (config.plugins || []).concat([
       new ProvidePlugin({
         process: 'process/browser',
-        Buffer: ['buffer', 'Buffer'],
       }),
     ]);
 

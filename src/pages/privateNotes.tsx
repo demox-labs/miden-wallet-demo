@@ -13,6 +13,7 @@ const PrivateNotesPage: NextPageWithLayout = () => {
   const [notes, setNotes] = useState<any[]>([]); // TODO: Define type for notes
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (event?: SyntheticEvent) => {
     event?.preventDefault?.();
@@ -27,6 +28,7 @@ const PrivateNotesPage: NextPageWithLayout = () => {
 
       console.log('Private Notes Response:', resp);
       setNotes(resp);
+      setSubmitted(true);
     } catch (e: any) {
       setError(e?.message ?? String(e));
     } finally {
@@ -64,7 +66,14 @@ const PrivateNotesPage: NextPageWithLayout = () => {
         {/* Errors */}
         {error && <p className="mt-4 text-center text-red-600">{error}</p>}
 
-        {/* Notes list */}
+        {submitted && notes.length === 0 && (
+          <div className="mt-6">
+            <h2 className="mb-2 text-lg font-semibold">
+              No private notes on this account
+            </h2>
+          </div>
+        )}
+
         {notes.length > 0 && (
           <div className="mt-6">
             <h2 className="mb-2 text-lg font-semibold">Private Notes</h2>
