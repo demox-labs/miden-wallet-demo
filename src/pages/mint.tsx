@@ -2,7 +2,7 @@ import Base from '@/components/ui/base';
 import Button from '@/components/ui/button';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
-import type { NextPageWithLayout } from '@/types';
+import type { FaucetMetadata, NextPageWithLayout } from '@/types';
 import {
   ConsumeTransaction,
   NoteTypeString,
@@ -21,11 +21,6 @@ import {
 } from 'react';
 import { sha3_256 } from 'js-sha3';
 import { MIDEN_METADATA } from '@/types';
-
-interface FaucetMetadata {
-  id: string;
-  decimals: number;
-}
 
 const tokenAmountOptions = [100, 500, 1000];
 

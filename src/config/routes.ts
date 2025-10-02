@@ -6,6 +6,7 @@ const routes = {
   assets: '/assets',
   privateNotes: '/privateNotes',
   sign: '/sign',
+  customTransaction: '/customTransaction',
 };
 
 export default routes;

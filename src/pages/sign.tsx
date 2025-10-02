@@ -139,8 +139,8 @@ const SignPage = dynamic(
       return (
         <>
           <NextSeo
-            title="Leo Wallet Sign"
-            description="Sign Messages with the Leo Wallet"
+            title="Miden Wallet Sign"
+            description="Sign Messages with the Miden Wallet"
           />
           <Base>
             {/* Top action row: Generate + Sign */}

@@ -17,3 +17,8 @@ export const MIDEN_METADATA = {
   symbol: 'MIDEN',
   name: 'Miden',
 };
+
+export interface FaucetMetadata {
+  id: string;
+  decimals: number;
+}

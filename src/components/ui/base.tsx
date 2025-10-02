@@ -40,6 +40,10 @@ const baseMenu = [
     name: 'Sign',
     value: routes.sign,
   },
+  {
+    name: 'Custom Transaction',
+    value: routes.customTransaction,
+  },
 ];
 
 function ActiveNavLink({ href, title, isActive, className }: any) {

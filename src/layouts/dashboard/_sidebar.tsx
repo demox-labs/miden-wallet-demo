@@ -11,6 +11,7 @@ import { Close } from '@/components/icons/close';
 import { OvenIcon } from '@/components/icons/oven';
 import { Sun } from '@/components/icons/sun';
 import { FarmIcon } from '@/components/icons/farm';
+import { Moon } from '@/components/icons/moon';
 
 const menuItems = [
   {
@@ -47,6 +48,11 @@ const menuItems = [
     name: 'Sign',
     icon: <Sun />,
     href: routes.sign,
+  },
+  {
+    name: 'Custom Transaction',
+    icon: <Moon />,
+    href: routes.customTransaction,
   },
 ];
 

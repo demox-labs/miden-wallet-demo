@@ -25,6 +25,7 @@ const MenuLinks = [
   { name: 'Assets', href: '/assets' },
   { name: 'Private Notes', href: '/privateNotes' },
   { name: 'Sign', href: '/sign' },
+  { name: 'Custom Transaction', href: '/customTransaction' },
 ];
 
 export function LayoutMenuItems() {
