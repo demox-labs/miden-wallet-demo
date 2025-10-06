@@ -7,6 +7,7 @@ const routes = {
   privateNotes: '/privateNotes',
   sign: '/sign',
   customTransaction: '/customTransaction',
+  importPrivateNote: '/importPrivateNote',
 };
 
 export default routes;

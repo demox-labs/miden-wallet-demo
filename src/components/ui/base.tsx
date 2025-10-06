@@ -44,6 +44,10 @@ const baseMenu = [
     name: 'Custom Transaction',
     value: routes.customTransaction,
   },
+  {
+    name: 'Import Private Note',
+    value: routes.importPrivateNote,
+  },
 ];
 
 function ActiveNavLink({ href, title, isActive, className }: any) {

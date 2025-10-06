@@ -6,6 +6,7 @@ import Button from '@/components/ui/button';
 import routes from '@/config/routes';
 import { useDrawer } from '@/components/drawer-views/context';
 import { ChevronForward } from '@/components/icons/chevron-forward';
+import { ChevronDown } from '@/components/icons/chevron-down';
 import { HomeIcon } from '@/components/icons/home';
 import { Close } from '@/components/icons/close';
 import { OvenIcon } from '@/components/icons/oven';
@@ -53,6 +54,11 @@ const menuItems = [
     name: 'Custom Transaction',
     icon: <Moon />,
     href: routes.customTransaction,
+  },
+  {
+    name: 'Import Private Note',
+    icon: <ChevronDown />,
+    href: routes.importPrivateNote,
   },
 ];
 

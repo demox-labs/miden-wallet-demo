@@ -26,6 +26,7 @@ const MenuLinks = [
   { name: 'Private Notes', href: '/privateNotes' },
   { name: 'Sign', href: '/sign' },
   { name: 'Custom Transaction', href: '/customTransaction' },
+  { name: 'Import Private Note', href: '/importPrivateNote' },
 ];
 
 export function LayoutMenuItems() {
