@@ -11,7 +11,7 @@ const Logo: React.FC<React.SVGAttributes<{}>> = (props) => {
   const { isDarkMode } = useIsDarkMode();
 
   return (
-    <AnchorLink href="https://www.leo.app/miden" className="flex" {...props}>
+    <AnchorLink href="https://www.miden.fi" className="flex" {...props}>
       <span className="relative flex overflow-hidden">
         {isMounted && isDarkMode && (
           <Image src={logo} alt="Miden Wallet" priority />
