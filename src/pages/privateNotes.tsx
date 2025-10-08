@@ -4,13 +4,16 @@ import { NextSeo } from 'next-seo';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import Base from '@/components/ui/base';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import { WalletNotConnectedError } from '@demox-labs/miden-wallet-adapter-base';
+import {
+  InputNoteDetails,
+  WalletNotConnectedError,
+} from '@demox-labs/miden-wallet-adapter-base';
 import Button from '@/components/ui/button';
 
 const PrivateNotesPage: NextPageWithLayout = () => {
   const { accountId, requestPrivateNotes } = useWallet();
 
-  const [notes, setNotes] = useState<any[]>([]); // TODO: Define type for notes
+  const [notes, setNotes] = useState<InputNoteDetails[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);

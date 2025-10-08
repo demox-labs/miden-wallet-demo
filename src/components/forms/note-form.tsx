@@ -2,10 +2,10 @@ import { useState, FormEvent } from 'react';
 import Button from '@/components/ui/button';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
 import { Check } from '@/components/icons/check';
+import type { AccountId } from '@demox-labs/miden-sdk';
 
 interface NoteFormProps {
-  client: any;
-  faucetId: any;
+  faucetId: AccountId | null;
   onStatusChange: (status: string) => void;
   onSubmitNote: (
     event: any,
@@ -18,7 +18,6 @@ interface NoteFormProps {
 }
 
 export default function NoteForm({
-  client,
   faucetId,
   onStatusChange,
   onSubmitNote,

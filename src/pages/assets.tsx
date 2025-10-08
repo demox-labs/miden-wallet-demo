@@ -1,17 +1,22 @@
 import { useState, SyntheticEvent } from 'react';
 import { NextSeo } from 'next-seo';
-import Base from '@/components/ui/base';
-import { NextPageWithLayout } from '@/types';
-import Button from '@/components/ui/button';
+
+import {
+  Asset,
+  WalletNotConnectedError,
+} from '@demox-labs/miden-wallet-adapter-base';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import { WalletNotConnectedError } from '@demox-labs/miden-wallet-adapter-base';
+
+import Base from '@/components/ui/base';
+import Button from '@/components/ui/button';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
+import { NextPageWithLayout } from '@/types';
 
 const AssetsPage: NextPageWithLayout = () => {
   const { accountId, requestAssets } = useWallet();
 
   const [loading, setLoading] = useState(false);
-  const [assets, setAssets] = useState<any[]>([]);
+  const [assets, setAssets] = useState<Asset[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
 

@@ -1,7 +1,7 @@
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 
-import type { AccountId } from '@demox-labs/miden-sdk';
+import type { AccountId, WebClient } from '@demox-labs/miden-sdk';
 import {
   CustomTransaction,
   TransactionType,
@@ -22,7 +22,7 @@ const CustomTransactionPage: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<string | undefined>();
   const [faucetState, setFaucetState] = useState<FaucetMetadata | undefined>();
-  let [client, setClient] = useState<any>(null);
+  let [client, setClient] = useState<WebClient | null>(null);
 
   let [toAddress, setToAddress] = useState<string>('');
 
@@ -81,7 +81,7 @@ const CustomTransactionPage: NextPageWithLayout = () => {
   }
 
   async function createCustomTransaction(): Promise<CustomTransaction> {
-    if (!accountId || !toAddress || !faucetState)
+    if (!accountId || !toAddress || !faucetState || !client)
       throw new WalletNotConnectedError();
 
     const walletAccountId = bech32ToAccountId(accountId);

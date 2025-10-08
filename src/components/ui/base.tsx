@@ -54,7 +54,7 @@ const baseMenu = [
   },
 ];
 
-function ActiveNavLink({ href, title, isActive, className }: any) {
+function ActiveNavLink({ href, title, isActive, className }) {
   return (
     <ActiveLink
       href={href}

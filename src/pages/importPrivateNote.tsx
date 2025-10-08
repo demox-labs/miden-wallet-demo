@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 
+import type { WebClient } from '@demox-labs/miden-sdk';
 import { WalletNotConnectedError } from '@demox-labs/miden-wallet-adapter-base';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
 
@@ -14,7 +15,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
   const { accountId, importPrivateNote } = useWallet();
   const { Miden, createClient } = useMidenSdk();
 
-  let [client, setClient] = useState<any>(null);
+  let [client, setClient] = useState<WebClient | null>(null);
   const [status, setStatus] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 

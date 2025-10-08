@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import type { NextPageWithLayout } from '@/types';
 import { NextSeo } from 'next-seo';
-import DashboardLayout from '@/layouts/dashboard/_dashboard';
-import Base from '@/components/ui/base';
-import FaucetConfigForm from '@/components/forms/faucet-config-form';
-import NoteForm from '@/components/forms/note-form';
-import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
+
+import type { AccountId, WebClient } from '@demox-labs/miden-sdk';
 import {
   ConsumeTransaction,
   WalletNotConnectedError,
 } from '@demox-labs/miden-wallet-adapter-base';
 import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
+import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
+
+import FaucetConfigForm from '@/components/forms/faucet-config-form';
+import NoteForm from '@/components/forms/note-form';
+import Base from '@/components/ui/base';
+import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
+import type { NextPageWithLayout } from '@/types';
 
 interface FaucetConfig {
   storageMode: 'public' | 'private';
@@ -25,8 +28,8 @@ const FaucetPage: NextPageWithLayout = () => {
   const { accountId, wallet } = useWallet();
   const { Miden, createClient, createFaucet } = useMidenSdk();
   const [showNoteForm, setShowNoteForm] = useState(false);
-  const [client, setClient] = useState<any>(null);
-  const [faucetId, setFaucetId] = useState<any>(null);
+  const [client, setClient] = useState<WebClient | null>(null);
+  const [faucetId, setFaucetId] = useState<AccountId | null>(null);
   const [status, setStatus] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -98,7 +101,7 @@ const FaucetPage: NextPageWithLayout = () => {
         try {
           let transaction: ConsumeTransaction;
           if (sharePrivately) {
-            const buffer = await client.exportNote(noteIdString, 'Partial');
+            const buffer = await client.exportNoteFile(noteIdString, 'Partial');
             const noteBytes = new Uint8Array(buffer);
             transaction = new ConsumeTransaction(
               faucetId.toString(),
@@ -131,7 +134,10 @@ const FaucetPage: NextPageWithLayout = () => {
       } else if (sharePrivately) {
         try {
           setStatus('Downloading note...');
-          const noteBytes = await client.exportNote(noteIdString, 'Partial');
+          const noteBytes = await client.exportNoteFile(
+            noteIdString,
+            'Partial'
+          );
           const blob = new Blob([noteBytes], {
             type: 'application/octet-stream',
           });
@@ -174,7 +180,6 @@ const FaucetPage: NextPageWithLayout = () => {
           />
         ) : (
           <NoteForm
-            client={client}
             faucetId={faucetId}
             onStatusChange={setStatus}
             onSubmitNote={handleSubmitNote}

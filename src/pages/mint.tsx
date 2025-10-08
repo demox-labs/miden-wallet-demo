@@ -3,6 +3,8 @@ import Button from '@/components/ui/button';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
 import type { FaucetMetadata, NextPageWithLayout } from '@/types';
+import { MIDEN_METADATA } from '@/types';
+import type { WebClient } from '@demox-labs/miden-sdk';
 import {
   ConsumeTransaction,
   NoteTypeString,
@@ -20,7 +22,6 @@ import {
   useState,
 } from 'react';
 import { sha3_256 } from 'js-sha3';
-import { MIDEN_METADATA } from '@/types';
 
 const tokenAmountOptions = [100, 500, 1000];
 
@@ -29,7 +30,7 @@ const MintPage: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<string | undefined>();
   const [faucetState, setFaucetState] = useState<FaucetMetadata | undefined>();
-  const [client, setClient] = useState<any>(null);
+  const [client, setClient] = useState<WebClient | null>(null);
 
   const { Miden, createClient } = useMidenSdk();
 
@@ -230,7 +231,7 @@ const MintPage: NextPageWithLayout = () => {
         const buffer = new ArrayBuffer(byteArray.byteLength);
         const bytesCopy = new Uint8Array(buffer);
         bytesCopy.set(byteArray);
-        const noteId = await client.importNote(byteArray);
+        const noteId = await client.importNoteFile(byteArray);
         transaction = new ConsumeTransaction(
           faucetState!.id,
           noteId,
