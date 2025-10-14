@@ -41,6 +41,10 @@ const baseMenu = [
     value: routes.sign,
   },
   {
+    name: 'Sign Data',
+    value: routes.signData,
+  },
+  {
     name: 'Custom Transaction',
     value: routes.customTransaction,
   },

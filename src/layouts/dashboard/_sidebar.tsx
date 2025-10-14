@@ -13,6 +13,7 @@ import { OvenIcon } from '@/components/icons/oven';
 import { Sun } from '@/components/icons/sun';
 import { FarmIcon } from '@/components/icons/farm';
 import { Moon } from '@/components/icons/moon';
+import { Unlocked } from '@/components/icons/unlocked';
 
 const menuItems = [
   {
@@ -59,6 +60,11 @@ const menuItems = [
     name: 'Import Private Note',
     icon: <ChevronDown />,
     href: routes.importPrivateNote,
+  },
+  {
+    name: 'Sign Data',
+    icon: <Unlocked />,
+    href: routes.signData,
   },
 ];
 
