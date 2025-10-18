@@ -798,24 +798,44 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-"@demox-labs/miden-sdk@file:../miden-client/crates/web-client":
-  version "0.11.8"
+"@demox-labs/miden-sdk@0.11.11":
+  version "0.11.11"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-sdk/-/miden-sdk-0.11.11.tgz#4582bff6a3d3b77268edb16a0be78cec1faab5d4"
+  integrity sha512-HcKadGQQynW/UZrVLSAZsl3Luwt1d0Pmhkd/2MBbyJ0IoIN/tySsAx3f7XrmMSwX4RwUnM2tY5aeM/bf0V/ZEw==
   dependencies:
     chai-as-promised "^8.0.0"
     dexie "^4.0.1"
     glob "^11.0.0"
 
-"@demox-labs/miden-wallet-adapter-base@file:../miden-wallet-adapter/packages/core/base/dist":
-  version "0.0.0"
+"@demox-labs/miden-wallet-adapter-base@0.8.0", "@demox-labs/miden-wallet-adapter-base@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-base/-/miden-wallet-adapter-base-0.8.0.tgz#5642e717dba57dfe9f078e13177bece18ca038dc"
+  integrity sha512-U2cSyAVDem03/U8eob0i4b6W5ftv9QCId7pdMa/GXwuRrO6Tlxz7zoyZC21xtw0w3dX83nJ8eRErgTFxow25zA==
+  dependencies:
+    eventemitter3 "^5.0.1"
 
-"@demox-labs/miden-wallet-adapter-miden@file:../miden-wallet-adapter/packages/wallets/miden/dist":
-  version "0.0.0"
+"@demox-labs/miden-wallet-adapter-miden@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-miden/-/miden-wallet-adapter-miden-0.8.0.tgz#b5a6d9278cc93143abd0c7f8a783be448055c985"
+  integrity sha512-kuqOPqlam8Uf5ZYFaNohXTvPVeSql4g5vLtGKE8arPgqRo/THTJfsaLhMCq5akwDE7VCGFc1iLd6MSy4cLyWeQ==
+  dependencies:
+    "@demox-labs/miden-wallet-adapter-base" "^0.8.0"
+    nanoid "^5.0.9"
 
-"@demox-labs/miden-wallet-adapter-react@file:../miden-wallet-adapter/packages/core/react/dist":
-  version "0.0.0"
+"@demox-labs/miden-wallet-adapter-react@0.8.0", "@demox-labs/miden-wallet-adapter-react@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-react/-/miden-wallet-adapter-react-0.8.0.tgz#2e5ea43454c5766dae8129d300677eb9e90cc059"
+  integrity sha512-cZbE13Tiy7Nw2TdvXnkr7CkZQBVp8P43p9MJhwUgABDJjFsSb6a5PnBA4zV4RzNTAQUpF7UO8L5vF/Ju11p3sw==
+  dependencies:
+    "@demox-labs/miden-wallet-adapter-base" "^0.8.0"
 
-"@demox-labs/miden-wallet-adapter-reactui@file:../miden-wallet-adapter/packages/ui/dist":
-  version "0.0.0"
+"@demox-labs/miden-wallet-adapter-reactui@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-reactui/-/miden-wallet-adapter-reactui-0.8.0.tgz#1ecde4a8ae0e51e1b648c2a6cc56cd44761a9c59"
+  integrity sha512-2gFxnj4A1Tq2h2f/VOJ8TQi5QRWRGjqM/NJrAn34Jo2V88dZ6tPFPqgYcSysOXxhXPMOEwg7xAr4L3p1J6fulw==
+  dependencies:
+    "@demox-labs/miden-wallet-adapter-base" "^0.8.0"
+    "@demox-labs/miden-wallet-adapter-react" "^0.8.0"
 
 "@emnapi/core@^1.4.3":
   version "1.5.0"
@@ -4515,6 +4535,11 @@ nanoid@^3.3.11, nanoid@^3.3.4, nanoid@^3.3.6:
   version "3.3.11"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.11.tgz#4f4f112cefbe303202f2199838128936266d185b"
   integrity sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==
+
+nanoid@^5.0.9:
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-5.1.6.tgz#30363f664797e7d40429f6c16946d6bd7a3f26c9"
+  integrity sha512-c7+7RQ+dMB5dPwwCp4ee1/iV/q2P6aK1mTZcfr1BTuVlyW9hJYiMPybJCcnBlQtuSmTIWNeazm/zqNoZSSElBg==
 
 napi-postinstall@^0.3.0:
   version "0.3.3"
