@@ -25,6 +25,7 @@ const MenuLinks = [
   { name: 'Assets', href: '/assets' },
   { name: 'Private Notes', href: '/privateNotes' },
   { name: 'Sign', href: '/sign' },
+  { name: 'Sign Data', href: '/signData' },
   { name: 'Custom Transaction', href: '/customTransaction' },
   { name: 'Import Private Note', href: '/importPrivateNote' },
 ];

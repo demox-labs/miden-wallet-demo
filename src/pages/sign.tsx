@@ -53,7 +53,7 @@ function hexToBytes(hex: string): Uint8Array | null {
 }
 
 const SignPage: NextPageWithLayout = () => {
-  const { accountId, publicKey: walletPublicKey, signMessage } = useWallet();
+  const { accountId, publicKey: walletPublicKey, signBytes } = useWallet();
   const { Miden } = useMidenSdk();
 
   const [message, setMessage] = useState<HexAndBytes>({ hex: '', bytes: null });
@@ -155,7 +155,8 @@ const SignPage: NextPageWithLayout = () => {
     resetVerificationFeedback();
 
     // signMessage likely expects Uint8Array — keep it as typed array.
-    const sigBytes = (await signMessage!(message.bytes)) || new Uint8Array();
+    const sigBytes =
+      (await signBytes!(message.bytes, 'word')) || new Uint8Array();
 
     setSignature({
       hex: bytesToHex(sigBytes),
