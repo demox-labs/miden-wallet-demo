@@ -59,7 +59,7 @@ export const MidenSdkProvider: FC<MidenSdkProviderProps> = ({ children }) => {
 
   const createClient = useCallback(async () => {
     if (!Miden) return null;
-    return await Miden.WebClient.createClient('http://localhost:57291');
+    return await Miden.WebClient.createClient('https://rpc.testnet.miden.io');
   }, [Miden]);
 
   const createFaucet = useCallback(
