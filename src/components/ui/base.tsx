@@ -52,6 +52,10 @@ const baseMenu = [
     name: 'Import Private Note',
     value: routes.importPrivateNote,
   },
+  {
+    name: 'Test',
+    value: routes.test,
+  },
 ];
 
 function ActiveNavLink({ href, title, isActive, className }) {

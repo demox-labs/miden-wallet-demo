@@ -66,6 +66,11 @@ const menuItems = [
     icon: <Unlocked />,
     href: routes.signData,
   },
+  {
+    name: 'Test',
+    icon: <Moon />,
+    href: routes.test,
+  },
 ];
 
 type SidebarProps = {

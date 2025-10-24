@@ -9,6 +9,7 @@ const routes = {
   signData: '/signData',
   customTransaction: '/customTransaction',
   importPrivateNote: '/importPrivateNote',
+  test: '/test',
 };
 
 export default routes;
