@@ -37,6 +37,10 @@ const baseMenu = [
     value: routes.privateNotes,
   },
   {
+    name: 'Consumable Notes',
+    value: routes.consumableNotes,
+  },
+  {
     name: 'Sign',
     value: routes.sign,
   },

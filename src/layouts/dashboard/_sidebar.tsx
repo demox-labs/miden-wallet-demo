@@ -47,6 +47,11 @@ const menuItems = [
     href: routes.privateNotes,
   },
   {
+    name: 'Consumable Notes',
+    icon: <OvenIcon />,
+    href: routes.consumableNotes,
+  },
+  {
     name: 'Sign',
     icon: <Sun />,
     href: routes.sign,
