@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useTheme } from 'next-themes';
-import { Dialog } from '@/components/ui/dialog';
+import { Dialog, DialogBackdrop } from '@/components/ui/dialog';
 import { Transition } from '@/components/ui/transition';
 import Button from '@/components/ui/button';
 import { RadioGroup } from '@/components/ui/radio-group';
@@ -38,7 +38,7 @@ const ColorPreset = [
   },
   {
     label: 'Orange',
-    value: '#ffa500',
+    value: '#FF5500',
   },
 ];
 
@@ -178,9 +178,9 @@ function LayoutSwitcher() {
 function ColorSwitcher() {
   const [themeColor, setThemeColor] = useLocalStorage(
     'criptic-color',
-    '#323743'
+    '#FF5500'
   );
-  useThemeColor(themeColor ? themeColor : '#323743');
+  useThemeColor(themeColor ? themeColor : '#FF5500');
 
   return (
     <div className="px-6 pt-8">
@@ -244,7 +244,7 @@ export default function SettingsDrawer() {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-gray-700 bg-opacity-0" />
+          <DialogBackdrop className="fixed inset-0 bg-gray-700 bg-opacity-0" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}
@@ -258,13 +258,13 @@ export default function SettingsDrawer() {
           <div className="fixed inset-y-0 w-80 max-w-full bg-white/95 shadow-[0_0_80px_rgba(17,24,39,0.2)] backdrop-blur ltr:right-0 rtl:left-0 dark:bg-dark/90">
             {/* {view && renderDrawerContent(view)} */}
             <div className="h-full w-full">
-              <div className="flex h-16 items-center justify-between gap-6 border-b border-dashed border-gray-200 px-6 dark:border-gray-700">
+              <div className="flex h-16 items-center justify-between gap-6 border-b border-dashed border-gray-400 px-6 dark:border-gray-700">
                 <h3 className="text-base font-medium uppercase text-gray-900 dark:text-white">
                   Settings
                 </h3>
                 <Button
                   title="Close"
-                  color="white"
+                  color="primary"
                   shape="circle"
                   variant="transparent"
                   size="small"

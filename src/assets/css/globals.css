@@ -3,11 +3,14 @@
 @tailwind utilities;
 @layer base {
   :root {
-    --color-brand: 17 24 39;
+    --color-brand: 255 85 0;
+    --color-brand-light: 255 229 204;
   }
   html,
   body {
-    @apply antialiased bg-body font-body dark:bg-dark dark:text-white;
+    @apply antialiased bg-white font-body text-gray-900 dark:bg-dark dark:text-white;
+    /* Full-width without cropping */
+    /* background: url('/bg.svg') white center top / 100% auto no-repeat; */
   }
   .dynamic-html h6 {
     @apply font-medium uppercase;

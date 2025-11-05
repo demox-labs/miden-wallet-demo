@@ -338,7 +338,7 @@ const SignPage: NextPageWithLayout = () => {
         >
           <Button
             type="button"
-            color="white"
+            color="primary"
             onClick={onGenerate}
             className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
           >
@@ -348,7 +348,7 @@ const SignPage: NextPageWithLayout = () => {
           <Button
             disabled={!accountId || !message.bytes}
             type="submit"
-            color="white"
+            color="primary"
             className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
           >
             {!accountId ? 'Connect Your Wallet' : 'Sign'}
@@ -398,7 +398,7 @@ const SignPage: NextPageWithLayout = () => {
                   />
                   <Button
                     type="button"
-                    color="white"
+                    color="primary"
                     className="shrink-0 shadow-card dark:bg-gray-700 md:h-10 md:px-5"
                     onClick={handleCopyToClipboard}
                     disabled={!signature.hex}
@@ -433,7 +433,7 @@ const SignPage: NextPageWithLayout = () => {
               <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm">
                 <Button
                   type="button"
-                  color="white"
+                  color="primary"
                   className="shadow-card dark:bg-gray-700 md:h-10 md:px-5"
                   onClick={handleVerifySignature}
                   disabled={isVerifying}

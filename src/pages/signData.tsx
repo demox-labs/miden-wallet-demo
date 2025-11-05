@@ -199,7 +199,7 @@ const SignDataPage: NextPageWithLayout = () => {
           {!accountId ? (
             <Button
               disabled
-              color="white"
+              color="primary"
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             >
               Connect Your Wallet
@@ -208,7 +208,7 @@ const SignDataPage: NextPageWithLayout = () => {
             <Button
               disabled={!accountId || !Miden || !client}
               type="submit"
-              color="white"
+              color="primary"
               isLoading={isLoading}
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
               onClick={handleSubmit}

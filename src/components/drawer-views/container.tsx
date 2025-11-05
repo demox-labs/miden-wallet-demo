@@ -6,14 +6,12 @@ import { Transition, TransitionChild } from '@/components/ui/transition';
 import { DRAWER_VIEW, useDrawer } from '@/components/drawer-views/context';
 
 const Sidebar = dynamic(() => import('@/layouts/dashboard/_sidebar'));
-const DrawerMenu = dynamic(() => import('@/layouts/_layout-menu'));
 
 function renderDrawerContent(view: DRAWER_VIEW | string) {
   switch (view) {
     case 'DASHBOARD_SIDEBAR':
-      return <Sidebar />;
     default:
-      return <DrawerMenu />;
+      return <Sidebar />;
   }
 }
 

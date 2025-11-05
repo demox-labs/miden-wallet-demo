@@ -50,7 +50,7 @@ const ConsumableNotesPage: NextPageWithLayout = () => {
         <div className="flex items-center justify-center">
           {!accountId ? (
             <Button
-              color="white"
+              color="primary"
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             >
               Connect Your Wallet

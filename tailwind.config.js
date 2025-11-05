@@ -19,7 +19,8 @@ module.exports = {
     extend: {
       colors: {
         brand: 'rgb(var(--color-brand) / <alpha-value>)',
-        body: '#fcfcfc',
+        'brand-light': 'rgb(var(--color-brand-light) / <alpha-value>)',
+        body: '#ffffff',
         dark: '#0D1321',
         'light-dark': '#171e2e',
       },
@@ -37,7 +38,7 @@ module.exports = {
         'calc-358': 'calc(100% - 358px)',
       },
       fontFamily: {
-        body: ['Fira Code', 'monospace'],
+        body: ['Inter', 'monospace'],
       },
       fontSize: {
         '13px': ['13px', '18px'],

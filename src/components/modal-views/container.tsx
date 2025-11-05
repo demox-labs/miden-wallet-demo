@@ -59,7 +59,7 @@ export default function ModalContainer() {
         <div className="sr-only">
           <Button
             size="small"
-            color="gray"
+            color="primary"
             shape="circle"
             onClick={closeModal}
             className="opacity-50 hover:opacity-80 "
