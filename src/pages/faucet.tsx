@@ -203,7 +203,7 @@ const FaucetPage: NextPageWithLayout = () => {
         )}
         {status && (
           <div className="mt-5 inline-flex w-full items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
-            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
+            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-gray-900 sm:text-sm">
               {status}
             </div>
           </div>

@@ -71,7 +71,7 @@ function ActiveNavLink({ href, title, isActive, className }) {
       <span>{title}</span>
       {isActive && (
         <motion.span
-          className="absolute left-0 right-0 bottom-0 -z-[1] h-full w-full rounded-lg bg-brand shadow-large"
+          className="absolute left-0 right-0 bottom-0 -z-[1] h-full w-full rounded-lg bg-gray-100 shadow-large"
           layoutId="activeNavLinkIndicator"
         />
       )}
@@ -95,40 +95,7 @@ export default function Base({ children }: React.PropsWithChildren<{}>) {
   }, [currentPath]);
   return (
     <div className="pt-8 text-sm xl:pt-10">
-      <div className="mx-auto w-full rounded-lg bg-white p-5 pt-4 shadow-card dark:bg-light-dark xs:p-6 xs:pt-5">
-        <nav className="mb-5 min-h-[40px] border-b border-dashed border-gray-200 pb-4 uppercase tracking-wider dark:border-gray-700 xs:mb-6 xs:pb-5 xs:tracking-wide">
-          {isMounted && ['xs'].indexOf(breakpoint) !== -1 && (
-            <Listbox
-              options={baseMenu}
-              selectedOption={selectedMenuItem}
-              onChange={setSelectedMenuItem}
-              onSelect={(path) => handleRouteOnSelect(path)}
-              className="w-full"
-            >
-              <AnchorLink
-                href={routes.charts}
-                className="inline-flex items-center justify-between gap-1.5 rounded-md px-3 py-2 text-gray-900 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700/70"
-              >
-                Charts
-                <ExportIcon className="h-auto w-2.5" />
-              </AnchorLink>
-              <button className="inline-flex items-center justify-between gap-1.5 rounded-md px-3 py-2 uppercase text-gray-900 hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700/70">
-                Settings
-                <RangeIcon className="h-auto w-3" />
-              </button>
-            </Listbox>
-          )}
-          <div className="hidden items-center justify-between text-gray-600 dark:text-gray-400 sm:flex">
-            {baseMenu.map((item) => (
-              <ActiveNavLink
-                key={item.name}
-                href={item.value}
-                title={item.name}
-                isActive={item.value === router.pathname}
-              />
-            ))}
-          </div>
-        </nav>
+      <div className="mx-auto w-full rounded-lg bg-white p-5 pt-4 xs:p-6 xs:pt-5">
         <AnimatePresence exitBeforeEnter>
           <motion.div
             initial="exit"

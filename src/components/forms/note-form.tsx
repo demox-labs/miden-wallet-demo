@@ -86,7 +86,7 @@ export default function NoteForm({
             disabled={isDisabled || !amount || !address}
             name="public"
             type="submit"
-            color="white"
+            color="primary"
             className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             isLoading={isLoading}
           >

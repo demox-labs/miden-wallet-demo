@@ -60,7 +60,7 @@ export function MenuItem({ name, icon, href, dropdownItems }: MenuItemProps) {
 
             {isChildrenActive && (
               <motion.span
-                className="absolute bottom-0 left-0 right-0 h-full w-full rounded-lg bg-brand shadow-large"
+                className="absolute bottom-0 left-0 right-0 h-full w-full rounded-lg bg-gray-100 shadow-large"
                 layoutId="menu-item-active-indicator"
               />
             )}
@@ -78,7 +78,7 @@ export function MenuItem({ name, icon, href, dropdownItems }: MenuItemProps) {
                   <ActiveLink
                     href={item.href}
                     className="flex items-center rounded-lg p-3 text-sm text-gray-500 transition-all before:h-1 before:w-1 before:rounded-full before:bg-gray-500 hover:text-brand ltr:pl-6 before:ltr:mr-5 rtl:pr-6 before:rtl:ml-5 dark:hover:text-white"
-                    activeClassName="!text-brand dark:!text-white dark:before:!bg-white before:!bg-brand before:!w-2 before:!h-2 before:-ml-0.5 before:ltr:!mr-[18px] before:rtl:!ml-[18px] !font-medium"
+                    activeClassName="!text-black dark:!text-white dark:before:!bg-white before:!bg-gray-100 before:!w-2 before:!h-2 before:-ml-0.5 before:ltr:!mr-[18px] before:rtl:!ml-[18px] !font-medium"
                   >
                     {item.name}
                   </ActiveLink>
@@ -91,14 +91,14 @@ export function MenuItem({ name, icon, href, dropdownItems }: MenuItemProps) {
         <ActiveLink
           href={href}
           className="relative flex h-12 items-center whitespace-nowrap rounded-lg px-4 text-sm text-gray-500 transition-all hover:text-brand dark:hover:text-white"
-          activeClassName=" !text-white"
+          activeClassName=" !text-black"
         >
           <span className="relative z-[1] ltr:mr-3 rtl:ml-3">{icon}</span>
           <span className="relative z-[1]"> {name}</span>
 
           {href === pathname && (
             <motion.span
-              className="absolute bottom-0 left-0 right-0 h-full w-full rounded-lg bg-brand shadow-large"
+              className="absolute bottom-0 left-0 right-0 h-full w-full rounded-lg bg-gray-100"
               layoutId="menu-item-active-indicator"
             />
           )}

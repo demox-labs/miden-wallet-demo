@@ -146,10 +146,10 @@ const PrivateNotesPage: NextPageWithLayout = () => {
       <Base>
         <form onSubmit={handleSubmit}>
           <div className="space-y-4">
-            <label className="flex flex-col gap-2 text-sm font-medium text-white">
+            <label className="flex flex-col gap-2 text-sm font-medium text-gray-800">
               Note Filter Type
               <select
-                className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+                className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
                 onChange={handleNoteFilterTypeChange}
               >
                 {allNoteFilterTypes.map((option) => (
@@ -163,10 +163,10 @@ const PrivateNotesPage: NextPageWithLayout = () => {
               (noteFilterType === Miden.NoteFilterTypes.List ||
                 noteFilterType === Miden.NoteFilterTypes.Unique) && (
                 <div className="mt-2">
-                  <label className="flex flex-col gap-2 text-sm font-medium text-white">
+                  <label className="flex flex-col gap-2 text-sm font-medium text-gray-800">
                     Note IDs
                     <textarea
-                      className="min-h-[96px] w-full rounded-lg border-2 border-gray-200 bg-transparent p-3 font-mono text-xs text-gray-800 outline-none transition-all placeholder:text-gray-500 focus:border-gray-900 dark:border-gray-600 dark:bg-light-dark dark:text-gray-200 dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+                      className="min-h-[96px] w-full rounded-lg border-2 border-gray-300 bg-transparent p-3 font-mono text-xs text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 dark:border-gray-600 dark:bg-light-dark dark:text-gray-200 dark:placeholder:text-gray-500 dark:focus:border-gray-500"
                       placeholder={
                         noteFilterType === Miden.NoteFilterTypes.Unique
                           ? 'Enter exactly one note id'
@@ -182,7 +182,7 @@ const PrivateNotesPage: NextPageWithLayout = () => {
           <div className="mt-4 flex items-center justify-center">
             {!accountId ? (
               <Button
-                color="white"
+                color="primary"
                 className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
               >
                 Connect Your Wallet

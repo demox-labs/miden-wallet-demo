@@ -4,26 +4,37 @@ import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import Button from '@/components/ui/button';
 import routes from '@/config/routes';
 import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter-reactui';
+import { Wallet } from '@/components/icons/wallet';
+import { Download } from '@/components/icons/download';
+import { Links } from '@/components/icons/links';
+import { Coins } from '@/components/icons/coins';
 
 type SectionProps = {
   title: string;
   bgColor: string;
+  icon: React.ReactNode;
   sectionWidth?: string;
 };
 
 export function Section({
   title,
   bgColor,
-  children,
+  icon,
   sectionWidth,
+  children,
 }: React.PropsWithChildren<SectionProps>) {
   return (
     <div className="mb-3">
-      <div className={`rounded-lg ${bgColor}`}>
+      <div className={`${bgColor}`}>
         <div className="relative flex items-center justify-between gap-4 p-4">
-          <div className={`items-center ltr:mr-6 rtl:ml-6 ${sectionWidth}`}>
+          <div
+            className={`flex-start flex flex-row items-start gap-[40px] ltr:mr-6 rtl:ml-6 ${sectionWidth}`}
+          >
+            <div className="flex h-[70px] w-[70px] items-center justify-center rounded-full bg-[#FAE6D9] p-2">
+              <span>{icon}</span>
+            </div>
             <div>
-              <span className="block text-xs font-medium uppercase tracking-wider text-gray-900 dark:text-white sm:text-sm">
+              <span className="block text-xs font-medium tracking-wider text-gray-900 dark:text-white sm:text-sm">
                 {title}
               </span>
               <span className="mt-1 hidden text-xs tracking-tighter text-gray-600 dark:text-gray-400 sm:block">
@@ -44,38 +55,53 @@ const GettingStartedPage: NextPageWithLayout = () => {
         title="Miden Wallet | Getting Started"
         description="How to get started using the Miden Wallet"
       />
-      <div className="mx-auto w-full px-4 pt-8 pb-14 sm:px-6 sm:pb-20 sm:pt-12 lg:px-8 xl:px-10 2xl:px-0">
-        <h2 className="mb-6 text-lg font-medium uppercase tracking-wider text-gray-900 dark:text-white sm:mb-10 sm:text-2xl">
-          Getting Started
-        </h2>
+      <div className="mx-auto w-full px-4 pt-8 pb-14">
         <Section
-          title="STEP 1 - GET A WALLET"
-          bgColor="bg-white shadow-card dark:bg-light-dark"
+          title="01. Get a Wallet"
+          bgColor="bg-white"
+          icon={<Download />}
         >
-          &bull; Download and install a Miden-compatible wallet. We recommend{' '}
-          <a href="https://miden.fi">Miden Wallet</a>
-        </Section>
-        <Section title="STEP 2 - CREATE A NEW WALLET ACCOUNT" bgColor="">
-          &bull; Once installed - click on &quot;Create a new wallet&quot;{' '}
+          Download and install a Miden-compatible wallet. We recommend Miden
+          Wallet
           <br />
-          &bull; Type in your password <br />
-          &bull; Save the provided Secret Recovery Phrase somewhere safe and
-          finish creating your account. Never share this phrase.
+          <br />
+          <a href="https://miden.fi" target="_blank">
+            <Button color="gray">Download Miden Wallet</Button>
+          </a>
         </Section>
         <Section
-          title="STEP 3 - CONNECT YOUR WALLET"
-          bgColor="bg-white shadow-card dark:bg-light-dark"
+          title="02. Create a New Wallet Account"
+          bgColor="bg-white"
+          icon={<Wallet />}
         >
-          &bull; Now that you have your wallet setup, connect it to our site by
+          <ol className="list-decimal space-y-1 pl-5">
+            <li>Once installed - click on &quot;Create a new wallet&quot;.</li>
+            <li>Type in your password.</li>
+            <li>
+              Save the provided Secret Recovery Phrase somewhere safe and finish
+              creating your account. Never share this phrase.
+            </li>
+          </ol>
+        </Section>
+        <Section
+          title="03. Connect Your Wallet"
+          bgColor="bg-white"
+          icon={<Links />}
+        >
+          Now that you have your wallet setup, connect it to our site by
           clicking the button below <br />
           <br />
-          <WalletMultiButton className="bg-[#154bf9]" />
+          <WalletMultiButton />
         </Section>
-        <Section title="STEP 4 - FUND YOUR WALLET" bgColor="">
-          &bull; Click on the button below to mint funds for your wallet
+        <Section
+          title="04. Fund Your Wallet"
+          bgColor="bg-white"
+          icon={<Coins />}
+        >
+          Click on the button below to mint funds for your wallet
           <br /> <br />
           <a href={`${routes.mint}`}>
-            <Button>Fund Wallet</Button>
+            <Button color="gray">Fund Wallet</Button>
           </a>
         </Section>
       </div>

@@ -2,8 +2,6 @@ import Image from '@/components/ui/image';
 import AnchorLink from '@/components/ui/links/anchor-link';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import { useIsDarkMode } from '@/lib/hooks/use-is-dark-mode';
-import lightLogo from '@/assets/images/logo.svg';
-import darkLogo from '@/assets/images/logo-white.svg';
 import logo from '@/assets/images/logo.svg';
 
 const Logo: React.FC<React.SVGAttributes<{}>> = (props) => {

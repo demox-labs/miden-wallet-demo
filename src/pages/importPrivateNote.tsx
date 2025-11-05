@@ -107,7 +107,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
           <div className="flex items-center space-x-4">
             <label
               htmlFor="file-upload"
-              className="flex cursor-pointer items-center justify-center rounded-full shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+              className="flex cursor-pointer items-center justify-center rounded-full bg-brand text-white shadow-card transition-all hover:-translate-y-0.5 hover:shadow-large md:h-10 md:px-5 xl:h-12 xl:px-7"
             >
               <span>Upload File</span>
               <input
@@ -122,7 +122,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
           {!accountId ? (
             <Button
               disabled
-              color="white"
+              color="primary"
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             >
               Connect Your Wallet
@@ -131,7 +131,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
             <Button
               disabled={!accountId || !noteData || !Miden || !client}
               type="submit"
-              color="white"
+              color="primary"
               isLoading={isLoading}
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
               onClick={handleSubmit}
@@ -142,7 +142,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
         </form>
         {status && (
           <div className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
-            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
+            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-gray-900 sm:text-sm">
               {status}
             </div>
           </div>

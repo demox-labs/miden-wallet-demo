@@ -349,7 +349,7 @@ const MintPage: NextPageWithLayout = () => {
               <Button
                 disabled={!accountId || !amount || !Miden || !client}
                 type="submit"
-                color="white"
+                color="primary"
                 className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
                 isLoading={isLoading}
                 onClick={async (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -362,7 +362,7 @@ const MintPage: NextPageWithLayout = () => {
                 <Button
                   disabled={!accountId || !amount || !Miden || !client}
                   type="submit"
-                  color="white"
+                  color="primary"
                   className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
                   isLoading={isLoading}
                   onClick={async (event: SyntheticEvent<HTMLButtonElement>) => {
