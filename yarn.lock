@@ -798,44 +798,44 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-"@demox-labs/miden-sdk@0.11.11":
-  version "0.11.11"
-  resolved "https://registry.yarnpkg.com/@demox-labs/miden-sdk/-/miden-sdk-0.11.11.tgz#4582bff6a3d3b77268edb16a0be78cec1faab5d4"
-  integrity sha512-HcKadGQQynW/UZrVLSAZsl3Luwt1d0Pmhkd/2MBbyJ0IoIN/tySsAx3f7XrmMSwX4RwUnM2tY5aeM/bf0V/ZEw==
+"@demox-labs/miden-sdk@0.12.3":
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-sdk/-/miden-sdk-0.12.3.tgz#f216af222760356f8bcfeb39b93d65ae45f87471"
+  integrity sha512-iHomtLaZrY1cb8FVevij9x2foXo33qxRnUNNszKDmdlvgEgt1XmZlZUP8+bb4OFPMJF5lRsJaLcfd5pODvF6JQ==
   dependencies:
-    chai-as-promised "^8.0.0"
+    "@rollup/plugin-typescript" "^12.3.0"
     dexie "^4.0.1"
     glob "^11.0.0"
 
-"@demox-labs/miden-wallet-adapter-base@0.8.2", "@demox-labs/miden-wallet-adapter-base@^0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-base/-/miden-wallet-adapter-base-0.8.2.tgz#fe7ce4c8287b208624fbe73ad7bf22bbd2239fe0"
-  integrity sha512-g2M7a2h/9MhUrNqdnblpN1nCLevPEUct5XZczf/7gc4tIRd9pWwLqcTFG1e65JlEiNswG6pd3KzXtHdqJzx+5Q==
+"@demox-labs/miden-wallet-adapter-base@0.9.0", "@demox-labs/miden-wallet-adapter-base@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-base/-/miden-wallet-adapter-base-0.9.0.tgz#104538cb7e74c8b02d77c1741a8cc2688e585b28"
+  integrity sha512-THKrVtC9LFnTJfjwAeGQtE4Xj3C5Wj1bQ5ezH1FrJxinhWC0vyBXizHQDvcXqKSVnnokzctHt3NW758r1SmcDg==
   dependencies:
     eventemitter3 "^5.0.1"
 
-"@demox-labs/miden-wallet-adapter-miden@0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-miden/-/miden-wallet-adapter-miden-0.8.2.tgz#eff75c2de873a64830b80f7bd09b88f17a07bde3"
-  integrity sha512-QtYtLx2FhF4UgyjaubHp0cTsfirj8YC8mFkqFoV1ayXBb5eKDbldHht47yEBr5Tp/hMt1j50+UEjILa3KLbNGg==
+"@demox-labs/miden-wallet-adapter-miden@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-miden/-/miden-wallet-adapter-miden-0.9.1.tgz#213909eef3d7aec3d7f19feebf44d6a3bc630ddd"
+  integrity sha512-Y2fxrpITejV/ECfgThzAHpAmWRyLRCYezFZOOk0rj0dvFl2H3GgKFWwpJz07x7JX7GmGWzDm9PJkNr6H6A7+1Q==
   dependencies:
-    "@demox-labs/miden-wallet-adapter-base" "^0.8.2"
+    "@demox-labs/miden-wallet-adapter-base" "^0.9.0"
     nanoid "^5.0.9"
 
-"@demox-labs/miden-wallet-adapter-react@0.8.2", "@demox-labs/miden-wallet-adapter-react@^0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-react/-/miden-wallet-adapter-react-0.8.2.tgz#a8e09c0cf26f8b20943b10d90d662bc02adc62fc"
-  integrity sha512-2sxC2SGJbyXJkLgwA6t/Uebqa0+pUEQktl3dESg2NNWoN193UTGVANs509p8jrvWpMFYjLb5YwwncukjdSyI3A==
+"@demox-labs/miden-wallet-adapter-react@0.9.0", "@demox-labs/miden-wallet-adapter-react@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-react/-/miden-wallet-adapter-react-0.9.0.tgz#2dc0a3d847e95be15fdb39d0c639a26af0b4af4d"
+  integrity sha512-MdOAzZQByKRQb5enEFrxUNg2yiLwLy4iO57lA9zdOzModuCSDM4nY3kg6qdxtvwE4Gdl75Ji0KbMG9yOZS/Y1w==
   dependencies:
-    "@demox-labs/miden-wallet-adapter-base" "^0.8.2"
+    "@demox-labs/miden-wallet-adapter-base" "^0.9.0"
 
-"@demox-labs/miden-wallet-adapter-reactui@0.8.2":
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-reactui/-/miden-wallet-adapter-reactui-0.8.2.tgz#da1f310e6fdd65356a6c02bb5314ca6eb33fc5d0"
-  integrity sha512-TKkyd1pjOhaYuY3vkVMg0xRD/pHqUviDXcfSgSn0jG7yRwpMeoo5vcUuS7oUTqGwQ/qd7fQ2AuCr09+RCHaPSw==
+"@demox-labs/miden-wallet-adapter-reactui@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@demox-labs/miden-wallet-adapter-reactui/-/miden-wallet-adapter-reactui-0.9.1.tgz#663bfb9ff873fcd37891269bb1cda9d17d09331d"
+  integrity sha512-rX0HZ1FeXGaHQ+LEp7/7EcXFZDaAB8k34u/bSQo2+TSslMk8ZYnQyOYAWsjjoB/S1zujlles8gtS+YSGOBECOQ==
   dependencies:
-    "@demox-labs/miden-wallet-adapter-base" "^0.8.2"
-    "@demox-labs/miden-wallet-adapter-react" "^0.8.2"
+    "@demox-labs/miden-wallet-adapter-base" "^0.9.0"
+    "@demox-labs/miden-wallet-adapter-react" "^0.9.0"
 
 "@emnapi/core@^1.4.3":
   version "1.5.0"
@@ -1263,6 +1263,11 @@
   resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-15.5.2.tgz#9237d40b82eaf2efc88baeba15b784d4126caf4a"
   integrity sha512-W5VvyZHnxG/2ukhZF/9Ikdra5fdNftxI6ybeVKYvBPDtyx7x4jPPSNduUkfH5fo3zG0JQ0bPxgy41af2JX5D4Q==
 
+"@noble/hashes@^2.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-2.0.1.tgz#fc1a928061d1232b0a52bb754393c37a5216c89e"
+  integrity sha512-XlOlEbQcE9fmuXxrVTXCTlG2nlRXa9Rj3rr5Ue/+tX+nmkgbX720YHh0VR3hBF9xDvwnb8D2shVGOwNx+ulArw==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1377,6 +1382,14 @@
     "@rollup/pluginutils" "^3.1.0"
     magic-string "^0.25.7"
 
+"@rollup/plugin-typescript@^12.3.0":
+  version "12.3.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-typescript/-/plugin-typescript-12.3.0.tgz#cc51b830973bc14c9456fe6532f322f2a40f5f12"
+  integrity sha512-7DP0/p7y3t67+NabT9f8oTBFE6gGkto4SA6Np2oudYmZE/m1dt8RB0SjL1msMxFpLo631qjRCcBlAbq1ml/Big==
+  dependencies:
+    "@rollup/pluginutils" "^5.1.0"
+    resolve "^1.22.1"
+
 "@rollup/pluginutils@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-3.1.0.tgz#706b4524ee6dc8b103b3c995533e5ad680c02b9b"
@@ -1385,6 +1398,15 @@
     "@types/estree" "0.0.39"
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
+
+"@rollup/pluginutils@^5.1.0":
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/@rollup/pluginutils/-/pluginutils-5.3.0.tgz#57ba1b0cbda8e7a3c597a4853c807b156e21a7b4"
+  integrity sha512-5EdhGZtnu3V88ces7s53hhfK5KSASnJZv8Lulpc04cWO3REESroJXg73DFsOmgbU2BhwV0E20bu2IDZb3VKW4Q==
+  dependencies:
+    "@types/estree" "^1.0.0"
+    estree-walker "^2.0.2"
+    picomatch "^4.0.2"
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -1496,7 +1518,7 @@
     "@types/estree" "*"
     "@types/json-schema" "*"
 
-"@types/estree@*", "@types/estree@^1.0.6", "@types/estree@^1.0.8":
+"@types/estree@*", "@types/estree@^1.0.0", "@types/estree@^1.0.6", "@types/estree@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.8.tgz#958b91c991b1867ced318bedea0e215ee050726e"
   integrity sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==
@@ -2360,13 +2382,6 @@ caniuse-lite@^1.0.30001335, caniuse-lite@^1.0.30001579, caniuse-lite@^1.0.300017
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001741.tgz#67fb92953edc536442f3c9da74320774aa523143"
   integrity sha512-QGUGitqsc8ARjLdgAfxETDhRbJ0REsP6O3I96TAth/mVjh2cYzN2u+3AzPP3aVSm2FehEItaJw1xd+IGBXWeSw==
 
-chai-as-promised@^8.0.0:
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/chai-as-promised/-/chai-as-promised-8.0.2.tgz#cd9b77afaa976383eb4cbef9463ac5230f7a1cba"
-  integrity sha512-1GadL+sEJVLzDjcawPM4kjfnL+p/9vrxiEUonowKOAzvVg0PixJUdtuDzdkDeQhK3zfOE76GqGkZIQ7/Adcrqw==
-  dependencies:
-    check-error "^2.1.1"
-
 chalk@^4.0.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
@@ -2374,11 +2389,6 @@ chalk@^4.0.0:
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
-
-check-error@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/check-error/-/check-error-2.1.1.tgz#87eb876ae71ee388fa0471fe423f494be1d96ccc"
-  integrity sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw==
 
 chokidar@^3.5.3:
   version "3.6.0"
@@ -3177,6 +3187,11 @@ estree-walker@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-1.0.1.tgz#31bc5d612c96b704106b477e6dd5d8aa138cb700"
   integrity sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==
+
+estree-walker@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-2.0.2.tgz#52f010178c2a4c117a7757cfe942adb7d2da4cac"
+  integrity sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==
 
 esutils@^2.0.2:
   version "2.0.3"
@@ -4055,11 +4070,6 @@ js-cookie@^2.2.1:
   resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
   integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
 
-js-sha3@^0.9.3:
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.9.3.tgz#f0209432b23a66a0f6c7af592c26802291a75c2a"
-  integrity sha512-BcJPCQeLg6WjEx3FE591wVAevlli8lxsxm9/FzV4HXkV49TmBH38Yvrpce6fjbADGMKFrBMGTqrVz3qPIZ88Gg==
-
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -4873,7 +4883,7 @@ picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.3.1:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
-picomatch@^4.0.3:
+picomatch@^4.0.2, picomatch@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-4.0.3.tgz#796c76136d1eead715db1e7bad785dedd695a042"
   integrity sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==
@@ -5319,6 +5329,15 @@ resolve@^1.1.7, resolve@^1.19.0, resolve@^1.22.0, resolve@^1.22.10, resolve@^1.2
   integrity sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==
   dependencies:
     is-core-module "^2.16.0"
+    path-parse "^1.0.7"
+    supports-preserve-symlinks-flag "^1.0.0"
+
+resolve@^1.22.1:
+  version "1.22.11"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.11.tgz#aad857ce1ffb8bfa9b0b1ac29f1156383f68c262"
+  integrity sha512-RfqAvLnMl313r7c9oclB1HhUEAezcpLjz95wFH4LVuhk9JF/r22qmVP9AMmOU4vMX7Q8pN8jwNg/CSpdFnMjTQ==
+  dependencies:
+    is-core-module "^2.16.1"
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 

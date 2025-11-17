@@ -28,7 +28,7 @@ function bytesToHex(u8: Uint8Array): string {
     const h = u8[i].toString(16).padStart(2, '0');
     s += h;
   }
-  return s;
+  return '0x' + s;
 }
 
 function normalizeHex(input: string): string {
@@ -93,11 +93,11 @@ const SignPage: NextPageWithLayout = () => {
   }, [walletPublicKey]);
 
   /** Build a random Word from 32 CSPRNG bytes (4×u64 little-endian) */
-  function generateRandomWord(): {
+  const generateRandomWord = useCallback((): {
     word: Word;
     hex: string;
     bytes: Uint8Array;
-  } {
+  } => {
     // 1) 32 secure random bytes
     const rand = crypto.getRandomValues(new Uint8Array(32));
 
@@ -118,7 +118,7 @@ const SignPage: NextPageWithLayout = () => {
     const hex = word.toHex();
     const bytes: Uint8Array = word.serialize(); // 32 bytes
     return { word, hex, bytes };
-  }
+  }, [Miden]);
 
   const onGenerate = useCallback(
     async (event: React.SyntheticEvent) => {
@@ -131,7 +131,7 @@ const SignPage: NextPageWithLayout = () => {
       setSignature({ hex: '', bytes: null });
       resetVerificationFeedback();
     },
-    [resetVerificationFeedback, accountId, Miden]
+    [resetVerificationFeedback, accountId, Miden, generateRandomWord]
   );
 
   const handleCopyToClipboard = () => {
@@ -286,7 +286,9 @@ const SignPage: NextPageWithLayout = () => {
 
       let midenPublicKey;
       try {
-        midenPublicKey = Miden.PublicKey.deserialize(publicKey.bytes);
+        console.log(publicKey);
+        console.log(publicKey.bytes);
+        midenPublicKey = Miden.PublicKey.recoverFrom(messageWord, signatureObj);
       } catch (error) {
         throw new Error(
           `Invalid public key encoding: ${
@@ -298,8 +300,12 @@ const SignPage: NextPageWithLayout = () => {
       }
 
       const isValid = midenPublicKey.verify(messageWord, signatureObj);
+      console.log('recoveredKeyAsHex', midenPublicKey.toCommitment().toHex());
+      console.log('publicKeyHex', publicKey.hex);
+      const isRecoveredPublicKeyCommitmentSame =
+        midenPublicKey.toCommitment().toHex() === publicKey.hex;
 
-      if (isValid) {
+      if (isValid && isRecoveredPublicKeyCommitmentSame) {
         setVerificationStatus('success');
         setVerificationMessage('Signature verified for the current message.');
       } else {
@@ -320,6 +326,7 @@ const SignPage: NextPageWithLayout = () => {
     resetVerificationFeedback,
     signature,
     publicKeyLength,
+    Miden,
   ]);
 
   return (

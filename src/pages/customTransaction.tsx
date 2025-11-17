@@ -11,6 +11,7 @@ import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
 
 import Base from '@/components/ui/base';
 import Button from '@/components/ui/button';
+import { FAUCET_API_URL } from '@/constants';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
 import { FaucetMetadata, NextPageWithLayout } from '@/types';
@@ -53,7 +54,7 @@ const CustomTransactionPage: NextPageWithLayout = () => {
   }, [createClient]);
 
   const fetchFaucetState = useCallback(async () => {
-    fetch('https://faucet.testnet.miden.io/get_metadata')
+    fetch(`${FAUCET_API_URL}/get_metadata`)
       .then((response) => response.json())
       .then((data) => {
         setFaucetState(data);
@@ -75,19 +76,30 @@ const CustomTransactionPage: NextPageWithLayout = () => {
   }
 
   function accountIdToBech32(accountId: AccountId) {
-    return Miden.Address.fromAccountId(accountId, 'Unspecified').toBech32(
+    return Miden.Address.fromAccountId(accountId, 'BasicWallet').toBech32(
       Miden.NetworkId.Testnet
     );
   }
 
   async function createCustomTransaction(): Promise<CustomTransaction> {
+    console.log('Creating custom transaction... 1');
+    console.log('accountId', accountId);
+    console.log('toAddress', toAddress);
+    console.log('faucetState', faucetState);
+    console.log('client', client);
+
+    // Validate inputs
     if (!accountId || !toAddress || !faucetState || !client)
       throw new WalletNotConnectedError();
 
+    console.log('Creating custom transaction... 1.5');
     const walletAccountId = bech32ToAccountId(accountId);
+    console.log('custom transaction 2');
     const recipientAccountId = bech32ToAccountId(toAddress);
-    const faucetAccountId = bech32ToAccountId(faucetState.id);
-    const amount = BigInt(10_000_000);
+    console.log('custom transaction 3');
+    const faucetAccountId = bech32ToAccountId(faucetState!.id);
+    console.log('custom transaction 4');
+    const amount = BigInt(10 * 10 ** faucetState!.decimals);
 
     // Creating Custom Note which needs the following:
     // - Note Assets
@@ -104,12 +116,20 @@ const CustomTransactionPage: NextPageWithLayout = () => {
     let felt7 = new Miden.Felt(BigInt(12));
     let felt8 = new Miden.Felt(BigInt(9));
 
+    console.log('custom transaction 5');
+
     let noteArgs = [felt1, felt2, felt3, felt4, felt5, felt6, felt7, felt8];
-    let feltArray = new Miden.FeltArray();
-    noteArgs.forEach((felt) => feltArray.append(felt));
+    let feltArray = new Miden.MidenArrays.FeltArray();
+    noteArgs.forEach((felt) => {
+      feltArray.push(felt);
+    });
+
+    console.log('custom transaction 6');
 
     const asset = new Miden.FungibleAsset(faucetAccountId, amount);
     let noteAssets = new Miden.NoteAssets([asset]);
+
+    console.log('custom transaction 7');
 
     let noteMetadata = new Miden.NoteMetadata(
       walletAccountId,
@@ -119,140 +139,96 @@ const CustomTransactionPage: NextPageWithLayout = () => {
       undefined
     );
 
+    console.log('custom transaction 8');
+
     let expectedNoteArgs = noteArgs.map((felt) => felt.asInt());
     let memAddress = '1000';
     let memAddress2 = '1004';
     let expectedNoteArg1 = expectedNoteArgs.slice(0, 4).join('.');
     let expectedNoteArg2 = expectedNoteArgs.slice(4, 8).join('.');
+    console.log('custom transaction 9');
     let noteScript = `
-      # Custom P2ID note script
-      #
-      # This note script asserts that the note args are exactly the same as passed
-      # (currently defined as {expected_note_arg_1} and {expected_note_arg_2}).
-      # Since the args are too big to fit in a single note arg, we provide them via advice inputs and
-      # address them via their commitment (noted as NOTE_ARG)
-      # This note script is based off of the P2ID note script because notes currently need to have
-      # assets, otherwise it could have been boiled down to the assert.
-  
-      use.miden::account
-      use.miden::note
-      use.miden::contracts::wallets::basic->wallet
-      use.std::mem
-  
-  
-      proc.add_note_assets_to_account
-          push.0 exec.note::get_assets
-          # => [num_of_assets, 0 = ptr, ...]
-  
-          # compute the pointer at which we should stop iterating
-          mul.4 dup.1 add
-          # => [end_ptr, ptr, ...]
-  
-          # pad the stack and move the pointer to the top
-          padw movup.5
-          # => [ptr, 0, 0, 0, 0, end_ptr, ...]
-  
-          # compute the loop latch
-          dup dup.6 neq
-          # => [latch, ptr, 0, 0, 0, 0, end_ptr, ...]
-  
-          while.true
-              # => [ptr, 0, 0, 0, 0, end_ptr, ...]
-  
-              # save the pointer so that we can use it later
-              dup movdn.5
-              # => [ptr, 0, 0, 0, 0, ptr, end_ptr, ...]
-  
-              # load the asset
-              mem_loadw
-              # => [ASSET, ptr, end_ptr, ...]
-  
-              # pad the stack before call
-              padw swapw padw padw swapdw
-              # => [ASSET, pad(12), ptr, end_ptr, ...]
-  
-              # add asset to the account
-              call.wallet::receive_asset
-              # => [pad(16), ptr, end_ptr, ...]
-  
-              # clean the stack after call
-              dropw dropw dropw
-              # => [0, 0, 0, 0, ptr, end_ptr, ...]
-  
-              # increment the pointer and compare it to the end_ptr
-              movup.4 add.4 dup dup.6 neq
-              # => [latch, ptr+4, ASSET, end_ptr, ...]
-          end
-  
-          # clear the stack
-          drop dropw drop
-      end
-  
-      begin
-          # push data from the advice map into the advice stack
-          adv.push_mapval
-          # => [NOTE_ARG]
-  
-          # memory address where to write the data
-          push.${memAddress}
-          # => [target_mem_addr, NOTE_ARG_COMMITMENT]
-          # number of words
-          push.2
-          # => [number_of_words, target_mem_addr, NOTE_ARG_COMMITMENT]
-          exec.mem::pipe_preimage_to_memory
-          # => [target_mem_addr']
-          dropw
-          # => []
-  
-          # read first word
-          push.${memAddress}
-          # => [data_mem_address]
-          mem_loadw
-          # => [NOTE_ARG_1]
-  
-          push.${expectedNoteArg1} assert_eqw.err="First note argument didn't match expected"
-          # => []
-  
-          # read second word
-          push.${memAddress2}
-          # => [data_mem_address_2]
-          mem_loadw
-          # => [NOTE_ARG_2]
-  
-          push.${expectedNoteArg2} assert_eqw.err="Second note argument didn't match expected"
-          # => []
-  
-          # store the note inputs to memory starting at address 0
-          push.0 exec.note::get_inputs
-          # => [num_inputs, inputs_ptr]
-  
-          # make sure the number of inputs is 2
-          eq.2 assert.err="P2ID script expects exactly 2 note inputs"
-          # => [inputs_ptr]
-  
-          # read the target account id from the note inputs
-          mem_load
-          # => [target_account_id_prefix]
-  
-          exec.account::get_id swap drop
-          # => [account_id_prefix, target_account_id_prefix, ...]
-  
-          # ensure account_id = target_account_id, fails otherwise
-          assert_eq.err="P2ID's target account address and transaction address do not match"
-          # => [...]
-  
-          exec.add_note_assets_to_account
-          # => [...]
-      end
+        # Custom P2ID note script
+        #
+        # This note script asserts that the note args are exactly the same as passed
+        # (currently defined as {expected_note_arg_1} and {expected_note_arg_2}).
+        # Since the args are too big to fit in a single note arg, we provide them via advice inputs and
+        # address them via their commitment (noted as NOTE_ARG)
+        # This note script is based off of the P2ID note script because notes currently need to have
+        # assets, otherwise it could have been boiled down to the assert.
+
+        use.miden::native_account
+        use.miden::active_note
+        use.miden::contracts::wallets::basic->wallet
+        use.std::mem
+
+        begin
+            # push data from the advice map into the advice stack
+            adv.push_mapval
+            # => [NOTE_ARG]
+
+            # memory address where to write the data
+            push.${memAddress}
+            # => [target_mem_addr, NOTE_ARG_COMMITMENT]
+            # number of words
+            push.2
+            # => [number_of_words, target_mem_addr, NOTE_ARG_COMMITMENT]
+            exec.mem::pipe_preimage_to_memory
+            # => [target_mem_addr']
+            dropw
+            # => []
+
+            # read first word
+            push.${memAddress}
+            # => [data_mem_address]
+            mem_loadw_be
+            # => [NOTE_ARG_1]
+
+            push.${expectedNoteArg1} assert_eqw.err="First note argument didn't match expected"
+            # => []
+
+            # read second word
+            push.${memAddress2}
+            # => [data_mem_address_2]
+            mem_loadw_be
+            # => [NOTE_ARG_2]
+
+            push.${expectedNoteArg2} assert_eqw.err="Second note argument didn't match expected"
+            # => []
+
+            # store the note inputs to memory starting at address 0
+            push.0 exec.active_note::get_inputs
+            # => [num_inputs, inputs_ptr]
+
+            # make sure the number of inputs is 2
+            eq.2 assert.err="P2ID script expects exactly 2 note inputs"
+            # => [inputs_ptr]
+
+            # read the target account id from the note inputs
+            mem_load
+            # => [target_account_id_prefix]
+
+            exec.native_account::get_id swap drop
+            # => [account_id_prefix, target_account_id_prefix, ...]
+
+            # ensure account_id = target_account_id, fails otherwise
+            assert_eq.err="P2ID's target account address and transaction address do not match"
+            # => [...]
+
+            exec.active_note::add_assets_to_account
+            # => [...]
+        end
     `;
 
-    let compiledNoteScript = client.compileNoteScript(noteScript);
+    let builder = client.createScriptBuilder();
+    let compiledNoteScript = builder.compileNoteScript(noteScript);
     let noteInputs = new Miden.NoteInputs(
-      new Miden.FeltArray([
+      new Miden.MidenArrays.FeltArray([
         recipientAccountId.prefix(),
         recipientAccountId.suffix(),
       ])
     );
+    console.log('custom transaction 10');
 
     const serialNum = new Miden.Word(
       new BigUint64Array([BigInt(1), BigInt(2), BigInt(3), BigInt(4)])
@@ -263,14 +239,20 @@ const CustomTransactionPage: NextPageWithLayout = () => {
       noteInputs
     );
 
+    console.log('custom transaction 11');
+
     let note = new Miden.Note(noteAssets, noteMetadata, noteRecipient);
+
+    console.log('custom transaction 12');
 
     // Creating First Custom Transaction Request to Mint the Custom Note
     let transactionRequest = new Miden.TransactionRequestBuilder()
       .withOwnOutputNotes(
-        new Miden.OutputNotesArray([Miden.OutputNote.full(note)])
+        new Miden.MidenArrays.OutputNoteArray([Miden.OutputNote.full(note)])
       )
       .build();
+
+    console.log('custom transaction 13');
 
     return new CustomTransaction(
       accountIdToBech32(walletAccountId),
@@ -287,18 +269,23 @@ const CustomTransactionPage: NextPageWithLayout = () => {
   };
 
   const handleSubmit = async (event: any) => {
+    console.log('handleSubmit called');
     event.preventDefault();
+    console.log('handleSubmit called 2');
     if (!accountId) throw new WalletNotConnectedError();
     if (!Miden || !client) return;
     setIsLoading(true);
 
     setStatus('Creating custom transaction...');
     try {
+      console.log('handleSubmit called 3');
       const tx = await createCustomTransaction();
+      console.log('handleSubmit called 4');
       const txId = await requestTransaction!({
         type: TransactionType.Custom,
         payload: tx,
       });
+      console.log('handleSubmit called 5');
       setIsLoading(false);
       setStatus(`Transaction ${txId} submitted`);
     } catch (error: any) {
@@ -321,7 +308,7 @@ const CustomTransactionPage: NextPageWithLayout = () => {
           <label className="flex w-full items-center py-4">
             <input
               className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-              placeholder="To address (e.g., 0x0b8a174d47e79b1000088ad423474e)"
+              placeholder="To address (e.g., mtst1ap2ckkxeufynqyptjwr0ylctvgzwhe30_qruqqypuyph)"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleToAddressChange(event)

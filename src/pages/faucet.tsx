@@ -85,24 +85,40 @@ const FaucetPage: NextPageWithLayout = () => {
       const noteTypeString = sharePrivately ? 'private' : 'public';
 
       setStatus('Minting note...');
-      const mintTxnReq = await client.newMintTransactionRequest(
+      const mintTxnReq = client.newMintTransactionRequest(
         midenAccountId,
         faucetId,
         noteType,
         BigInt(amount)
       );
-      const mintTxn = await client.newTransaction(faucetId, mintTxnReq);
-      await client.submitTransaction(mintTxn);
-
-      const noteId = mintTxn.createdNotes().notes()[0].id();
+      const transactionResult = await client.executeTransaction(
+        faucetId,
+        mintTxnReq
+      );
+      const provenTransaction = await client.proveTransaction(
+        transactionResult
+      );
+      const submissionHeight = await client.submitProvenTransaction(
+        provenTransaction,
+        transactionResult
+      );
+      await client.applyTransaction(transactionResult, submissionHeight);
+      const noteId = transactionResult
+        .executedTransaction()
+        .outputNotes()
+        .notes()[0]
+        .id();
       const noteIdString = noteId.toString();
 
       if (address === accountId) {
         try {
           let transaction: ConsumeTransaction;
           if (sharePrivately) {
-            const buffer = await client.exportNoteFile(noteIdString, 'Partial');
-            const noteBytes = new Uint8Array(buffer);
+            const notefile = await client.exportNoteFile(
+              noteIdString,
+              'Partial'
+            );
+            const noteBytes = notefile.serialize();
             transaction = new ConsumeTransaction(
               faucetId.toString(),
               noteIdString,
@@ -134,11 +150,9 @@ const FaucetPage: NextPageWithLayout = () => {
       } else if (sharePrivately) {
         try {
           setStatus('Downloading note...');
-          const noteBytes = await client.exportNoteFile(
-            noteIdString,
-            'Partial'
-          );
-          const blob = new Blob([noteBytes], {
+          const noteFile = await client.exportNoteFile(noteIdString, 'Partial');
+          const noteBytes = noteFile.serialize();
+          const blob = new Blob([new Uint8Array(noteBytes)], {
             type: 'application/octet-stream',
           });
           const url = URL.createObjectURL(blob);

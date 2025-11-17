@@ -84,7 +84,8 @@ export const MidenSdkProvider: FC<MidenSdkProviderProps> = ({ children }) => {
           nonFungible,
           assetSymbol,
           decimals,
-          totalSupply
+          totalSupply,
+          0
         );
 
         // Get the faucet ID before any other operations

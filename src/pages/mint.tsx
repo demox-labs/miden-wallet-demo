@@ -1,5 +1,6 @@
 import Base from '@/components/ui/base';
 import Button from '@/components/ui/button';
+import { FAUCET_API_URL } from '@/constants';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
 import type { FaucetMetadata, NextPageWithLayout } from '@/types';
@@ -21,7 +22,8 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { sha3_256 } from 'js-sha3';
+import { sha256 } from '@noble/hashes/sha2.js';
+import { hexToBytes } from '@noble/hashes/utils.js';
 
 const tokenAmountOptions = [100, 500, 1000];
 
@@ -63,10 +65,9 @@ const MintPage: NextPageWithLayout = () => {
   }, [createClient]);
 
   const fetchFaucetState = useCallback(async () => {
-    fetch('https://faucet.testnet.miden.io/get_metadata')
+    fetch(`${FAUCET_API_URL}/get_metadata`)
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
         setFaucetState(data);
       })
       .catch((error) => {
@@ -76,6 +77,12 @@ const MintPage: NextPageWithLayout = () => {
 
   const decimals = useMemo(() => {
     return faucetState?.decimals || MIDEN_METADATA.decimals;
+  }, [faucetState]);
+
+  const faucetId = useMemo(() => {
+    return (
+      faucetState?.id || 'mtst1ap2t7nsjausqsgrswk9syfzkcu328yna_qruqqypuyph'
+    );
   }, [faucetState]);
 
   useEffect(() => {
@@ -89,15 +96,16 @@ const MintPage: NextPageWithLayout = () => {
   async function findValidNonce(challenge: string, target: string) {
     let nonce = 0;
     let targetNum = BigInt(target);
+    const challengeBytes = hexToBytes(challenge);
 
     while (true) {
       // Generate a random nonce
       nonce = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER);
 
       try {
-        // Compute hash using SHA3 with the challenge and nonce
-        let hash = sha3_256.create();
-        hash.update(challenge); // Use the hex-encoded challenge string directly
+        // Compute hash using SHA-256 with the challenge and nonce
+        let hash = sha256.create();
+        hash.update(challengeBytes); // Use the hex-encoded challenge string directly
 
         // Convert nonce to 8-byte big-endian format to match backend
         const nonceBytes = new ArrayBuffer(8);
@@ -107,7 +115,13 @@ const MintPage: NextPageWithLayout = () => {
         hash.update(nonceByteArray);
 
         // Take the first 8 bytes of the hash and parse them as u64 in big-endian
-        let digest = BigInt('0x' + hash.hex().slice(0, 16));
+        const hashBytes: Uint8Array = hash.digest().slice(0, 8);
+        let digest = BigInt(
+          '0x' +
+            Array.from(hashBytes)
+              .map((b) => b.toString(16).padStart(2, '0'))
+              .join('')
+        );
 
         // Check if the hash is less than the target
         if (digest < targetNum) {
@@ -125,13 +139,14 @@ const MintPage: NextPageWithLayout = () => {
     }
   }
 
-  async function powChallenge() {
+  async function powChallenge(amount: number) {
     let powResponse;
     try {
       powResponse = await fetch(
-        'https://faucet.testnet.miden.io/pow?' +
+        `${FAUCET_API_URL}/pow?` +
           new URLSearchParams({
             account_id: accountId!,
+            amount: amount.toString(),
           }),
         {
           method: 'GET',
@@ -144,9 +159,9 @@ const MintPage: NextPageWithLayout = () => {
 
     if (!powResponse.ok) {
       const message = await powResponse.text();
-      setStatus(message);
+      setStatus(`Error getting pow challenge: ${message}`);
       setIsLoading(false);
-      return { challenge: '', nonce: 0 };
+      return;
     }
     setIsLoading(true);
 
@@ -170,14 +185,9 @@ const MintPage: NextPageWithLayout = () => {
         challenge: challenge,
         nonce: nonce.toString(),
       };
-      const noteDataRegex = /"data_base64":"([^"]+)"/;
-      const noteIdRegex = /"note_id":"([^"]+)"/;
-      let noteData = '';
-      let noteId = '';
 
       const response = await fetch(
-        'https://faucet.testnet.miden.io/get_tokens?' +
-          new URLSearchParams(params),
+        `${FAUCET_API_URL}/get_tokens?` + new URLSearchParams(params),
         {
           method: 'GET',
           headers: {
@@ -185,18 +195,46 @@ const MintPage: NextPageWithLayout = () => {
           },
         }
       );
-      const text = await response.text();
-      const noteDataMatch = noteDataRegex.exec(text);
-      const noteIdMatch = noteIdRegex.exec(text);
-      if (noteDataMatch) {
-        noteData = noteDataMatch[1];
-      }
-      if (noteIdMatch) {
-        noteId = noteIdMatch[1];
+      if (!response.ok) {
+        const message = await response.text();
+        setStatus(`Error getting tokens: ${message}`);
+        setIsLoading(false);
+        return;
       }
 
-      return { noteData, noteId };
+      const text = await response.text();
+      const json = JSON.parse(text);
+      const noteId = json.note_id;
+
+      return { noteId };
     } catch (error) {
+      setStatus('Error: ' + (error as Error).message);
+      console.error('Error:', error);
+    }
+  }
+
+  async function getNote(noteId: string) {
+    try {
+      const response = await fetch(
+        `${FAUCET_API_URL}/get_note?` +
+          new URLSearchParams({
+            note_id: noteId,
+          })
+      );
+
+      if (!response.ok) {
+        const message = await response.text();
+        setStatus(`Error getting note: ${message}`);
+        setIsLoading(false);
+        return;
+      }
+
+      const text = await response.text();
+      const json = JSON.parse(text);
+      const noteData = json.data_base64;
+      return noteData;
+    } catch (error) {
+      setStatus('Error: ' + (error as Error).message);
       console.error('Error:', error);
     }
   }
@@ -210,7 +248,11 @@ const MintPage: NextPageWithLayout = () => {
     const isPrivateNote = noteType === 'private';
     setStatus('Minting note from remote faucet...');
     try {
-      const { challenge, nonce } = await powChallenge();
+      const powResponse = await powChallenge(amount! * 10 ** decimals);
+      if (!powResponse) {
+        return;
+      }
+      const { challenge, nonce } = powResponse;
 
       const noteResponse = await requestNote(
         isPrivateNote,
@@ -218,11 +260,17 @@ const MintPage: NextPageWithLayout = () => {
         challenge,
         nonce
       );
+      if (!noteResponse) {
+        return;
+      }
       let transaction: ConsumeTransaction;
 
       if (isPrivateNote) {
+        // Fetch note data from the faucet
+        const noteData = await getNote(noteResponse!.noteId);
+
         // Decode base64
-        const binaryString = atob(noteResponse!.noteData);
+        const binaryString = atob(noteData);
         const byteArray = new Uint8Array(binaryString.length);
         for (let i = 0; i < binaryString.length; i++) {
           byteArray[i] = binaryString.charCodeAt(i);
@@ -231,18 +279,18 @@ const MintPage: NextPageWithLayout = () => {
         const buffer = new ArrayBuffer(byteArray.byteLength);
         const bytesCopy = new Uint8Array(buffer);
         bytesCopy.set(byteArray);
-        const noteId = await client.importNoteFile(byteArray);
+        const noteFile = Miden.NoteFile.deserialize(byteArray);
+        const noteId = await client.importNoteFile(noteFile);
         transaction = new ConsumeTransaction(
-          faucetState!.id,
-          noteId,
+          faucetId,
+          noteId.toString(),
           noteType,
           amount! * 10 ** decimals,
           bytesCopy
         );
-        console.log(transaction);
       } else {
         transaction = new ConsumeTransaction(
-          faucetState!.id,
+          faucetId,
           noteResponse!.noteId,
           noteType,
           amount! * 10 ** decimals
@@ -275,7 +323,7 @@ const MintPage: NextPageWithLayout = () => {
       />
       <Base>
         <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
-          {`Mint from Miden Faucet${faucetState ? `: ${faucetState.id}` : ''}`}
+          {`Mint from Miden Faucet: ${faucetId}`}
         </div>
         <form
           className="relative flex w-full flex-col rounded-full md:w-auto"
