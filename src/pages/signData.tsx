@@ -24,7 +24,7 @@ function bytesToHex(u8: Uint8Array): string {
 }
 
 const SignDataPage: NextPageWithLayout = () => {
-  const { accountId, signBytes } = useWallet();
+  const { address, signBytes } = useWallet();
   const { Miden, createClient } = useMidenSdk();
 
   let [client, setClient] = useState<any>(null);
@@ -59,7 +59,7 @@ const SignDataPage: NextPageWithLayout = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
     if (!Miden || !client) return;
 
     setIsLoading(true);
@@ -187,7 +187,7 @@ const SignDataPage: NextPageWithLayout = () => {
           onSubmit={handleSubmit}
           className="flex flex-col items-center justify-center space-y-4"
         >
-          {!accountId ? (
+          {!address ? (
             <Button
               disabled
               color="primary"
@@ -197,7 +197,7 @@ const SignDataPage: NextPageWithLayout = () => {
             </Button>
           ) : (
             <Button
-              disabled={!accountId || !Miden || !client}
+              disabled={!address || !Miden || !client}
               type="submit"
               color="primary"
               isLoading={isLoading}

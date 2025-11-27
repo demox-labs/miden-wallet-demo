@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { useWindowScroll } from '@/lib/hooks/use-window-scroll';
-import Hamburger from '@/components/ui/hamburger';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import { useDrawer } from '@/components/drawer-views/context';
 import Sidebar from '@/layouts/dashboard/_sidebar';

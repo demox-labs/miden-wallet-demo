@@ -14,7 +14,7 @@ import Button from '@/components/ui/button';
 import { MIDEN_METADATA } from '@/types';
 
 const SendPage: NextPageWithLayout = () => {
-  const { wallet, accountId } = useWallet();
+  const { wallet, address } = useWallet();
 
   let [toAddress, setToAddress] = useState('');
   let [amount, setAmount] = useState<number | undefined>(undefined);
@@ -24,10 +24,10 @@ const SendPage: NextPageWithLayout = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
 
     const midenTransaction = new SendTransaction(
-      accountId,
+      address,
       toAddress,
       faucetId,
       sharePrivately ? 'private' : 'public',
@@ -142,12 +142,12 @@ const SendPage: NextPageWithLayout = () => {
           </label>
           <div className="flex items-center justify-center">
             <Button
-              disabled={!accountId || !toAddress || !amount || !faucetId}
+              disabled={!address || !toAddress || !amount || !faucetId}
               type="submit"
               color="primary"
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             >
-              {!accountId ? 'Connect Your Wallet' : 'Submit'}
+              {!address ? 'Connect Your Wallet' : 'Submit'}
             </Button>
           </div>
         </form>

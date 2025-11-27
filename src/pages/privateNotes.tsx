@@ -24,7 +24,7 @@ type NoteFilterOption = {
 };
 
 const PrivateNotesPage: NextPageWithLayout = () => {
-  const { accountId, requestPrivateNotes } = useWallet();
+  const { address, requestPrivateNotes } = useWallet();
   const { Miden, createClient } = useMidenSdk();
 
   const [noteFilterType, setNoteFilterType] = useState<number | undefined>(
@@ -70,7 +70,7 @@ const PrivateNotesPage: NextPageWithLayout = () => {
       event?.preventDefault?.();
       try {
         setError(null);
-        if (!accountId) throw new WalletNotConnectedError();
+        if (!address) throw new WalletNotConnectedError();
 
         let idsArg: string[] | undefined = undefined;
         if (Miden && noteFilterType === Miden.NoteFilterTypes.List) {
@@ -107,7 +107,7 @@ const PrivateNotesPage: NextPageWithLayout = () => {
         setLoading(false);
       }
     },
-    [accountId, noteFilterType, requestPrivateNotes, noteIds, Miden]
+    [address, noteFilterType, requestPrivateNotes, noteIds, Miden]
   );
 
   const handleNoteFilterTypeChange = useCallback(
@@ -180,7 +180,7 @@ const PrivateNotesPage: NextPageWithLayout = () => {
               )}
           </div>
           <div className="mt-4 flex items-center justify-center">
-            {!accountId ? (
+            {!address ? (
               <Button
                 color="primary"
                 className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"

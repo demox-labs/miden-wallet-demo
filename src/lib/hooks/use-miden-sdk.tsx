@@ -5,7 +5,6 @@ import {
   useContext,
   useEffect,
   useState,
-  useRef,
 } from 'react';
 
 import * as MidenSdk from '@demox-labs/miden-sdk/dist/index';

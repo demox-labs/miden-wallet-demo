@@ -28,7 +28,7 @@ import { hexToBytes } from '@noble/hashes/utils.js';
 const tokenAmountOptions = [100, 500, 1000];
 
 const MintPage: NextPageWithLayout = () => {
-  const { wallet, accountId } = useWallet();
+  const { wallet, address } = useWallet();
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState<string | undefined>();
   const [faucetState, setFaucetState] = useState<FaucetMetadata | undefined>();
@@ -145,7 +145,7 @@ const MintPage: NextPageWithLayout = () => {
       powResponse = await fetch(
         `${FAUCET_API_URL}/pow?` +
           new URLSearchParams({
-            account_id: accountId!,
+            account_id: address!,
             amount: amount.toString(),
           }),
         {
@@ -179,7 +179,7 @@ const MintPage: NextPageWithLayout = () => {
   ) {
     try {
       const params = {
-        account_id: accountId!,
+        account_id: address!,
         is_private_note: String(isPrivateNote),
         asset_amount: amount.toString(),
         challenge: challenge,
@@ -241,7 +241,7 @@ const MintPage: NextPageWithLayout = () => {
 
   const handleSubmit = async (event: any, noteType: NoteTypeString) => {
     event.preventDefault();
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
     if (!Miden || !client) return;
     setIsLoading(true);
 
@@ -347,7 +347,7 @@ const MintPage: NextPageWithLayout = () => {
             </select>
             <div className="flex items-center justify-center">
               <Button
-                disabled={!accountId || !amount || !Miden || !client}
+                disabled={!address || !amount || !Miden || !client}
                 type="submit"
                 color="primary"
                 className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
@@ -356,11 +356,11 @@ const MintPage: NextPageWithLayout = () => {
                   await handleSubmit(event, 'public');
                 }}
               >
-                {!accountId ? 'Connect Your Wallet' : 'Mint Public Note'}
+                {!address ? 'Connect Your Wallet' : 'Mint Public Note'}
               </Button>
-              {accountId && (
+              {address && (
                 <Button
-                  disabled={!accountId || !amount || !Miden || !client}
+                  disabled={!address || !amount || !Miden || !client}
                   type="submit"
                   color="primary"
                   className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"

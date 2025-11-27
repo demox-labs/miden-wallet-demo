@@ -13,7 +13,7 @@ import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { NextPageWithLayout } from '@/types';
 
 const AssetsPage: NextPageWithLayout = () => {
-  const { accountId, requestAssets } = useWallet();
+  const { address, requestAssets } = useWallet();
 
   const [loading, setLoading] = useState(false);
   const [assets, setAssets] = useState<Asset[]>([]);
@@ -24,7 +24,7 @@ const AssetsPage: NextPageWithLayout = () => {
     event?.preventDefault?.();
     try {
       setError(null);
-      if (!accountId) throw new WalletNotConnectedError();
+      if (!address) throw new WalletNotConnectedError();
 
       setLoading(true);
       console.log('Requesting assets...');
@@ -48,7 +48,7 @@ const AssetsPage: NextPageWithLayout = () => {
       />
       <Base>
         <div className="flex items-center justify-center">
-          {!accountId ? (
+          {!address ? (
             <Button
               color="primary"
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"

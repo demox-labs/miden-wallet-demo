@@ -17,7 +17,7 @@ import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
 import { FaucetMetadata, NextPageWithLayout } from '@/types';
 
 const CustomTransactionPage: NextPageWithLayout = () => {
-  const { accountId, requestTransaction } = useWallet();
+  const { address, requestTransaction } = useWallet();
   const { Miden, createClient } = useMidenSdk();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -83,17 +83,17 @@ const CustomTransactionPage: NextPageWithLayout = () => {
 
   async function createCustomTransaction(): Promise<CustomTransaction> {
     console.log('Creating custom transaction... 1');
-    console.log('accountId', accountId);
+    console.log('address', address);
     console.log('toAddress', toAddress);
     console.log('faucetState', faucetState);
     console.log('client', client);
 
     // Validate inputs
-    if (!accountId || !toAddress || !faucetState || !client)
+    if (!address || !toAddress || !faucetState || !client)
       throw new WalletNotConnectedError();
 
     console.log('Creating custom transaction... 1.5');
-    const walletAccountId = bech32ToAccountId(accountId);
+    const walletAccountId = bech32ToAccountId(address);
     console.log('custom transaction 2');
     const recipientAccountId = bech32ToAccountId(toAddress);
     console.log('custom transaction 3');
@@ -272,7 +272,7 @@ const CustomTransactionPage: NextPageWithLayout = () => {
     console.log('handleSubmit called');
     event.preventDefault();
     console.log('handleSubmit called 2');
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
     if (!Miden || !client) return;
     setIsLoading(true);
 
@@ -317,7 +317,7 @@ const CustomTransactionPage: NextPageWithLayout = () => {
             />
           </label>
           <Button
-            disabled={!accountId || !toAddress || !Miden || !client}
+            disabled={!address || !toAddress || !Miden || !client}
             type="submit"
             color="primary"
             isLoading={isLoading}

@@ -53,7 +53,7 @@ function hexToBytes(hex: string): Uint8Array | null {
 }
 
 const SignPage: NextPageWithLayout = () => {
-  const { accountId, publicKey: walletPublicKey, signBytes } = useWallet();
+  const { address, publicKey: walletPublicKey, signBytes } = useWallet();
   const { Miden } = useMidenSdk();
 
   const [message, setMessage] = useState<HexAndBytes>({ hex: '', bytes: null });
@@ -123,7 +123,7 @@ const SignPage: NextPageWithLayout = () => {
   const onGenerate = useCallback(
     async (event: React.SyntheticEvent) => {
       event?.preventDefault?.();
-      if (!accountId) throw new WalletNotConnectedError();
+      if (!address) throw new WalletNotConnectedError();
       if (!Miden) return;
 
       const { hex, bytes } = generateRandomWord();
@@ -131,7 +131,7 @@ const SignPage: NextPageWithLayout = () => {
       setSignature({ hex: '', bytes: null });
       resetVerificationFeedback();
     },
-    [resetVerificationFeedback, accountId, Miden, generateRandomWord]
+    [resetVerificationFeedback, address, Miden, generateRandomWord]
   );
 
   const handleCopyToClipboard = () => {
@@ -143,7 +143,7 @@ const SignPage: NextPageWithLayout = () => {
 
   const handleSubmit = async (event?: React.SyntheticEvent) => {
     event?.preventDefault?.();
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
     if (!message.bytes) {
       setVerificationStatus('error');
       setVerificationMessage(
@@ -353,12 +353,12 @@ const SignPage: NextPageWithLayout = () => {
           </Button>
 
           <Button
-            disabled={!accountId || !message.bytes}
+            disabled={!address || !message.bytes}
             type="submit"
             color="primary"
             className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
           >
-            {!accountId ? 'Connect Your Wallet' : 'Sign'}
+            {!address ? 'Connect Your Wallet' : 'Sign'}
           </Button>
         </form>
 

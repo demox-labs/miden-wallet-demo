@@ -25,7 +25,7 @@ interface FaucetConfig {
 }
 
 const FaucetPage: NextPageWithLayout = () => {
-  const { accountId, wallet } = useWallet();
+  const { address, wallet } = useWallet();
   const { Miden, createClient, createFaucet } = useMidenSdk();
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [client, setClient] = useState<WebClient | null>(null);
@@ -34,7 +34,7 @@ const FaucetPage: NextPageWithLayout = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateFaucet = async (faucetConfig: FaucetConfig) => {
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
     if (!Miden) return;
     setIsLoading(true);
 
@@ -67,18 +67,18 @@ const FaucetPage: NextPageWithLayout = () => {
 
   const handleSubmitNote = async (
     event: any,
-    address: string,
+    recipientAddress: string,
     amount: number,
     sharePrivately: boolean
   ) => {
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
     if (!Miden || !client || !faucetId) return;
     setIsLoading(true);
 
     try {
       await client.syncState();
 
-      const midenAccountId = Miden.AccountId.fromHex(accountId);
+      const midenAccountId = Miden.Address.fromBech32(address).accountId();
       const noteType = sharePrivately
         ? Miden.NoteType.Private
         : Miden.NoteType.Public;
@@ -110,7 +110,7 @@ const FaucetPage: NextPageWithLayout = () => {
         .id();
       const noteIdString = noteId.toString();
 
-      if (address === accountId) {
+      if (recipientAddress === address) {
         try {
           let transaction: ConsumeTransaction;
           if (sharePrivately) {
@@ -198,7 +198,7 @@ const FaucetPage: NextPageWithLayout = () => {
             onStatusChange={setStatus}
             onSubmitNote={handleSubmitNote}
             isLoading={isLoading}
-            isDisabled={!accountId || !Miden || !client || !faucetId}
+            isDisabled={!address || !Miden || !client || !faucetId}
           />
         )}
         {status && (

@@ -13,7 +13,7 @@ import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import type { NextPageWithLayout } from '@/types';
 
 const ConsumableNotesPage: NextPageWithLayout = () => {
-  const { accountId, requestConsumableNotes } = useWallet();
+  const { address, requestConsumableNotes } = useWallet();
 
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState<InputNoteDetails[]>([]);
@@ -24,7 +24,7 @@ const ConsumableNotesPage: NextPageWithLayout = () => {
     event?.preventDefault?.();
     try {
       setError(null);
-      if (!accountId) throw new WalletNotConnectedError();
+      if (!address) throw new WalletNotConnectedError();
 
       setLoading(true);
       console.log('Requesting consumable notes...');
@@ -48,7 +48,7 @@ const ConsumableNotesPage: NextPageWithLayout = () => {
       />
       <Base>
         <div className="flex items-center justify-center">
-          {!accountId ? (
+          {!address ? (
             <Button
               color="primary"
               className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"

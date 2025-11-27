@@ -24,8 +24,8 @@ export default function NoteForm({
   isLoading,
   isDisabled,
 }: NoteFormProps) {
-  const { accountId } = useWallet();
-  const [address, setAddress] = useState<string>('');
+  const { address } = useWallet();
+  const [recipientAddress, setRecipientAddress] = useState<string>('');
   const [amount, setAmount] = useState<number | undefined>(100);
   const [sharePrivately, setSharePrivately] = useState<boolean>(false);
 
@@ -36,13 +36,13 @@ export default function NoteForm({
 
   const handleAddressChange = (event: FormEvent<Element>) => {
     event.preventDefault();
-    setAddress((event.target as HTMLInputElement).value);
+    setRecipientAddress((event.target as HTMLInputElement).value);
   };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
-      await onSubmitNote(event, address, amount!, sharePrivately);
+      await onSubmitNote(event, recipientAddress, amount!, sharePrivately);
     } catch (error: any) {
       onStatusChange(`Error: ${error.message}`);
     }
@@ -65,7 +65,7 @@ export default function NoteForm({
             placeholder="To address (e.g., 0x0b8a174d47e79b1000088ad423474e)"
             autoComplete="off"
             onChange={handleAddressChange}
-            value={address}
+            value={recipientAddress}
           />
           <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
             <Check className="h-4 w-4" />
@@ -83,14 +83,14 @@ export default function NoteForm({
             <Check className="h-4 w-4" />
           </span>
           <Button
-            disabled={isDisabled || !amount || !address}
+            disabled={isDisabled || !amount || !recipientAddress}
             name="public"
             type="submit"
             color="primary"
             className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             isLoading={isLoading}
           >
-            {!accountId
+            {!address
               ? 'Connect Your Wallet'
               : `Mint ${sharePrivately ? 'Private' : 'Public'} Note`}
           </Button>

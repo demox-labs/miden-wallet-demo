@@ -12,7 +12,7 @@ import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
 import { NextPageWithLayout } from '@/types';
 
 const ImportPrivateNotePage: NextPageWithLayout = () => {
-  const { accountId, importPrivateNote } = useWallet();
+  const { address, importPrivateNote } = useWallet();
   const { Miden, createClient } = useMidenSdk();
 
   let [client, setClient] = useState<WebClient | null>(null);
@@ -76,7 +76,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if (!accountId) throw new WalletNotConnectedError();
+    if (!address) throw new WalletNotConnectedError();
     if (!Miden || !client || !noteData) return;
 
     setIsLoading(true);
@@ -119,7 +119,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
             </label>
             <span>{fileName || 'No file selected'}</span>
           </div>
-          {!accountId ? (
+          {!address ? (
             <Button
               disabled
               color="primary"
@@ -129,7 +129,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
             </Button>
           ) : (
             <Button
-              disabled={!accountId || !noteData || !Miden || !client}
+              disabled={!address || !noteData || !Miden || !client}
               type="submit"
               color="primary"
               isLoading={isLoading}
