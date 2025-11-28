@@ -4,6 +4,12 @@ import cn from 'classnames';
 import { useMeasure } from '@/lib/hooks/use-measure';
 import ActiveLink from '@/components/ui/links/active-link';
 import { Icon, IconName } from '../icons';
+import { motion } from 'framer-motion';
+import type { MotionProps } from 'framer-motion';
+
+const MotionSpan = motion.span as unknown as React.FC<
+  React.HTMLAttributes<HTMLSpanElement> & MotionProps
+>;
 
 type MenuItemProps = {
   name: string;
@@ -56,6 +62,12 @@ export function MenuItem({ name, icon, href, dropdownItems }: MenuItemProps) {
             >
               <Icon name={IconName.ChevronDown} />
             </span>
+            {isChildrenActive && (
+              <MotionSpan
+                className="absolute bottom-0 left-0 right-0 h-full w-full rounded-lg bg-gray-100 shadow-large"
+                layoutId="menu-item-active-indicator"
+              />
+            )}
           </div>
 
           <div
@@ -87,6 +99,12 @@ export function MenuItem({ name, icon, href, dropdownItems }: MenuItemProps) {
         >
           <span className="relative z-[1] ltr:mr-3 rtl:ml-3">{icon}</span>
           <span className="relative z-[1]"> {name}</span>
+          {href === pathname && (
+            <MotionSpan
+              className="absolute bottom-0 left-0 right-0 h-full w-full rounded-lg bg-gray-100"
+              layoutId="menu-item-active-indicator"
+            />
+          )}
         </ActiveLink>
       )}
     </div>
