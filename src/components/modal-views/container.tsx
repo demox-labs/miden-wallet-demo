@@ -4,8 +4,9 @@ import { useRouter } from 'next/router';
 import { Dialog, DialogPanel, DialogBackdrop } from '@/components/ui/dialog';
 import { Transition, TransitionChild } from '@/components/ui/transition';
 import Button from '@/components/ui/button';
-import { Close } from '@/components/icons/close';
 import { useModal, MODAL_VIEW } from '@/components/modal-views/context';
+import { Icon, IconName } from '../icons';
+
 // dynamic imports
 const SearchView = dynamic(() => import('@/components/search/view'));
 
@@ -64,7 +65,7 @@ export default function ModalContainer() {
             onClick={closeModal}
             className="opacity-50 hover:opacity-80 "
           >
-            <Close className="h-auto w-[13px]" />
+            <Icon name={IconName.Close} />
           </Button>
         </div>
 

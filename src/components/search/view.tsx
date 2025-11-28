@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react';
-import { SearchIcon } from '@/components/icons/search';
+import { Icon, IconName } from '../icons';
 import { Transition } from '@/components/ui/transition';
 import AnchorLink from '@/components/ui/links/anchor-link';
 import { useClickAway } from '@/lib/hooks/use-click-away';
 import { useModal } from '@/components/modal-views/context';
-import { Close } from '@/components/icons/close';
 
 type TagProps = {
   label: string;
@@ -95,14 +94,14 @@ export function SearchFrom({ placeholder = 'Search...' }: SearchFromProps) {
             autoComplete="off"
           />
           <span className="pointer-events-none absolute flex h-full w-10 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-white sm:w-14 sm:ltr:pl-3 sm:rtl:pr-3 xl:w-16">
-            <SearchIcon className="h-4 w-4" />
+            <Icon name={IconName.Search} />
           </span>
         </label>
         <div
           className="flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white ltr:ml-3.5 rtl:ml-3.5 dark:bg-light-dark xl:hidden"
           onClick={() => closeModal()}
         >
-          <Close className="h-auto w-3 text-gray-600 dark:text-white" />
+          <Icon name={IconName.Close} />
         </div>
       </form>
 

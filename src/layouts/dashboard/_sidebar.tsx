@@ -1,74 +1,65 @@
 import cn from 'classnames';
-import Logo from '@/components/ui/logo';
 import { MenuItem } from '@/components/ui/collapsible-menu';
 import Scrollbar from '@/components/ui/scrollbar';
 import Button from '@/components/ui/button';
 import routes from '@/config/routes';
 import { useDrawer } from '@/components/drawer-views/context';
-import { ChevronForward } from '@/components/icons/chevron-forward';
-import { ChevronDown } from '@/components/icons/chevron-down';
-import { HomeIcon } from '@/components/icons/home';
-import { Close } from '@/components/icons/close';
-import { OvenIcon } from '@/components/icons/oven';
-import { Sun } from '@/components/icons/sun';
-import { FarmIcon } from '@/components/icons/farm';
-import { Moon } from '@/components/icons/moon';
-import { Unlocked } from '@/components/icons/unlocked';
+import { Icon, IconName } from '@/components/icons';
 
 const menuItems = [
   {
     name: 'Getting Started',
-    icon: <HomeIcon />,
+    icon: <Icon name={IconName.Home} size="xs" />,
     href: routes.gettingStarted,
   },
   {
     name: 'Mint',
-    icon: <Sun />,
+    icon: <Icon name={IconName.Mint} size="xs" />,
     href: routes.mint,
   },
   {
     name: 'Send',
-    icon: <ChevronForward />,
+    icon: <Icon name={IconName.Send} size="xs" />,
     href: routes.send,
   },
   {
     name: 'Assets',
-    icon: <FarmIcon />,
+    icon: <Icon name={IconName.Assets} size="xs" />,
     href: routes.assets,
   },
   {
     name: 'Create Faucet',
-    icon: <OvenIcon />,
+    icon: <Icon name={IconName.CreateFaucet} size="xs" />,
     href: routes.faucet,
   },
   {
     name: 'Private Notes',
-    icon: <OvenIcon />,
+    icon: <Icon name={IconName.PrivateNotes} size="xs" />,
     href: routes.privateNotes,
   },
   {
     name: 'Consumable Notes',
-    icon: <OvenIcon />,
+    icon: <Icon name={IconName.ConsumableNotes} size="xs" />,
     href: routes.consumableNotes,
   },
   {
     name: 'Sign',
-    icon: <Sun />,
+    icon: <Icon name={IconName.Sign} size="xs" />,
     href: routes.sign,
   },
   {
     name: 'Custom Transaction',
-    icon: <Moon />,
+    icon: <Icon name={IconName.CustomTransaction} size="xs" />,
     href: routes.customTransaction,
   },
   {
     name: 'Import Private Note',
-    icon: <ChevronDown />,
+    icon: <Icon name={IconName.ImportNote} size="xs" />,
     href: routes.importPrivateNote,
   },
   {
     name: 'Sign Data',
-    icon: <Unlocked />,
+    icon: <Icon name={IconName.SignData} size="xs" />,
     href: routes.signData,
   },
 ];
@@ -96,7 +87,7 @@ export default function Sidebar({ className }: SidebarProps) {
             size="small"
             onClick={closeDrawer}
           >
-            <Close className="h-auto w-2.5" />
+            <Icon name={IconName.Close} />
           </Button>
         </div>
       </div>

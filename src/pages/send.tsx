@@ -9,7 +9,6 @@ import {
   SendTransaction,
   WalletNotConnectedError,
 } from '@demox-labs/miden-wallet-adapter-base';
-import { Check } from '@/components/icons/check';
 import Button from '@/components/ui/button';
 import { MIDEN_METADATA } from '@/types';
 
@@ -85,9 +84,6 @@ const SendPage: NextPageWithLayout = () => {
               }
               value={toAddress}
             />
-            <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-              <Check className="h-4 w-4" />
-            </span>
           </label>
           <label className="flex w-full items-center py-4">
             <input
@@ -99,9 +95,6 @@ const SendPage: NextPageWithLayout = () => {
               }
               value={faucetId}
             />
-            <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-              <Check className="h-4 w-4" />
-            </span>
           </label>
           <label className="flex w-full items-center py-4">
             <input
@@ -113,9 +106,6 @@ const SendPage: NextPageWithLayout = () => {
               }
               value={amount}
             />
-            <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-              <Check className="h-4 w-4" />
-            </span>
           </label>
           <label className="flex w-full items-center py-4">
             <input
@@ -127,9 +117,6 @@ const SendPage: NextPageWithLayout = () => {
               }
               value={recallBlocks}
             />
-            <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-              <Check className="h-4 w-4" />
-            </span>
           </label>
           <label className="flex items-center py-4">
             <span className="mr-8 text-sm text-white">Share Privately</span>

@@ -1,7 +1,7 @@
 import { useState, FormEvent } from 'react';
 import Button from '@/components/ui/button';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import { Check } from '@/components/icons/check';
+import { Icon, IconName } from '@/components/icons';
 import type { AccountId } from '@demox-labs/miden-sdk';
 
 interface NoteFormProps {
@@ -68,7 +68,7 @@ export default function NoteForm({
             value={recipientAddress}
           />
           <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-            <Check className="h-4 w-4" />
+            <Icon name={IconName.Check} />
           </span>
         </label>
         <label className="flex w-full items-center py-4 text-sm font-medium text-white">
@@ -80,7 +80,7 @@ export default function NoteForm({
             value={amount}
           />
           <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-            <Check className="h-4 w-4" />
+            <Icon name={IconName.Check} />
           </span>
           <Button
             disabled={isDisabled || !amount || !recipientAddress}

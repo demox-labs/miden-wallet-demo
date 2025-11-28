@@ -11,12 +11,7 @@ const Logo: React.FC<React.SVGAttributes<{}>> = (props) => {
   return (
     <AnchorLink href="https://www.miden.fi" className="flex" {...props}>
       <span className="relative flex overflow-hidden">
-        {isMounted && isDarkMode && (
-          <Image src={logo} alt="Miden Wallet" priority />
-        )}
-        {isMounted && !isDarkMode && (
-          <Image src={logo} alt="Miden Wallet" priority />
-        )}
+        <Image src={logo} alt="Miden Wallet" width={237} height={24} priority />
       </span>
     </AnchorLink>
   );

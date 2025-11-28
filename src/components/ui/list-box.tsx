@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { Listbox as HeadlessListbox } from '@headlessui/react';
 import cn from 'classnames';
 import { Transition } from '@/components/ui/transition';
-import { ChevronDown } from '@/components/icons/chevron-down';
+import { Icon, IconName } from '../icons';
 
 export type ListboxOption = {
   name: string;
@@ -46,7 +46,7 @@ export default function Listbox({
           )}
         >
           <div className="flex items-center">{selectedOption?.name}</div>
-          <ChevronDown />
+          <Icon name={IconName.ChevronDown} />
         </HeadlessListbox.Button>
         <Transition
           as={Fragment}

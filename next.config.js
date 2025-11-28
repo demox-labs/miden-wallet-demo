@@ -80,6 +80,46 @@ module.exports = withPWA({
     });
     config.resolve.alias = alias;
 
+    // Enable CRA-like SVG imports:
+    // - Named export { ReactComponent } is a React component
+    // - Default export remains the URL
+    const fileLoaderRule = config.module.rules.find(
+      (rule) => rule.test && rule.test.test && rule.test.test('.svg')
+    );
+    if (fileLoaderRule) {
+      fileLoaderRule.exclude = /\.svg$/i;
+    }
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.tsx?$/,
+      use: [
+        {
+          loader: '@svgr/webpack',
+          options: {
+            svgo: true,
+            icon: true,
+            svgoConfig: {
+              plugins: [
+                { name: 'removeViewBox', active: false },
+                { name: 'removeDimensions', active: true },
+              ],
+            },
+            titleProp: true,
+            ref: true,
+            exportType: 'named',
+            namedExport: 'ReactComponent',
+          },
+        },
+        {
+          loader: 'url-loader',
+          options: {
+            limit: 8192,
+            name: 'static/media/[name].[hash:8].[ext]',
+          },
+        },
+      ],
+    });
+
     return config;
   },
 });

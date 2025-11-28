@@ -4,10 +4,7 @@ import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import Button from '@/components/ui/button';
 import routes from '@/config/routes';
 import { WalletMultiButton } from '@demox-labs/miden-wallet-adapter-reactui';
-import { Wallet } from '@/components/icons/wallet';
-import { Download } from '@/components/icons/download';
-import { Links } from '@/components/icons/links';
-import { Coins } from '@/components/icons/coins';
+import { Icon, IconName } from '@/components/icons';
 
 type SectionProps = {
   title: string;
@@ -31,7 +28,9 @@ export function Section({
             className={`flex-start flex flex-row items-start gap-[40px] ltr:mr-6 rtl:ml-6 ${sectionWidth}`}
           >
             <div className="flex h-[70px] w-[70px] items-center justify-center rounded-full bg-[#FAE6D9] p-2">
-              <span>{icon}</span>
+              <span className="inline-flex h-6 w-6 items-center justify-center [&>svg]:h-6 [&>svg]:w-6">
+                {icon}
+              </span>
             </div>
             <div>
               <span className="block text-xs font-medium tracking-wider text-gray-900 dark:text-white sm:text-sm">
@@ -59,7 +58,7 @@ const GettingStartedPage: NextPageWithLayout = () => {
         <Section
           title="01. Get a Wallet"
           bgColor="bg-white"
-          icon={<Download />}
+          icon={<Icon name={IconName.Download} />}
         >
           Download and install a Miden-compatible wallet. We recommend Miden
           Wallet
@@ -72,7 +71,7 @@ const GettingStartedPage: NextPageWithLayout = () => {
         <Section
           title="02. Create a New Wallet Account"
           bgColor="bg-white"
-          icon={<Wallet />}
+          icon={<Icon name={IconName.Wallet} />}
         >
           <ol className="list-decimal space-y-1 pl-5">
             <li>Once installed - click on &quot;Create a new wallet&quot;.</li>
@@ -86,7 +85,7 @@ const GettingStartedPage: NextPageWithLayout = () => {
         <Section
           title="03. Connect Your Wallet"
           bgColor="bg-white"
-          icon={<Links />}
+          icon={<Icon name={IconName.Links} />}
         >
           Now that you have your wallet setup, connect it to our site by
           clicking the button below <br />
@@ -96,7 +95,7 @@ const GettingStartedPage: NextPageWithLayout = () => {
         <Section
           title="04. Fund Your Wallet"
           bgColor="bg-white"
-          icon={<Coins />}
+          icon={<Icon name={IconName.Coins} />}
         >
           Click on the button below to mint funds for your wallet
           <br /> <br />

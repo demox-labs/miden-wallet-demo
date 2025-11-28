@@ -17,10 +17,7 @@ import '@/assets/css/scrollbar.css';
 import '@/assets/css/globals.css';
 import '@/assets/css/range-slider.css';
 import { WalletProvider } from '@demox-labs/miden-wallet-adapter-react';
-import {
-  AllowedPrivateData,
-  PrivateDataPermission,
-} from '@demox-labs/miden-wallet-adapter-base';
+import { PrivateDataPermission } from '@demox-labs/miden-wallet-adapter-base';
 import { WalletModalProvider } from '@demox-labs/miden-wallet-adapter-reactui';
 import { MidenWalletAdapter } from '@demox-labs/miden-wallet-adapter-miden';
 import { MidenSdkProvider } from '@/lib/hooks/use-miden-sdk';

@@ -7,8 +7,7 @@ import type { Word } from '@demox-labs/miden-sdk';
 
 import Base from '@/components/ui/base';
 import Button from '@/components/ui/button';
-import { Check } from '@/components/icons/check';
-import { Copy } from '@/components/icons/copy';
+import { Icon, IconName } from '@/components/icons';
 import DashboardLayout from '@/layouts/dashboard/_dashboard';
 import { useCopyToClipboard } from '@/lib/hooks/use-copy-to-clipboard';
 import { useMidenSdk } from '@/lib/hooks/use-miden-sdk';
@@ -410,15 +409,21 @@ const SignPage: NextPageWithLayout = () => {
                     onClick={handleCopyToClipboard}
                     disabled={!signature.hex}
                   >
-                    <span className="inline-flex items-center gap-2 text-xs sm:text-sm">
+                    <span className="inline-flex items-center gap-2 text-xs leading-none sm:text-sm">
                       {copyButtonStatus ? (
                         <>
-                          <Check className="h-auto w-3.5 text-green-500" />
+                          <Icon
+                            name={IconName.Check}
+                            className="h-4 w-4 shrink-0 self-center"
+                          />
                           Copied
                         </>
                       ) : (
                         <>
-                          <Copy className="h-auto w-3.5" />
+                          <Icon
+                            name={IconName.Copy}
+                            className="h-4 w-4 shrink-0 self-center"
+                          />
                           Copy
                         </>
                       )}
