@@ -47,7 +47,11 @@ const AssetsPage: NextPageWithLayout = () => {
         description="Request Assets from the Miden Wallet"
       />
       <Base>
-        <div className="flex items-center justify-center">
+        <h2 className="text-2xl font-bold">Assets</h2>
+        <p className="text-sm text-gray-500">
+          View all assets and balances in your account
+        </p>
+        <div className="mt-4 flex items-start justify-start">
           {!address ? (
             <Button
               color="primary"
@@ -73,7 +77,6 @@ const AssetsPage: NextPageWithLayout = () => {
         {/* Assets list */}
         {assets.length > 0 && (
           <div className="mt-6">
-            <h2 className="mb-2 text-lg font-semibold">Assets</h2>
             <ul className="space-y-2">
               {assets.map((asset, i) => (
                 <li
@@ -81,12 +84,12 @@ const AssetsPage: NextPageWithLayout = () => {
                   className="rounded-md border p-3 dark:border-gray-700"
                 >
                   <div className="space-y-1">
-                    <div>
-                      <strong>Faucet ID:</strong> {asset.faucetId}
-                    </div>
-                    <div>
-                      <strong>Amount:</strong> {asset.amount}
-                    </div>
+                    <div className="font-bold">Faucet ID</div>
+                    <p className="text-sm">{asset.faucetId}</p>
+                  </div>
+                  <div className="mt-3 space-y-1">
+                    <div className="font-bold">Amount</div>
+                    <p className="text-sm">{asset.amount}</p>
                   </div>
                 </li>
               ))}

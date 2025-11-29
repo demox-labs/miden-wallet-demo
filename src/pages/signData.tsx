@@ -183,9 +183,13 @@ const SignDataPage: NextPageWithLayout = () => {
         description="Sign data with the Miden Wallet"
       />
       <Base>
+        <h2 className="text-2xl font-bold">Sign Data</h2>
+        <p className="text-sm text-gray-500">
+          Sign arbitrary data for verification
+        </p>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center justify-center space-y-4"
+          className="mt-4 flex flex-col items-start justify-center space-y-4"
         >
           {!address ? (
             <Button

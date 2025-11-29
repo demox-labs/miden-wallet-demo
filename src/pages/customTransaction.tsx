@@ -301,14 +301,16 @@ const CustomTransactionPage: NextPageWithLayout = () => {
         description="Request Custom Transaction from the Miden Wallet"
       />
       <Base>
-        <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
-          {`Custom Transaction`}
-        </div>
-        <form onSubmit={handleSubmit}>
-          <label className="flex w-full items-center py-4">
+        <h2 className="text-2xl font-bold">Custom Transaction</h2>
+        <p className="text-sm text-gray-500">
+          Send custom transactions from your account
+        </p>
+        <form onSubmit={handleSubmit} className="mt-4">
+          <label className="flex w-full flex-col items-start justify-between py-4">
+            <p className="mb-2">To Address</p>
             <input
-              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-              placeholder="To address (e.g., mtst1ap2ckkxeufynqyptjwr0ylctvgzwhe30_qruqqypuyph)"
+              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+              placeholder="e.g., mtst1apuf6ly9ssj4yyzvn6jq52vupv8qaxem_qruqqypuyph"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleToAddressChange(event)
@@ -316,19 +318,21 @@ const CustomTransactionPage: NextPageWithLayout = () => {
               value={toAddress}
             />
           </label>
-          <Button
-            disabled={!address || !toAddress || !Miden || !client}
-            type="submit"
-            color="primary"
-            isLoading={isLoading}
-            className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
-            onClick={handleSubmit}
-          >
-            Generate Custom Transaction
-          </Button>
+          <div className="mt-4 flex items-start justify-start">
+            <Button
+              disabled={!address || !toAddress || !Miden || !client}
+              type="submit"
+              color="primary"
+              isLoading={isLoading}
+              className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+              onClick={handleSubmit}
+            >
+              {!address ? 'Connect Your Wallet' : 'Submit Custom Transaction'}
+            </Button>
+          </div>
         </form>
         {status && (
-          <div className="mt-5 inline-flex w-full items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
+          <div className="mt-5 inline-flex w-full items-center rounded-full bg-white dark:bg-light-dark xl:mt-6">
             <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
               {status}
             </div>

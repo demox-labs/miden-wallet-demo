@@ -25,7 +25,7 @@ type NoteFilterOption = {
 
 const PrivateNotesPage: NextPageWithLayout = () => {
   const { address, requestPrivateNotes } = useWallet();
-  const { Miden, createClient } = useMidenSdk();
+  const { Miden } = useMidenSdk();
 
   const [noteFilterType, setNoteFilterType] = useState<number | undefined>(
     undefined
@@ -144,12 +144,16 @@ const PrivateNotesPage: NextPageWithLayout = () => {
         description="Request Private Notes from the Miden Wallet"
       />
       <Base>
+        <h2 className="text-2xl font-bold">Private Notes</h2>
+        <p className="text-sm text-gray-500">
+          Browse private notes stored in your account
+        </p>
         <form onSubmit={handleSubmit}>
-          <div className="space-y-4">
+          <div className="mt-4 space-y-4">
             <label className="flex flex-col gap-2 text-sm font-medium text-gray-800">
               Note Filter Type
               <select
-                className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+                className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
                 onChange={handleNoteFilterTypeChange}
               >
                 {allNoteFilterTypes.map((option) => (
@@ -179,7 +183,7 @@ const PrivateNotesPage: NextPageWithLayout = () => {
                 </div>
               )}
           </div>
-          <div className="mt-4 flex items-center justify-center">
+          <div className="mt-4 flex items-start justify-start">
             {!address ? (
               <Button
                 color="primary"

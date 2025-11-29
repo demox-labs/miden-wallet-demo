@@ -322,17 +322,17 @@ const MintPage: NextPageWithLayout = () => {
         description="Request Mint from the Miden Wallet"
       />
       <Base>
-        <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
-          {`Mint from Miden Faucet: ${faucetId}`}
-        </div>
+        <h2 className="text-2xl font-bold">Mint</h2>
+        <p className="text-sm text-gray-500">Request MIDEN tokens on Testnet</p>
         <form
           className="relative flex w-full flex-col rounded-full md:w-auto"
           noValidate
           role="search"
         >
-          <label className="flex w-full items-center justify-between py-4">
+          <label className="flex w-full flex-col items-start justify-between py-4">
+            <p className="mb-2">Amount</p>
             <select
-              className="h-11 w-1/2 appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 ltr:pr-5 ltr:pl-4 rtl:pr-4 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-white py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-500 focus:border-gray-900 ltr:pr-5 ltr:pl-4 rtl:pr-4 dark:border-gray-300 dark:bg-white dark:text-gray-900 dark:placeholder:text-gray-500 dark:focus:border-gray-900"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleAmountChange(event)
@@ -345,12 +345,13 @@ const MintPage: NextPageWithLayout = () => {
                 </option>
               ))}
             </select>
-            <div className="flex items-center justify-center">
+            <p className="mt-2 text-xs text-gray-500">{`Mint from Miden Faucet: ${faucetId}`}</p>
+            <div className="mt-4 flex items-start justify-start">
               <Button
                 disabled={!address || !amount || !Miden || !client}
                 type="submit"
                 color="primary"
-                className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+                className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
                 isLoading={isLoading}
                 onClick={async (event: SyntheticEvent<HTMLButtonElement>) => {
                   await handleSubmit(event, 'public');

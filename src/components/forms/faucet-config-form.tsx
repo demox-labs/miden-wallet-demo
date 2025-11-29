@@ -5,8 +5,8 @@ interface FaucetConfig {
   storageMode: 'public' | 'private';
   nonFungible: boolean;
   assetSymbol: string;
-  decimals: number;
-  totalSupply: bigint;
+  decimals?: number;
+  totalSupply?: bigint;
 }
 
 interface FaucetConfigFormProps {
@@ -26,8 +26,6 @@ export default function FaucetConfigForm({
     storageMode: 'public',
     nonFungible: false,
     assetSymbol: '',
-    decimals: 10,
-    totalSupply: BigInt(1000000),
   });
 
   const handleFaucetConfigChange = (field: keyof FaucetConfig, value: any) => {
@@ -53,9 +51,7 @@ export default function FaucetConfigForm({
       role="search"
       onSubmit={handleSubmit}
     >
-      <div className="mb-4 text-sm text-gray-800">
-        Configure Faucet Properties
-      </div>
+      <h3 className="mb-4 text-lg font-bold">Configure Faucet Properties</h3>
       <div className="space-y-4">
         <label className="flex flex-col gap-2 text-sm font-medium text-gray-800">
           Storage Mode
@@ -88,7 +84,7 @@ export default function FaucetConfigForm({
         <label className="flex flex-col gap-2 text-sm font-medium text-gray-800">
           Number of Decimals
           <input
-            type="number"
+            type="text"
             className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-4 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
             placeholder="e.g., 10"
             value={faucetConfig.decimals}
@@ -100,8 +96,10 @@ export default function FaucetConfigForm({
         <label className="flex flex-col gap-2 text-sm font-medium text-gray-800">
           Total Supply
           <input
-            type="number"
-            value={Number(faucetConfig.totalSupply)}
+            type="text"
+            value={
+              faucetConfig.totalSupply ? Number(faucetConfig.totalSupply) : ''
+            }
             onChange={(e) =>
               setFaucetConfig({
                 ...faucetConfig,
@@ -109,16 +107,16 @@ export default function FaucetConfigForm({
               })
             }
             className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-4 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-            placeholder="Enter total supply"
+            placeholder="e.g., 1000000"
           />
         </label>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="mt-4 flex items-start justify-start">
         <Button
           disabled={isDisabled}
           type="submit"
           color="primary"
-          className="mt-6 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+          className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
           isLoading={isLoading}
         >
           {isDisabled ? 'Connect Your Wallet' : 'Create Faucet'}

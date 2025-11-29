@@ -335,34 +335,37 @@ const SignPage: NextPageWithLayout = () => {
         description="Sign Messages with the Miden Wallet"
       />
       <Base>
-        {/* Top action row: Generate + Sign */}
-        <form
-          className="relative flex w-full items-center gap-3 md:w-auto"
-          noValidate
-          role="form"
-          onSubmit={handleSubmit}
-        >
-          <Button
-            type="button"
-            color="primary"
-            onClick={onGenerate}
-            className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
-          >
-            Generate Random Word
-          </Button>
-
-          <Button
-            disabled={!address || !message.bytes}
-            type="submit"
-            color="primary"
-            className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
-          >
-            {!address ? 'Connect Your Wallet' : 'Sign'}
-          </Button>
-        </form>
-
+        <h2 className="text-2xl font-bold">Sign</h2>
+        <p className="text-sm text-gray-500">Sign words with your account</p>
         {/* Display the generated Message (hex) */}
         <div className="mt-4 rounded-lg border-2 border-gray-200 p-3 dark:border-gray-600">
+          <div className="mb-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
+            Generate and Sign Word
+          </div>
+          <form
+            className="relative mb-4 flex w-full items-center gap-3 md:w-auto"
+            noValidate
+            role="form"
+            onSubmit={handleSubmit}
+          >
+            <Button
+              type="button"
+              color="primary"
+              onClick={onGenerate}
+              className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+            >
+              Generate Random Word
+            </Button>
+
+            <Button
+              disabled={!address || !message.bytes}
+              type="submit"
+              color="primary"
+              className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+            >
+              {!address ? 'Connect Your Wallet' : 'Sign'}
+            </Button>
+          </form>
           <div className="mb-2 text-xs font-semibold text-gray-700 dark:text-gray-300">
             Message (hex)
           </div>
@@ -381,7 +384,7 @@ const SignPage: NextPageWithLayout = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">
+                <label className="mb-2 block text-xs font-semibold tracking-wide text-gray-600 dark:text-gray-400">
                   Message (hex)
                 </label>
                 <textarea
@@ -392,7 +395,7 @@ const SignPage: NextPageWithLayout = () => {
                 />
               </div>
               <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">
+                <label className="mb-2 block text-xs font-semibold tracking-wide text-gray-600 dark:text-gray-400">
                   Signature (hex)
                 </label>
                 <div className="flex flex-col gap-3 sm:flex-row">
@@ -432,7 +435,7 @@ const SignPage: NextPageWithLayout = () => {
                 </div>
               </div>
               <div>
-                <label className="mb-2 block text-xs font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400">
+                <label className="mb-2 block text-xs font-semibold tracking-wide text-gray-600 dark:text-gray-400">
                   Public Key (hex)
                 </label>
                 <textarea

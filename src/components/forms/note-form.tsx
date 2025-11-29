@@ -1,11 +1,11 @@
 import { useState, FormEvent } from 'react';
 import Button from '@/components/ui/button';
 import { useWallet } from '@demox-labs/miden-wallet-adapter-react';
-import { Icon, IconName } from '@/components/icons';
 import type { AccountId } from '@demox-labs/miden-sdk';
 
 interface NoteFormProps {
   faucetId: AccountId | null;
+  assetSymbol: string | null;
   onStatusChange: (status: string) => void;
   onSubmitNote: (
     event: any,
@@ -19,6 +19,7 @@ interface NoteFormProps {
 
 export default function NoteForm({
   faucetId,
+  assetSymbol,
   onStatusChange,
   onSubmitNote,
   isLoading,
@@ -50,7 +51,8 @@ export default function NoteForm({
 
   return (
     <>
-      <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-white sm:text-sm">
+      <h3 className="text-lg font-bold">Mint {assetSymbol} Note</h3>
+      <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full sm:text-sm">
         {faucetId ? 'Faucet ID: ' + faucetId.toString() : 'Creating faucet...'}
       </div>
       <form
@@ -59,51 +61,49 @@ export default function NoteForm({
         role="search"
         onSubmit={handleSubmit}
       >
-        <label className="flex w-full items-center py-4">
+        <label className="flex w-full flex-col items-start justify-between pt-4">
+          <p className="mb-2">To Address</p>
           <input
-            className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-            placeholder="To address (e.g., 0x0b8a174d47e79b1000088ad423474e)"
+            className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+            placeholder="e.g., mtst1apuf6ly9ssj4yyzvn6jq52vupv8qaxem_qruqqypuyph"
             autoComplete="off"
             onChange={handleAddressChange}
             value={recipientAddress}
           />
-          <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-            <Icon name={IconName.Check} />
-          </span>
         </label>
-        <label className="flex w-full items-center py-4 text-sm font-medium text-white">
+        <label className="flex w-full flex-col items-start justify-between pt-4">
+          <p className="mb-2">Amount</p>
           <input
-            className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-            placeholder="Amount: ie, 100"
+            className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+            placeholder="e.g., 100"
             autoComplete="off"
             onChange={handleAmountChange}
             value={amount}
           />
-          <span className="pointer-events-none absolute flex h-full w-8 cursor-pointer items-center justify-center text-gray-600 hover:text-gray-900 ltr:left-0 ltr:pl-2 rtl:right-0 rtl:pr-2 dark:text-gray-500 sm:ltr:pl-3 sm:rtl:pr-3">
-            <Icon name={IconName.Check} />
-          </span>
+        </label>
+        <label className="flex items-start pt-4">
+          <input
+            type="checkbox"
+            className="h-5 w-5 rounded text-gray-700 transition duration-150 ease-in-out"
+            onChange={() => setSharePrivately(!sharePrivately)}
+            checked={sharePrivately}
+          />
+          <p className="ml-2 text-sm">Share Privately</p>
+        </label>
+        <div className="mt-4 flex items-start justify-start">
           <Button
             disabled={isDisabled || !amount || !recipientAddress}
             name="public"
             type="submit"
             color="primary"
-            className="ml-4 shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+            className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
             isLoading={isLoading}
           >
             {!address
               ? 'Connect Your Wallet'
               : `Mint ${sharePrivately ? 'Private' : 'Public'} Note`}
           </Button>
-        </label>
-        <label className="flex items-center text-sm font-medium text-white">
-          <span className="mr-2">Share Privately</span>
-          <input
-            type="checkbox"
-            className="h-4 w-4 rounded border-none text-gray-700 transition duration-150 ease-in-out"
-            onChange={() => setSharePrivately(!sharePrivately)}
-            checked={sharePrivately}
-          />
-        </label>
+        </div>
       </form>
     </>
   );

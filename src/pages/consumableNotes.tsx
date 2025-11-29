@@ -47,7 +47,11 @@ const ConsumableNotesPage: NextPageWithLayout = () => {
         description="Request Consumable Notes from the Miden Wallet"
       />
       <Base>
-        <div className="flex items-center justify-center">
+        <h2 className="text-2xl font-bold">Consumable Notes</h2>
+        <p className="text-sm text-gray-500">
+          Browse consumable notes available to your account
+        </p>
+        <div className="mt-4 flex items-start justify-start">
           {!address ? (
             <Button
               color="primary"
@@ -79,7 +83,6 @@ const ConsumableNotesPage: NextPageWithLayout = () => {
 
         {notes.length > 0 && (
           <div className="mt-6">
-            <h2 className="mb-2 text-lg font-semibold">Consumable Notes</h2>
             <ul className="space-y-2">
               {notes.map((note, i) => (
                 <li

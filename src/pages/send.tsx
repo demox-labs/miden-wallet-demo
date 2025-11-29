@@ -66,18 +66,23 @@ const SendPage: NextPageWithLayout = () => {
         description="Request Send from the Miden Wallet"
       />
       <Base>
+        <h2 className="text-2xl font-bold">Send</h2>
+        <p className="text-sm text-gray-500">
+          Transfer MIDEN to another account
+        </p>
         <form
-          className="relative flex w-full flex-col rounded-full md:w-auto"
+          className="relative flex w-full flex-col rounded-full pt-4 md:w-auto"
           noValidate
           role="search"
           onSubmit={async (event: SyntheticEvent<HTMLFormElement>) => {
             await handleSubmit(event);
           }}
         >
-          <label className="flex w-full items-center py-4">
+          <label className="flex w-full flex-col items-start justify-between py-2">
+            <p className="mb-2 text-sm">To Address</p>
             <input
-              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-              placeholder="To address (e.g., 0x0b8a174d47e79b1000088ad423474e)"
+              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+              placeholder="e.g., mtst1apuf6ly9ssj4yyzvn6jq52vupv8qaxem_qruqqypuyph"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleToAddressChange(event)
@@ -85,10 +90,11 @@ const SendPage: NextPageWithLayout = () => {
               value={toAddress}
             />
           </label>
-          <label className="flex w-full items-center py-4">
+          <label className="flex w-full flex-col items-start justify-between py-2">
+            <p className="mb-2 text-sm">Faucet ID</p>
             <input
-              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-              placeholder="Faucet ID (e.g., mtst1qzp4jgq9cy75wgp7c833ynr9f4cqqscqucc)"
+              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+              placeholder="e.g., mtst1ap2t7nsjausqsgrswk9syfzkcu328yna"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleFaucetIdChange(event)
@@ -96,10 +102,11 @@ const SendPage: NextPageWithLayout = () => {
               value={faucetId}
             />
           </label>
-          <label className="flex w-full items-center py-4">
+          <label className="flex w-full flex-col items-start justify-between py-2">
+            <p className="mb-2 text-sm">Amount</p>
             <input
-              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-              placeholder="Amount (e.g., 101)"
+              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+              placeholder="e.g., 101"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleAmountChange(event)
@@ -107,27 +114,29 @@ const SendPage: NextPageWithLayout = () => {
               value={amount}
             />
           </label>
-          <label className="flex w-full items-center py-4">
+          <label className="flex w-full flex-col items-start justify-between py-2">
+            <p className="mb-2 text-sm">Recall Blocks</p>
             <input
-              className="text sm h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 ltr:pr-5 ltr:pl-10 rtl:pr-10 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
-              placeholder="Blocks before note can be recalled (e.g., 10)"
+              className="h-11 w-full appearance-none rounded-lg border-2 border-gray-300 bg-transparent py-1 px-5 tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-700 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"
+              placeholder="e.g., 10"
               autoComplete="off"
               onChange={(event: FormEvent<Element>) =>
                 handleRecallBlocksChange(event)
               }
               value={recallBlocks}
             />
+            <p className="mt-2 text-xs text-gray-500">{`Blocks before note will be recalled`}</p>
           </label>
-          <label className="flex items-center py-4">
-            <span className="mr-8 text-sm text-white">Share Privately</span>
+          <label className="flex items-start py-2">
             <input
               type="checkbox"
-              className="h-4 w-4 rounded border-none text-gray-700 transition duration-150 ease-in-out"
+              className="h-5 w-5 rounded text-gray-700 transition duration-150 ease-in-out"
               onChange={() => setSharePrivately(!sharePrivately)}
               checked={sharePrivately}
             />
+            <p className="ml-2 text-sm">Share Privately</p>
           </label>
-          <div className="flex items-center justify-center">
+          <div className="mt-4 flex items-start justify-start">
             <Button
               disabled={!address || !toAddress || !amount || !faucetId}
               type="submit"

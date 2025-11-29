@@ -100,9 +100,13 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
         description="Import a private note into your account on Miden Wallet"
       />
       <Base>
+        <h2 className="text-2xl font-bold">Import Private Note</h2>
+        <p className="text-sm text-gray-500">
+          Import a private note into your account
+        </p>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center justify-center space-y-4"
+          className="mt-4 flex flex-col items-start justify-center space-y-4"
         >
           <div className="flex items-center space-x-4">
             <label

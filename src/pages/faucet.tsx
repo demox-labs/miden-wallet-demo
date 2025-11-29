@@ -20,8 +20,8 @@ interface FaucetConfig {
   storageMode: 'public' | 'private';
   nonFungible: boolean;
   assetSymbol: string;
-  decimals: number;
-  totalSupply: bigint;
+  decimals?: number;
+  totalSupply?: bigint;
 }
 
 const FaucetPage: NextPageWithLayout = () => {
@@ -30,12 +30,15 @@ const FaucetPage: NextPageWithLayout = () => {
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [client, setClient] = useState<WebClient | null>(null);
   const [faucetId, setFaucetId] = useState<AccountId | null>(null);
+  const [faucetConfig, setFaucetConfig] = useState<FaucetConfig | null>(null);
   const [status, setStatus] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCreateFaucet = async (faucetConfig: FaucetConfig) => {
     if (!address) throw new WalletNotConnectedError();
     if (!Miden) return;
+    if (!faucetConfig.decimals) throw new Error('Decimals are required');
+    if (!faucetConfig.totalSupply) throw new Error('Total supply is required');
     setIsLoading(true);
 
     try {
@@ -52,10 +55,11 @@ const FaucetPage: NextPageWithLayout = () => {
         faucetConfig.nonFungible,
         faucetConfig.assetSymbol,
         faucetConfig.decimals,
-        faucetConfig.totalSupply
+        faucetConfig.totalSupply! * BigInt(10 ** faucetConfig.decimals!)
       );
       setClient(newClient);
       setFaucetId(newFaucetId);
+      setFaucetConfig(faucetConfig);
       setShowNoteForm(true);
       setStatus('');
     } catch (error: any) {
@@ -73,6 +77,7 @@ const FaucetPage: NextPageWithLayout = () => {
   ) => {
     if (!address) throw new WalletNotConnectedError();
     if (!Miden || !client || !faucetId) return;
+    if (!faucetConfig) throw new Error('Faucet config is required');
     setIsLoading(true);
 
     try {
@@ -89,7 +94,7 @@ const FaucetPage: NextPageWithLayout = () => {
         midenAccountId,
         faucetId,
         noteType,
-        BigInt(amount)
+        BigInt(amount * 10 ** faucetConfig.decimals!)
       );
       const transactionResult = await client.executeTransaction(
         faucetId,
@@ -123,7 +128,7 @@ const FaucetPage: NextPageWithLayout = () => {
               faucetId.toString(),
               noteIdString,
               noteTypeString,
-              amount!,
+              amount! * 10 ** faucetConfig.decimals!,
               noteBytes
             );
           } else {
@@ -131,7 +136,7 @@ const FaucetPage: NextPageWithLayout = () => {
               faucetId.toString(),
               noteIdString,
               noteTypeString,
-              amount!
+              amount! * 10 ** faucetConfig.decimals!
             );
           }
 
@@ -185,6 +190,10 @@ const FaucetPage: NextPageWithLayout = () => {
         description="Request Mint from the Miden Wallet"
       />
       <Base>
+        <h2 className="text-2xl font-bold">Faucet</h2>
+        <p className="mb-4 text-sm text-gray-500">
+          Create a faucet to receive custom tokens
+        </p>
         {!showNoteForm ? (
           <FaucetConfigForm
             onCreateFaucet={handleCreateFaucet}
@@ -195,6 +204,7 @@ const FaucetPage: NextPageWithLayout = () => {
         ) : (
           <NoteForm
             faucetId={faucetId}
+            assetSymbol={faucetConfig!.assetSymbol}
             onStatusChange={setStatus}
             onSubmitNote={handleSubmitNote}
             isLoading={isLoading}
@@ -202,7 +212,7 @@ const FaucetPage: NextPageWithLayout = () => {
           />
         )}
         {status && (
-          <div className="mt-5 inline-flex w-full items-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
+          <div className="mt-4 inline-flex w-full items-center rounded-full bg-white dark:bg-light-dark xl:mt-6">
             <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-gray-900 sm:text-sm">
               {status}
             </div>
