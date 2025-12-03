@@ -18,11 +18,6 @@ function HeaderRightArea() {
 }
 
 export function Header() {
-  const { openDrawer } = useDrawer();
-  const isMounted = useIsMounted();
-  let windowScroll = useWindowScroll();
-  let [isOpen, setIsOpen] = useState(false);
-
   return (
     <nav
       className={`fixed top-0 z-30 h-[80px] w-full border-b border-gray-200 bg-white transition-all duration-300 ltr:right-0 rtl:left-0 dark:border-gray-800 dark:bg-dark`}
@@ -30,14 +25,6 @@ export function Header() {
       <div className="flex h-full items-center justify-between px-4 sm:px-6 lg:px-8 xl:px-10 3xl:px-12">
         <div className="flex items-center">
           <Logo />
-          {/* <div className="block ltr:mr-1 rtl:ml-1 ltr:sm:mr-3 rtl:sm:ml-3 xl:hidden">
-            <Hamburger
-              isOpen={isOpen}
-              onClick={() => openDrawer('DASHBOARD_SIDEBAR')}
-              variant="transparent"
-              className="dark:text-white"
-            />
-          </div> */}
         </div>
 
         <HeaderRightArea />

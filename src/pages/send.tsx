@@ -16,29 +16,41 @@ const SendPage: NextPageWithLayout = () => {
   const { wallet, address } = useWallet();
 
   let [toAddress, setToAddress] = useState('');
-  let [amount, setAmount] = useState<number | undefined>(undefined);
+  let [amount, setAmount] = useState<number>(10);
   let [faucetId, setFaucetId] = useState<string>('');
   let [sharePrivately, setSharePrivately] = useState<boolean>(false);
   let [recallBlocks, setRecallBlocks] = useState<number | undefined>();
+  const [status, setStatus] = useState<string | undefined>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (!address) throw new WalletNotConnectedError();
 
-    const midenTransaction = new SendTransaction(
-      address,
-      toAddress,
-      faucetId,
-      sharePrivately ? 'private' : 'public',
-      amount! * 10 ** MIDEN_METADATA.decimals
-    );
+    try {
+      setIsLoading(true);
+      setStatus('Submitting send transaction request...');
+      const midenTransaction = new SendTransaction(
+        address,
+        toAddress,
+        faucetId,
+        sharePrivately ? 'private' : 'public',
+        amount! * 10 ** MIDEN_METADATA.decimals
+      );
 
-    const txId =
-      (await (wallet?.adapter as MidenWalletAdapter).requestSend(
-        midenTransaction
-      )) || '';
-    if (event.target?.elements[0]?.value) {
-      event.target.elements[0].value = '';
+      const txId =
+        (await (wallet?.adapter as MidenWalletAdapter).requestSend(
+          midenTransaction
+        )) || '';
+      console.log(txId);
+      if (event.target?.elements[0]?.value) {
+        event.target.elements[0].value = '';
+      }
+      setStatus(`Transaction ${txId} submitted`);
+    } catch (error: any) {
+      setStatus(`Error: ${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,16 +149,34 @@ const SendPage: NextPageWithLayout = () => {
             <p className="ml-2 text-sm">Share Privately</p>
           </label>
           <div className="mt-4 flex items-start justify-start">
-            <Button
-              disabled={!address || !toAddress || !amount || !faucetId}
-              type="submit"
-              color="primary"
-              className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
-            >
-              {!address ? 'Connect Your Wallet' : 'Submit'}
-            </Button>
+            {!address ? (
+              <Button
+                disabled
+                color="primary"
+                className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+              >
+                Connect Your Wallet
+              </Button>
+            ) : (
+              <Button
+                disabled={!address || !toAddress || !amount || !faucetId}
+                type="submit"
+                color="primary"
+                isLoading={isLoading}
+                className="shadow-card dark:bg-gray-700 md:h-10 md:px-5 xl:h-12 xl:px-7"
+              >
+                {isLoading ? 'Submitting...' : 'Submit'}
+              </Button>
+            )}
           </div>
         </form>
+        {status && (
+          <div className="mt-5 inline-flex w-full items-center justify-center rounded-full dark:bg-light-dark xl:mt-6">
+            <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-gray-900 sm:text-sm">
+              {status}
+            </div>
+          </div>
+        )}
       </Base>
     </>
   );

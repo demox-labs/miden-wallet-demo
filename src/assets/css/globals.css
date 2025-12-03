@@ -9,8 +9,6 @@
   html,
   body {
     @apply antialiased bg-white font-body text-gray-900 dark:bg-dark dark:text-white;
-    /* Full-width without cropping */
-    /* background: url('/bg.svg') white center top / 100% auto no-repeat; */
   }
   .dynamic-html h6 {
     @apply font-medium uppercase;

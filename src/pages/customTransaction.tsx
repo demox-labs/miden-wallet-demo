@@ -306,7 +306,7 @@ const CustomTransactionPage: NextPageWithLayout = () => {
           Send custom transactions from your account
         </p>
         <form onSubmit={handleSubmit} className="mt-4">
-          <label className="flex w-full flex-col items-start justify-between py-4">
+          <label className="flex w-full flex-col items-start justify-between">
             <p className="mb-2">To Address</p>
             <input
               className="h-11 w-full appearance-none rounded-lg border-2 border-gray-200 bg-transparent py-1 px-5 text-sm tracking-tighter text-gray-900 outline-none transition-all placeholder:text-gray-600 focus:border-gray-900 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-gray-500"

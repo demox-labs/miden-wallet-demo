@@ -85,9 +85,9 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
     try {
       const noteId = await importPrivateNote!(noteData);
       setStatus(`Note imported successfully: ${noteId}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error during note import:', error);
-      setStatus('Error importing note');
+      setStatus(`Error importing note: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -145,7 +145,7 @@ const ImportPrivateNotePage: NextPageWithLayout = () => {
           )}
         </form>
         {status && (
-          <div className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-white shadow-card dark:bg-light-dark xl:mt-6">
+          <div className="mt-5 inline-flex w-full items-center justify-center rounded-full dark:bg-light-dark xl:mt-6">
             <div className="inline-flex h-full shrink-0 grow-0 items-center rounded-full text-xs text-gray-900 sm:text-sm">
               {status}
             </div>
